@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A354918D237072A40056D05B /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918C237072A40056D05B /* SearchTableView.swift */; };
+		A354918F237077F00056D05B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918E237077F00056D05B /* LoginController.swift */; };
 		A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767C2362FE220098A25F /* AppDelegate.swift */; };
 		A3C0767F2362FE220098A25F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767E2362FE220098A25F /* ViewController.swift */; };
 		A3C076822362FE220098A25F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076802362FE220098A25F /* Main.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A354918C237072A40056D05B /* SearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableView.swift; sourceTree = "<group>"; };
+		A354918E237077F00056D05B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A3C076792362FE220098A25F /* SwiftyCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C0767C2362FE220098A25F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3C0767E2362FE220098A25F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +62,9 @@
 			children = (
 				A3C0767C2362FE220098A25F /* AppDelegate.swift */,
 				A3C0767E2362FE220098A25F /* ViewController.swift */,
+				A354918E237077F00056D05B /* LoginController.swift */,
 				A3C076802362FE220098A25F /* Main.storyboard */,
+				A354918C237072A40056D05B /* SearchTableView.swift */,
 				A3C076862362FE260098A25F /* Assets.xcassets */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
 				A3C0768B2362FE260098A25F /* Info.plist */,
@@ -139,8 +145,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3C076852362FE220098A25F /* SwiftyCompanion.xcdatamodeld in Sources */,
+				A354918D237072A40056D05B /* SearchTableView.swift in Sources */,
 				A3C0767F2362FE220098A25F /* ViewController.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
+				A354918F237077F00056D05B /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

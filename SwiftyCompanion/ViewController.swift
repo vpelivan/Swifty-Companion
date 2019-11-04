@@ -8,13 +8,30 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var projectsMoreButton: UIButton!
+    @IBOutlet weak var skillsMoreButton: UIButton!
+    
+    var searchController: UISearchController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let searchTableView = storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
+        searchController = UISearchController(searchResultsController: searchTableView)
+        searchController?.searchBar.placeholder = "Search user"
+        searchController?.searchBar.delegate = self
+        searchController?.hidesNavigationBarDuringPresentation = true
+        searchController?.dimsBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
     }
-
-
+    
+    @IBAction func tapSearch(_ sender: UIBarButtonItem) {
+        print("1")
+        searchController?.searchBar.becomeFirstResponder()
+    }
+    
 }
 
