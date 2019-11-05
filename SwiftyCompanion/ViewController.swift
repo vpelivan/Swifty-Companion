@@ -12,14 +12,13 @@ class ViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var projectsMoreButton: UIButton!
     @IBOutlet weak var skillsMoreButton: UIButton!
-    @IBOutlet weak var nameInfoView: UIView!
-    @IBOutlet weak var levelInfoView: UIView!
-    @IBOutlet weak var diffInfoView: UIView!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var coalitionImageView: UIImageView!
-    
-    
+    @IBOutlet weak var evalMoreButton: UIButton!
+    @IBOutlet weak var eventsMoreButton: UIButton!
+    @IBOutlet weak var evalView: UIView!
+    @IBOutlet weak var eventsView: UIView!
+    @IBOutlet weak var profileViewConstr: NSLayoutConstraint!
     var searchController: UISearchController?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,16 +41,27 @@ class ViewController: UIViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
     }
     
+    func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile
+        if evalView.isHidden == false {
+            evalView.isHidden = true
+            eventsView.isHidden = true
+            profileViewConstr.constant = 500
+        } else {
+            evalView.isHidden = false
+            eventsView.isHidden = false
+            profileViewConstr.constant = 988
+        }
+    }
+    
     func setFramesForElems() {
         projectsMoreButton.layer.borderWidth = 1.0
         projectsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
         skillsMoreButton.layer.borderWidth = 1.0
         skillsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
-//        nameInfoView.layer.cornerRadius = 5.0
-//        levelInfoView.layer.cornerRadius = 5.0
-//        diffInfoView.layer.cornerRadius = 5.0
-//        photoImageView.layer.cornerRadius = 5.0
+        eventsMoreButton.layer.borderWidth = 1.0
+        eventsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
+        evalMoreButton.layer.borderWidth = 1.0
+        evalMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
     }
-    
 }
 
