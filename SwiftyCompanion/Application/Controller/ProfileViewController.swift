@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UISearchBarDelegate {
+class ProfileViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var projectsMoreButton: UIButton!
     @IBOutlet weak var skillsMoreButton: UIButton!

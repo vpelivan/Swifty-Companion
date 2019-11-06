@@ -7,24 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
+		A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29A237320E8009D3E12 /* UserProfile.swift */; };
+		A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29C237326C2009D3E12 /* AuthUser.swift */; };
 		A354918D237072A40056D05B /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918C237072A40056D05B /* SearchTableView.swift */; };
 		A354918F237077F00056D05B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918E237077F00056D05B /* LoginController.swift */; };
 		A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767C2362FE220098A25F /* AppDelegate.swift */; };
-		A3C0767F2362FE220098A25F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767E2362FE220098A25F /* ViewController.swift */; };
+		A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767E2362FE220098A25F /* ProfileViewController.swift */; };
 		A3C076822362FE220098A25F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076802362FE220098A25F /* Main.storyboard */; };
-		A3C076852362FE220098A25F /* SwiftyCompanion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3C076832362FE220098A25F /* SwiftyCompanion.xcdatamodeld */; };
 		A3C076872362FE260098A25F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3C076862362FE260098A25F /* Assets.xcassets */; };
 		A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076882362FE260098A25F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		A326F29A237320E8009D3E12 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		A326F29C237326C2009D3E12 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 		A354918C237072A40056D05B /* SearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableView.swift; sourceTree = "<group>"; };
 		A354918E237077F00056D05B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A3C076792362FE220098A25F /* SwiftyCompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyCompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C0767C2362FE220098A25F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A3C0767E2362FE220098A25F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A3C0767E2362FE220098A25F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A3C076812362FE220098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A3C076842362FE220098A25F /* SwiftyCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftyCompanion.xcdatamodel; sourceTree = "<group>"; };
 		A3C076862362FE260098A25F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3C076892362FE260098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3C0768B2362FE260098A25F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,6 +45,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A326F2862372FD52009D3E12 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A326F29A237320E8009D3E12 /* UserProfile.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A326F2872372FD63009D3E12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3C076802362FE220098A25F /* Main.storyboard */,
+				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A326F2882372FD6D009D3E12 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A3C0767E2362FE220098A25F /* ProfileViewController.swift */,
+				A354918C237072A40056D05B /* SearchTableView.swift */,
+				A3C0767C2362FE220098A25F /* AppDelegate.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A326F2892372FD92009D3E12 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A326F2862372FD52009D3E12 /* Model */,
+				A326F2872372FD63009D3E12 /* View */,
+				A326F2882372FD6D009D3E12 /* Controller */,
+				A326F29123730648009D3E12 /* NetworkService */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		A326F28B2372FE99009D3E12 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A3C076862362FE260098A25F /* Assets.xcassets */,
+				A3C0768B2362FE260098A25F /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A326F29123730648009D3E12 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				A326F2922373066D009D3E12 /* NetworkService.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		A326F294237308AC009D3E12 /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				A326F298237308E0009D3E12 /* Model */,
+				A326F297237308DA009D3E12 /* View */,
+				A326F295237308BE009D3E12 /* Controller */,
+				A326F299237308F6009D3E12 /* LoginNetworkService */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		A326F295237308BE009D3E12 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A354918E237077F00056D05B /* LoginController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A326F297237308DA009D3E12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A326F298237308E0009D3E12 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A326F29C237326C2009D3E12 /* AuthUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A326F299237308F6009D3E12 /* LoginNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoginNetworkService;
+			sourceTree = "<group>";
+		};
 		A3C076702362FE220098A25F = {
 			isa = PBXGroup;
 			children = (
@@ -60,15 +160,9 @@
 		A3C0767B2362FE220098A25F /* SwiftyCompanion */ = {
 			isa = PBXGroup;
 			children = (
-				A3C0767C2362FE220098A25F /* AppDelegate.swift */,
-				A3C0767E2362FE220098A25F /* ViewController.swift */,
-				A354918E237077F00056D05B /* LoginController.swift */,
-				A3C076802362FE220098A25F /* Main.storyboard */,
-				A354918C237072A40056D05B /* SearchTableView.swift */,
-				A3C076862362FE260098A25F /* Assets.xcassets */,
-				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
-				A3C0768B2362FE260098A25F /* Info.plist */,
-				A3C076832362FE220098A25F /* SwiftyCompanion.xcdatamodeld */,
+				A326F294237308AC009D3E12 /* LogIn */,
+				A326F2892372FD92009D3E12 /* Application */,
+				A326F28B2372FE99009D3E12 /* Supporting Files */,
 			);
 			path = SwiftyCompanion;
 			sourceTree = "<group>";
@@ -144,9 +238,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3C076852362FE220098A25F /* SwiftyCompanion.xcdatamodeld in Sources */,
+				A326F2932373066D009D3E12 /* NetworkService.swift in Sources */,
 				A354918D237072A40056D05B /* SearchTableView.swift in Sources */,
-				A3C0767F2362FE220098A25F /* ViewController.swift in Sources */,
+				A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */,
+				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
+				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A354918F237077F00056D05B /* LoginController.swift in Sources */,
 			);
@@ -296,7 +392,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
-				INFOPLIST_FILE = SwiftyCompanion/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyCompanion/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,7 +411,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
-				INFOPLIST_FILE = SwiftyCompanion/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/SwiftyCompanion/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -348,19 +446,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		A3C076832362FE220098A25F /* SwiftyCompanion.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A3C076842362FE220098A25F /* SwiftyCompanion.xcdatamodel */,
-			);
-			currentVersion = A3C076842362FE220098A25F /* SwiftyCompanion.xcdatamodel */;
-			path = SwiftyCompanion.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A3C076712362FE220098A25F /* Project object */;
 }
