@@ -17,13 +17,35 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var evalView: UIView!
     @IBOutlet weak var eventsView: UIView!
     @IBOutlet weak var profileViewConstr: NSLayoutConstraint!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var profileSurnameLabel: UILabel!
+    @IBOutlet weak var profileLoginLabel: UILabel!
+    @IBOutlet weak var profileCampusLabel: UILabel!
+    @IBOutlet weak var profileMobileLabel: UILabel!
+    @IBOutlet weak var profileEmailLabel: UILabel!
+    @IBOutlet weak var profileLocationLabel: UILabel!
+    @IBOutlet weak var profileLevelLabel: UILabel!
+    @IBOutlet weak var profileProgressBar: UIProgressView!
+    @IBOutlet weak var profileCoalitionLabel: UILabel!
+    @IBOutlet weak var profileWalletLabel: UILabel!
+    @IBOutlet weak var profileGradeLabel: UILabel!
+    @IBOutlet weak var profileEtecLabel: UILabel!
+    @IBOutlet weak var profileExamsLabel: UILabel!
+    @IBOutlet weak var profileCorrectionLabel: UILabel!
+    
+    
     var searchController: UISearchController?
     
+    var myInfo: UserInfo!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ProfileViewController")
+        myInfo.profileInfo?.description()
         setSearchBar()
         setFramesForElems()
+        fetchUserData()
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
@@ -39,6 +61,40 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         searchController?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         navigationItem.searchController = searchController
+    }
+    
+    func fetchUserData() {
+        let userData = self.myInfo.profileInfo
+        let lvlFloat = userData?.cursus_users[0]?.level ?? 0.0
+        let lvlProgressWhole = Int(lvlFloat)
+        var lvlProgressRest = Float(0.0)
+        
+        if lvlProgressWhole > 0 {
+            lvlProgressRest = lvlFloat - Float(lvlProgressWhole)
+        } else {
+            lvlProgressRest = lvlFloat
+        }
+        
+        guard let url = URL(string: (userData?.image_url)!) else { return }
+        let session = URLSession.shared
+        session.dataTask(with: url) {(data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    self.profileImageView.image = image
+                }
+            }
+            }.resume()
+        profileNameLabel.text = userData?.first_name
+        profileSurnameLabel.text = userData?.last_name
+        profileLoginLabel.text = userData?.login
+        profileLocationLabel.text = userData?.location
+        profileLevelLabel.text = String(userData?.cursus_users[0]?.level ?? 0.0)
+        profileProgressBar.progress = lvlProgressRest
+        profileWalletLabel.text = String("Wallet: \(userData?.wallet ?? 0)₳")
+        profileCorrectionLabel.text = String("Evaluation Poins: \(userData?.correction_point ?? 0)")
+        profileGradeLabel.text = String("Grade: \(userData?.cursus_users[0]?.grade ?? "no grade")")
+        profileEmailLabel.text = userData?.email
+        profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
     }
     
     func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile
