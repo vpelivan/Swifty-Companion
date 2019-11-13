@@ -18,7 +18,8 @@ class AuthUser {
     private let intraURL = "https://api.intra.42.fr/"
     private var webAuthSession: ASWebAuthenticationSession?
     private var tokenJson: NSDictionary?
-    private var UserData: User?
+    private var userData: User?
+    private var coalitionData: [Coalition?] = []
     
     private init() {}
 }
@@ -53,7 +54,8 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
-                    print(self.tokenJson!)
+//                    print(self.tokenJson!)
+                    
                     completion()
                 } else {
                     print("Json error")
@@ -64,7 +66,7 @@ extension AuthUser {
         }.resume()
     }
     
-    public func getUserInfo(completion: @escaping (User) -> ()) {
+    public func getUserInfo(completion: @escaping (User, Coalition) -> ()) {
             let token = tokenJson!["access_token"] as! String
             
             guard let url = NSURL(string: "\(self.intraURL)/v2/me") else { return }
@@ -72,22 +74,19 @@ extension AuthUser {
             request.httpMethod = "GET"
             request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
             let session = URLSession.shared
-//            self.UserData =
+//            self.userData =
             session.dataTask(with: request as URLRequest) {
                 (data, response, error) in
                 do
                 {
                     guard let data = data else { return }
-                    let json = try JSONSerialization.jsonObject(with: data)
-                    print(json)
-                    self.UserData = try JSONDecoder().decode(User.self, from: data)
-//                    print(self.UserData!)
-//                    self.UserData?.description()
-                    DispatchQueue.main.async {
-                        self.getCoalitionInfo()
-                        completion(self.UserData!)
-                    }
-
+//                    let json = try JSONSerialization.jsonObject(with: data)
+//                    print(json)
+                    self.userData = try JSONDecoder().decode(User.self, from: data)
+                    self.getGraphInfo()
+                    self.getCoalitionInfo(completion: { (coalition) in
+                        completion(self.userData!, coalition)
+                    })
                 }
                 catch let error {
                     return print(error)
@@ -97,26 +96,56 @@ extension AuthUser {
 }
 
 extension AuthUser {
-    func getCoalitionInfo() {
+    func getCoalitionInfo(completion: @escaping (Coalition) -> ()) {
         let token = tokenJson!["access_token"] as! String
         
         print("COALITION")
-        let url = NSURL(string: "\(self.intraURL)/v2/users/\(UserData?.cursus_users[0]?.user?.id ?? 0)/coalitions")
+        let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/coalitions")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         let session = URLSession.shared
-        //            self.UserData =
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
             do
             {
                 guard let data = data else { return }
+//                let json = try JSONSerialization.jsonObject(with: data)
+//                print(json)
+                self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
+                completion(self.coalitionData[0]!)
+        
+            }
+            catch let error {
+                return print(error)
+            }
+            }.resume()
+    }
+    
+    
+}
+
+extension AuthUser {
+    func getGraphInfo() {
+        let token = tokenJson!["access_token"] as! String
+        
+        print("GRAPH")
+        let url = NSURL(string: "\(self.intraURL)/v2/projects/11/projects_users")
+        let request = NSMutableURLRequest(url: url! as URL)
+        request.httpMethod = "GET"
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        request.httpBody = "".data(using: String.Encoding.utf8)
+        let session = URLSession.shared
+        session.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            print("done")
+            do
+            {
+                guard let data = data else { return }
                 let json = try JSONSerialization.jsonObject(with: data)
                 print(json)
-//                self.UserData = try JSONDecoder().decode(User.self, from: data)
-                //                    print(self.UserData!)
-                //                    self.UserData?.description()
+//                self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
+//                completion(self.coalitionData[0]!)
                 
             }
             catch let error {

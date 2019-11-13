@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var profileSurnameLabel: UILabel!
     @IBOutlet weak var profileLoginLabel: UILabel!
     @IBOutlet weak var profileCampusLabel: UILabel!
-    @IBOutlet weak var profileMobileLabel: UILabel!
+    @IBOutlet weak var profileAdressLabel: UILabel!
     @IBOutlet weak var profileEmailLabel: UILabel!
     @IBOutlet weak var profileLocationLabel: UILabel!
     @IBOutlet weak var profileLevelLabel: UILabel!
@@ -30,9 +30,9 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var profileCoalitionLabel: UILabel!
     @IBOutlet weak var profileWalletLabel: UILabel!
     @IBOutlet weak var profileGradeLabel: UILabel!
-    @IBOutlet weak var profileEtecLabel: UILabel!
     @IBOutlet weak var profileExamsLabel: UILabel!
     @IBOutlet weak var profileCorrectionLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     
     var searchController: UISearchController?
@@ -46,6 +46,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         setSearchBar()
         setFramesForElems()
         fetchUserData()
+        print(myInfo.profileInfo?.campus[0]?.address ?? "none")
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
@@ -76,11 +77,19 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         }
         
         guard let url = URL(string: (userData?.image_url)!) else { return }
+        guard let url1 = URL(string: (myInfo.coalitionInfo?.cover_url)!) else { return }
         let session = URLSession.shared
         session.dataTask(with: url) {(data, response, error) in
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
                     self.profileImageView.image = image
+                }
+            }
+            }.resume()
+        session.dataTask(with: url1) {(data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    self.backgroundImageView.image = image
                 }
             }
             }.resume()
@@ -95,6 +104,8 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileGradeLabel.text = String("Grade: \(userData?.cursus_users[0]?.grade ?? "no grade")")
         profileEmailLabel.text = userData?.email
         profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
+        profileAdressLabel.text = String("\(userData?.campus[0]?.address ?? "none")")
+        profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
     }
     
     func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile

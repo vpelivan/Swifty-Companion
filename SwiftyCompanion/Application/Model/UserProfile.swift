@@ -8,6 +8,13 @@
 
 import Foundation
 
+class UserInfo {
+    var profileInfo: User?
+    var coalitionInfo: Coalition?
+    //    var eventInfo: Event?
+}
+
+
 struct User: Decodable {
     var first_name: String?
     var last_name: String?
@@ -19,15 +26,6 @@ struct User: Decodable {
     var email: String?
     var cursus_users: [CursusUsers?]
     var campus: [Campus?]
-//    var cursus: String
-//    var campus: String
-//    var phone: String
-//    var avaliable: String
-//    var coalition: String
-//    var grade: String
-//    var etec: String
-//    var exams: Int
-//    var internships: Int
     
     func description() {
         guard let cursus = cursus_users[0] else { return print("cursus_users == nil")}
@@ -56,14 +54,9 @@ struct Skills: Decodable {
 struct Campus: Decodable {
     var city: String?
     var country: String?
-    var adress: String?
+    var address: String?
 }
 
 struct UserId: Decodable {
     var id: Int?
-}
-
-class UserInfo {
-    var profileInfo: User?
-//    var eventInfo: Event?
 }
