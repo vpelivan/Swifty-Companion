@@ -20,6 +20,7 @@ class AuthUser {
     private var tokenJson: NSDictionary?
     private var userData: User?
     private var coalitionData: [Coalition?] = []
+    private var examsPassed: Int = 0
     
     private init() {}
 }
@@ -54,7 +55,7 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
-//                    print(self.tokenJson!)
+                    print(self.tokenJson!)
                     
                     completion()
                 } else {
@@ -66,7 +67,7 @@ extension AuthUser {
         }.resume()
     }
     
-    public func getUserInfo(completion: @escaping (User, Coalition) -> ()) {
+    public func getUserInfo(completion: @escaping (User, Coalition, Int) -> ()) {
             let token = tokenJson!["access_token"] as! String
             
             guard let url = NSURL(string: "\(self.intraURL)/v2/me") else { return }
@@ -74,7 +75,6 @@ extension AuthUser {
             request.httpMethod = "GET"
             request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
             let session = URLSession.shared
-//            self.userData =
             session.dataTask(with: request as URLRequest) {
                 (data, response, error) in
                 do
@@ -83,9 +83,10 @@ extension AuthUser {
 //                    let json = try JSONSerialization.jsonObject(with: data)
 //                    print(json)
                     self.userData = try JSONDecoder().decode(User.self, from: data)
-                    self.getGraphInfo()
                     self.getCoalitionInfo(completion: { (coalition) in
-                        completion(self.userData!, coalition)
+                        self.getExamInfo(completion: { (exams) in
+                            completion(self.userData!, coalition, exams)
+                        })
                     })
                 }
                 catch let error {
@@ -95,16 +96,17 @@ extension AuthUser {
         }
 }
 
+
+//Coaltions
 extension AuthUser {
     func getCoalitionInfo(completion: @escaping (Coalition) -> ()) {
         let token = tokenJson!["access_token"] as! String
-        
-        print("COALITION")
         let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/coalitions")
         let request = NSMutableURLRequest(url: url! as URL)
+        let session = URLSession.shared
+        
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        let session = URLSession.shared
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
             do
@@ -121,32 +123,36 @@ extension AuthUser {
             }
             }.resume()
     }
-    
-    
 }
 
+//Exams
 extension AuthUser {
-    func getGraphInfo() {
+    func getExamInfo(completion: @escaping (Int) -> ()) {
         let token = tokenJson!["access_token"] as! String
-        
-        print("GRAPH")
-        let url = NSURL(string: "\(self.intraURL)/v2/projects/11/projects_users")
+        print("EXAMS")
+        let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/projects_users?filter[project_id]=11")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        request.httpBody = "".data(using: String.Encoding.utf8)
         let session = URLSession.shared
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
-            print("done")
             do
             {
                 guard let data = data else { return }
-                let json = try JSONSerialization.jsonObject(with: data)
-                print(json)
-//                self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
-//                completion(self.coalitionData[0]!)
-                
+//                let json = try JSONSerialization.jsonObject(with: data)
+//                print(json)
+                if let dic: [NSDictionary] = try JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
+                        let a = dic[0]["teams"] as! [NSDictionary]
+                        for i in 0..<a.count
+                        {
+                            if a[i]["validated?"] as! Int? == 1 && self.examsPassed < 5  {
+                                self.examsPassed += 1
+                            }
+                        }
+                    }
+                print(self.examsPassed)
+                completion(self.examsPassed)
             }
             catch let error {
                 return print(error)

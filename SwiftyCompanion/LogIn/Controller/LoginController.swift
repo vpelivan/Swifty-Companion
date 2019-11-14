@@ -18,9 +18,10 @@ class LoginController: UIViewController {
     
     @IBAction func tapLogIn(_ sender: UIButton) {
         AuthUser.shared.authorizeUser {
-            AuthUser.shared.getUserInfo(completion: {userInfo, coalitionInfo in
+            AuthUser.shared.getUserInfo(completion: {userInfo, coalitionInfo, examsPassed in
                 self.myInfo.profileInfo = userInfo
                 self.myInfo.coalitionInfo = coalitionInfo
+                self.myInfo.examsPassed = examsPassed
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "goToProfile", sender: nil)
                 }

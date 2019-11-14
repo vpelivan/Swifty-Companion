@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var profileCoalitionLabel: UILabel!
     @IBOutlet weak var profileWalletLabel: UILabel!
     @IBOutlet weak var profileGradeLabel: UILabel!
+    @IBOutlet weak var profileInternLabel: UILabel!
     @IBOutlet weak var profileExamsLabel: UILabel!
     @IBOutlet weak var profileCorrectionLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -46,7 +47,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         setSearchBar()
         setFramesForElems()
         fetchUserData()
-        print(myInfo.profileInfo?.campus[0]?.address ?? "none")
+        print(self.myInfo.examsPassed)
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
@@ -106,6 +107,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
         profileAdressLabel.text = String("\(userData?.campus[0]?.address ?? "none")")
         profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
+        profileExamsLabel.text = String("Exams passed: \(String(self.myInfo.examsPassed)) of 5")
     }
     
     func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile

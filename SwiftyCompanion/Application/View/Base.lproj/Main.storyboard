@@ -551,9 +551,10 @@
                         <outlet property="profileCoalitionLabel" destination="JRx-RU-tEm" id="Jdi-hP-XDa"/>
                         <outlet property="profileCorrectionLabel" destination="2L8-pv-9vK" id="5sx-GI-ZS3"/>
                         <outlet property="profileEmailLabel" destination="Ymz-Zd-YPn" id="kWQ-U9-bgn"/>
-                        <outlet property="profileExamsLabel" destination="ZOQ-zM-GHi" id="yPv-q7-0bo"/>
+                        <outlet property="profileExamsLabel" destination="rJJ-BL-ZLV" id="oyS-HC-4Dz"/>
                         <outlet property="profileGradeLabel" destination="oni-Se-YEq" id="hLj-dv-Q8o"/>
                         <outlet property="profileImageView" destination="nHl-eI-uz8" id="1N6-Si-wOV"/>
+                        <outlet property="profileInternLabel" destination="ZOQ-zM-GHi" id="ADh-br-95h"/>
                         <outlet property="profileLevelLabel" destination="unf-7e-1GH" id="iE7-Ov-y9b"/>
                         <outlet property="profileLocationLabel" destination="Q8d-Nh-2ss" id="65m-fb-7J9"/>
                         <outlet property="profileLoginLabel" destination="vnX-K1-FcH" id="YZa-zZ-OTV"/>

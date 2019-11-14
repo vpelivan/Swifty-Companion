@@ -11,6 +11,7 @@ import Foundation
 class UserInfo {
     var profileInfo: User?
     var coalitionInfo: Coalition?
+    var examsPassed: Int = 0
     //    var eventInfo: Event?
 }
 
