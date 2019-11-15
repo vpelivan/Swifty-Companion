@@ -12,6 +12,7 @@ class UserInfo {
     var profileInfo: User?
     var coalitionInfo: Coalition?
     var examsPassed: Int = 0
+    var internPassed: Int = 0
     //    var eventInfo: Event?
 }
 

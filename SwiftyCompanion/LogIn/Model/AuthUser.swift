@@ -21,6 +21,7 @@ class AuthUser {
     private var userData: User?
     private var coalitionData: [Coalition?] = []
     private var examsPassed: Int = 0
+    private var internshipsPassed: Int = 0
     
     private init() {}
 }
@@ -67,7 +68,7 @@ extension AuthUser {
         }.resume()
     }
     
-    public func getUserInfo(completion: @escaping (User, Coalition, Int) -> ()) {
+    public func getUserInfo(completion: @escaping (User, Coalition, Int, Int) -> ()) {
             let token = tokenJson!["access_token"] as! String
             
             guard let url = NSURL(string: "\(self.intraURL)/v2/me") else { return }
@@ -84,10 +85,10 @@ extension AuthUser {
 //                    print(json)
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     self.getCoalitionInfo(completion: { (coalition) in
-                        self.getExamInfo(completion: { (exams) in
-                            completion(self.userData!, coalition, exams)
+                        self.getExamInfo(completion: { (exams, intern) in
+                                completion(self.userData!, coalition, exams, intern)
+                            })
                         })
-                    })
                 }
                 catch let error {
                     return print(error)
@@ -127,10 +128,10 @@ extension AuthUser {
 
 //Exams
 extension AuthUser {
-    func getExamInfo(completion: @escaping (Int) -> ()) {
+    func getExamInfo(completion: @escaping (Int, Int) -> ()) {
         let token = tokenJson!["access_token"] as! String
         print("EXAMS")
-        let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/projects_users?filter[project_id]=11")
+        let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=118,212,11&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
@@ -140,19 +141,32 @@ extension AuthUser {
             do
             {
                 guard let data = data else { return }
-//                let json = try JSONSerialization.jsonObject(with: data)
-//                print(json)
+                let json = try JSONSerialization.jsonObject(with: data)
+                print(json)
                 if let dic: [NSDictionary] = try JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
-                        let a = dic[0]["teams"] as! [NSDictionary]
-                        for i in 0..<a.count
-                        {
-                            if a[i]["validated?"] as! Int? == 1 && self.examsPassed < 5  {
-                                self.examsPassed += 1
+                    let a = dic[0]["teams"] as! [NSDictionary]
+                    for i in 0..<a.count
+                    {
+                        if a[i]["validated?"] as! Int? == 1 /*&& self.examsPassed < 5*/  {
+                            self.examsPassed += 1
+                        }
+                    }
+                    if dic.count > 0 {
+//                        print(dic[1]["validated?"] as? Bool?, dic.count)
+                        if dic.count > 1 && dic[1]["validated?"] as? Bool? == true {
+                            self.internshipsPassed += 1
+                        }
+                        if dic.count > 2 {
+                            if dic[2]["validated?"] as? Bool? == true {
+                                self.internshipsPassed += 1
                             }
                         }
                     }
-                print(self.examsPassed)
-                completion(self.examsPassed)
+                    
+                }
+                
+                print(self.internshipsPassed)
+                completion(self.examsPassed, self.internshipsPassed)
             }
             catch let error {
                 return print(error)

@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileNameLabel.text = userData?.first_name
         profileSurnameLabel.text = userData?.last_name
         profileLoginLabel.text = userData?.login
-        profileLocationLabel.text = userData?.location
+        profileLocationLabel.text = String("Location: \(userData?.location ?? "Unavaliable")")
         profileLevelLabel.text = String(userData?.cursus_users[0]?.level ?? 0.0)
         profileProgressBar.progress = lvlProgressRest
         profileWalletLabel.text = String("Wallet: \(userData?.wallet ?? 0)₳")
@@ -108,6 +108,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileAdressLabel.text = String("\(userData?.campus[0]?.address ?? "none")")
         profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
         profileExamsLabel.text = String("Exams passed: \(String(self.myInfo.examsPassed)) of 5")
+        profileInternLabel.text = String("Internships: \(String(self.myInfo.internPassed)) of 2")
     }
     
     func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile
