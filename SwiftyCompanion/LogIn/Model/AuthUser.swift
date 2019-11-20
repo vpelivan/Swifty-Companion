@@ -20,7 +20,6 @@ class AuthUser {
     private var tokenJson: NSDictionary?
     private var userData: User?
     private var coalitionData: [Coalition?] = []
-    private var projectData: [Projects?] = []
     private var examsPassed: Int = 0
     private var internshipsPassed: Int = 0
     
@@ -113,7 +112,6 @@ extension AuthUser {
 //                let json = try JSONSerialization.jsonObject(with: data)
 //                print(json)
                 self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
-//                self.getCurrentProjects()
                 completion(self.coalitionData[0]!)
             }
             catch let error {
@@ -143,7 +141,7 @@ extension AuthUser {
                     let a = dic[0]["teams"] as! [NSDictionary]
                     for i in 0..<a.count
                     {
-                        if a[i]["validated?"] as! Int? == 1{
+                        if a[i]["validated?"] as! Int? == 1 {
                             self.examsPassed += 1
                         }
                     }
@@ -166,29 +164,3 @@ extension AuthUser {
             }.resume()
     }
 }
-
-//extension AuthUser {
-//    func getCurrentProjects() {
-//        let token = tokenJson!["access_token"] as! String
-//        let url = NSURL(string: "https://api.intra.42.fr/v2/projects_users?&user_id=33768&page[size]=100")
-//        let request = NSMutableURLRequest(url: url! as URL)
-//        request.httpMethod = "GET"
-//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//        let session = URLSession.shared
-//        session.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//            do
-//            {
-//                guard let data = data else { return }
-////                let json = try JSONSerialization.jsonObject(with: data)
-////                print(json)
-//                self.projectData = try JSONDecoder().decode([Projects?].self, from: data)
-//                print(self.projectData)
-////                completion(self.projectData[0]!)
-//            }
-//            catch let error {
-//                return print(error)
-//            }
-//            }.resume()
-//    }
-//}

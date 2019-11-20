@@ -34,6 +34,8 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var profileExamsLabel: UILabel!
     @IBOutlet weak var profileCorrectionLabel: UILabel!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var projectsTableView: UITableView!
+    @IBOutlet weak var skillsTableView: UITableView!
     
     
     var searchController: UISearchController?
@@ -45,7 +47,10 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         setSearchBar()
         setFramesForElems()
         fetchUserData()
-//        print(self.myInfo.projectsInfo?.final_mark ?? 0)
+        projectsTableView.delegate = self
+        projectsTableView.dataSource = self
+        skillsTableView.delegate = self
+        skillsTableView.dataSource = self
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
@@ -133,3 +138,39 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     }
 }
 
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let userInfo = self.myInfo.profileInfo!
+        var projectsNum: Int = 0
+        
+        if tableView == self.projectsTableView {
+            for i in 0..<userInfo.projects_users.count {
+                if userInfo.projects_users[i]?.project?.parent_id == nil {
+                    projectsNum += 1
+                }
+            }
+            return userInfo.projects_users.count
+        }
+        else if tableView == self.skillsTableView {
+            return userInfo.cursus_users[0]?.skills.count ?? 0
+        }
+        return 0
+}
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let userInfo = self.myInfo.profileInfo!
+    
+        if tableView == self.projectsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath) as! ProjectTableViewCell
+            cell.projectNameLabel.text = userInfo.projects_users[indexPath.row]?.project?.slug
+            return cell
+        }
+        else if tableView == self.skillsTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsCell", for: indexPath) as! SkillsTableViewCell
+            cell.skillNameLabel.text = userInfo.cursus_users[0]?.skills[indexPath.row]?.name
+            return cell
+        }
+        return UITableViewCell()
+    }
+    
+}

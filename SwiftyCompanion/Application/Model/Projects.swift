@@ -12,22 +12,43 @@ struct Projects: Decodable {
     var final_mark: Int?
     var id: Int?
     var status: String?
-    var teams: [Teams?]
+    var cursus_ids: [Int?]
+//    var teams: [Teams?]
     var project: Project?
+
+    //"current_team_id" = 2837609;
+    //"cursus_ids" =             (
+    //    1
+    //);
+    //"final_mark" = 100;
+    //id = 1582886;
+    //marked = 1;
+    //"marked_at" = "2019-10-09T11:40:08.563Z";
+    //occurrence = 0;
+    //project =             {
+    //    id = 750;
+    //    name = "Day 05";
+    //    "parent_id" = 742;
+    //    slug = "piscine-swift-ios-day-05";
+    //};
+    //"retriable_at" = "2019-10-09T11:40:08.779Z";
+    //status = finished;
+    //"validated?" = 1;
+
 }
 
 struct Project: Decodable {
     var id: Int?
     var name: String?
-    var slug: String?
     var parent_id: Int?
+    var slug: String?
 }
 
+//struct Teams: Decodable {
+//    var created_at: String?
+//    var closed_at: String?
+//}
 
-struct Teams: Decodable {
-    var created_at: String?
-    var closed_at: String?
-}
 
 //{
 //    "cursus_ids" =         (

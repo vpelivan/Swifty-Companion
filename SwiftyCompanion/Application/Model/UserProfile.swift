@@ -13,10 +13,8 @@ class UserInfo {
     var coalitionInfo: Coalition?
     var examsPassed: Int = 0
     var internPassed: Int = 0
-    var projectsInfo: Projects?
     //    var eventInfo: Event?
 }
-
 
 struct User: Decodable {
     var first_name: String?
@@ -29,6 +27,7 @@ struct User: Decodable {
     var email: String?
     var cursus_users: [CursusUsers?]
     var campus: [Campus?]
+    var projects_users: [Projects?]
     
     func description() {
         guard let cursus = cursus_users[0] else { return print("cursus_users == nil")}
