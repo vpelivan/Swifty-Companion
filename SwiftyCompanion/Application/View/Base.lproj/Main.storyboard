@@ -323,14 +323,31 @@
                                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OCW-MG-hc6" id="Zu8-Oj-A0P">
                                                                             <rect key="frame" x="0.0" y="0.0" width="382" height="43.5"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OqG-dY-kEF">
+                                                                                    <rect key="frame" x="0.0" y="10" width="104" height="21"/>
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                    <color key="textColor" red="0.3162705898" green="0.6937659383" blue="0.70589250329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OqG-dY-kEF" secondAttribute="trailing" constant="20" symbolic="YES" id="3WI-WO-N1Y"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="OqG-dY-kEF" secondAttribute="bottom" constant="12.5" id="4Y9-AR-td9"/>
+                                                                                <constraint firstItem="OqG-dY-kEF" firstAttribute="leading" secondItem="Zu8-Oj-A0P" secondAttribute="leading" id="mVr-Ql-1qU"/>
+                                                                                <constraint firstItem="OqG-dY-kEF" firstAttribute="top" secondItem="Zu8-Oj-A0P" secondAttribute="top" constant="10" id="rXJ-7W-VYf"/>
+                                                                            </constraints>
                                                                         </tableViewCellContentView>
+                                                                        <connections>
+                                                                            <segue destination="gKU-D4-k4l" kind="show" id="1Jo-uH-bQu"/>
+                                                                        </connections>
                                                                     </tableViewCell>
                                                                 </prototypes>
                                                             </tableView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fJ-pm-4b0">
-                                                                <rect key="frame" x="338" y="8" width="52" height="28"/>
+                                                                <rect key="frame" x="246" y="8" width="144" height="28"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                <state key="normal" title="  MORE  ">
+                                                                <state key="normal" title="  VIEW ALL PROJECTS  ">
                                                                     <color key="titleColor" red="0.3162705898" green="0.6937659383" blue="0.70589250329999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </state>
                                                                 <connections>
@@ -424,9 +441,9 @@
                                                                 </prototypes>
                                                             </tableView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRG-AH-lVB" userLabel="Eval More Button">
-                                                                <rect key="frame" x="338" y="8" width="52" height="28"/>
+                                                                <rect key="frame" x="275" y="8" width="115" height="28"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                <state key="normal" title="  MORE  ">
+                                                                <state key="normal" title="  MANAGE SLOTS  ">
                                                                     <color key="titleColor" red="0.31875336170000002" green="0.70184201000000002" blue="0.71373426910000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </state>
                                                                 <connections>
@@ -452,8 +469,8 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gl6-4N-ebb" userLabel="Events View">
                                                         <rect key="frame" x="0.0" y="736" width="398" height="236"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmk-jC-vXw">
-                                                                <rect key="frame" x="8" y="13" width="53.5" height="17.5"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AGENDA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmk-jC-vXw">
+                                                                <rect key="frame" x="8" y="13" width="57.5" height="17.5"/>
                                                                 <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="15"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -472,9 +489,9 @@
                                                                 </prototypes>
                                                             </tableView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFU-pv-Ghw" userLabel="Events More Button">
-                                                                <rect key="frame" x="338" y="8" width="52" height="28"/>
+                                                                <rect key="frame" x="266" y="8" width="124" height="28"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                <state key="normal" title="  MORE  ">
+                                                                <state key="normal" title="  MANAGE EVENTS  ">
                                                                     <color key="titleColor" red="0.31875336170000002" green="0.70184201000000002" blue="0.71373426910000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </state>
                                                                 <connections>
@@ -570,6 +587,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X6r-rP-mnx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1370.625" y="109.85915492957747"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="pxo-fs-xRb">
+            <objects>
+                <viewController id="gKU-D4-k4l" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HED-q0-tfa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="QIG-VO-Sdq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6dJ-Ln-ydi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2273" y="-950"/>
         </scene>
         <!--Projects-->
         <scene sceneID="wx4-u0-xPB">

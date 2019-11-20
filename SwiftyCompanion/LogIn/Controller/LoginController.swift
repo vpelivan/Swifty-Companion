@@ -23,6 +23,7 @@ class LoginController: UIViewController {
                 self.myInfo.coalitionInfo = coalitionInfo
                 self.myInfo.examsPassed = examsPassed
                 self.myInfo.internPassed = internPassed
+//                self.myInfo.projectsInfo = projectsInfo
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "goToProfile", sender: nil)
                 }

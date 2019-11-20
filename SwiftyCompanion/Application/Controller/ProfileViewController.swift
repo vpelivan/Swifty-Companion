@@ -42,12 +42,10 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ProfileViewController")
-        myInfo.profileInfo?.description()
         setSearchBar()
         setFramesForElems()
         fetchUserData()
-        print(self.myInfo.examsPassed)
+//        print(self.myInfo.projectsInfo?.final_mark ?? 0)
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {

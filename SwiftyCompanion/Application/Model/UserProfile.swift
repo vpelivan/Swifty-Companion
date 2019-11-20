@@ -13,6 +13,7 @@ class UserInfo {
     var coalitionInfo: Coalition?
     var examsPassed: Int = 0
     var internPassed: Int = 0
+    var projectsInfo: Projects?
     //    var eventInfo: Event?
 }
 

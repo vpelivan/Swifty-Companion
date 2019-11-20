@@ -20,6 +20,7 @@ class AuthUser {
     private var tokenJson: NSDictionary?
     private var userData: User?
     private var coalitionData: [Coalition?] = []
+    private var projectData: [Projects?] = []
     private var examsPassed: Int = 0
     private var internshipsPassed: Int = 0
     
@@ -40,9 +41,7 @@ extension AuthUser {
     }
     
     private func getUserToken(bearer: String, completion: @escaping () -> ()) {
-        
         guard let url = NSURL(string: intraURL+"oauth/token") else { return }
-        
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
         request.httpBody = "grant_type=authorization_code&client_id=\(UID)&client_secret=\(secretKey)&\(bearer)&redirect_uri=\(callbackURI)".data(using: String.Encoding.utf8)
@@ -56,8 +55,6 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
-                    print(self.tokenJson!)
-                    
                     completion()
                 } else {
                     print("Json error")
@@ -81,12 +78,12 @@ extension AuthUser {
                 do
                 {
                     guard let data = data else { return }
-//                    let json = try JSONSerialization.jsonObject(with: data)
-//                    print(json)
+                    let json = try JSONSerialization.jsonObject(with: data)
+                    print(json)
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     self.getCoalitionInfo(completion: { (coalition) in
                         self.getExamInfo(completion: { (exams, intern) in
-                                completion(self.userData!, coalition, exams, intern)
+                            completion(self.userData!, coalition, exams, intern)
                             })
                         })
                 }
@@ -116,8 +113,8 @@ extension AuthUser {
 //                let json = try JSONSerialization.jsonObject(with: data)
 //                print(json)
                 self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
+//                self.getCurrentProjects()
                 completion(self.coalitionData[0]!)
-        
             }
             catch let error {
                 return print(error)
@@ -126,11 +123,10 @@ extension AuthUser {
     }
 }
 
-//Exams
+//Exams, Internships
 extension AuthUser {
     func getExamInfo(completion: @escaping (Int, Int) -> ()) {
         let token = tokenJson!["access_token"] as! String
-        print("EXAMS")
         let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=118,212,11&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
@@ -141,18 +137,17 @@ extension AuthUser {
             do
             {
                 guard let data = data else { return }
-                let json = try JSONSerialization.jsonObject(with: data)
-                print(json)
+//                let json = try JSONSerialization.jsonObject(with: data)
+//                print(json)
                 if let dic: [NSDictionary] = try JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
                     let a = dic[0]["teams"] as! [NSDictionary]
                     for i in 0..<a.count
                     {
-                        if a[i]["validated?"] as! Int? == 1 /*&& self.examsPassed < 5*/  {
+                        if a[i]["validated?"] as! Int? == 1{
                             self.examsPassed += 1
                         }
                     }
                     if dic.count > 0 {
-//                        print(dic[1]["validated?"] as? Bool?, dic.count)
                         if dic.count > 1 && dic[1]["validated?"] as? Bool? == true {
                             self.internshipsPassed += 1
                         }
@@ -162,10 +157,7 @@ extension AuthUser {
                             }
                         }
                     }
-                    
                 }
-                
-                print(self.internshipsPassed)
                 completion(self.examsPassed, self.internshipsPassed)
             }
             catch let error {
@@ -174,3 +166,29 @@ extension AuthUser {
             }.resume()
     }
 }
+
+//extension AuthUser {
+//    func getCurrentProjects() {
+//        let token = tokenJson!["access_token"] as! String
+//        let url = NSURL(string: "https://api.intra.42.fr/v2/projects_users?&user_id=33768&page[size]=100")
+//        let request = NSMutableURLRequest(url: url! as URL)
+//        request.httpMethod = "GET"
+//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+//        let session = URLSession.shared
+//        session.dataTask(with: request as URLRequest) {
+//            (data, response, error) in
+//            do
+//            {
+//                guard let data = data else { return }
+////                let json = try JSONSerialization.jsonObject(with: data)
+////                print(json)
+//                self.projectData = try JSONDecoder().decode([Projects?].self, from: data)
+//                print(self.projectData)
+////                completion(self.projectData[0]!)
+//            }
+//            catch let error {
+//                return print(error)
+//            }
+//            }.resume()
+//    }
+//}
