@@ -11,7 +11,6 @@ import UIKit
 class ProfileViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var projectsMoreButton: UIButton!
-    @IBOutlet weak var skillsMoreButton: UIButton!
     @IBOutlet weak var evalMoreButton: UIButton!
     @IBOutlet weak var eventsMoreButton: UIButton!
     @IBOutlet weak var evalView: UIView!
@@ -39,14 +38,16 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     
     var searchController: UISearchController?
-    
     var myInfo: UserInfo!
+    var inProgressProjects: [Projects?] = []
+    var projectsNum: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
         setFramesForElems()
         fetchUserData()
+        getInProgressProjects()
         projectsTableView.delegate = self
         projectsTableView.dataSource = self
         skillsTableView.delegate = self
@@ -129,48 +130,56 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     func setFramesForElems() {
         projectsMoreButton.layer.borderWidth = 1.0
         projectsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
-        skillsMoreButton.layer.borderWidth = 1.0
-        skillsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
         eventsMoreButton.layer.borderWidth = 1.0
         eventsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
         evalMoreButton.layer.borderWidth = 1.0
         evalMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
     }
+    
+    func getInProgressProjects() {
+        let userInfo = self.myInfo.profileInfo!
+        
+        for i in 0..<userInfo.projects_users.count {
+            if userInfo.projects_users[i]?.status == "in_progress" {
+                self.inProgressProjects.append(userInfo.projects_users[i])
+                self.projectsNum += 1
+            }
+        }
+//        print(inProgressProjects)
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let userInfo = self.myInfo.profileInfo!
-        var projectsNum: Int = 0
-        
         if tableView == self.projectsTableView {
-            for i in 0..<userInfo.projects_users.count {
-                if userInfo.projects_users[i]?.project?.parent_id == nil {
-                    projectsNum += 1
-                }
-            }
-            return userInfo.projects_users.count
+            return self.projectsNum
         }
         else if tableView == self.skillsTableView {
-            return userInfo.cursus_users[0]?.skills.count ?? 0
+            return (self.myInfo?.profileInfo?.cursus_users[0]?.skills.count ?? 0)
         }
         return 0
-}
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let userInfo = self.myInfo.profileInfo!
     
         if tableView == self.projectsTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath) as! ProjectTableViewCell
-            cell.projectNameLabel.text = userInfo.projects_users[indexPath.row]?.project?.slug
+            cell.projectNameLabel.text = inProgressProjects[indexPath.row]?.project?.slug
+            cell.tag = inProgressProjects[indexPath.row]?.project?.id ?? 0
             return cell
         }
         else if tableView == self.skillsTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SkillsCell", for: indexPath) as! SkillsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SkillCell", for: indexPath) as! SkillsTableViewCell
             cell.skillNameLabel.text = userInfo.cursus_users[0]?.skills[indexPath.row]?.name
+            cell.skillLevelLabel.text = String(userInfo.cursus_users[0]?.skills[indexPath.row]?.level ?? 0)
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
