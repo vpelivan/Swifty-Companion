@@ -32,9 +32,11 @@ class LoginController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let navi = segue.destination as? UINavigationController {
-            if let vc = navi.viewControllers.first as? ProfileViewController {
-                vc.myInfo = self.myInfo
+        if let tabBar = segue.destination as? UITabBarController {
+            if let navi = tabBar.viewControllers?[0] as? UINavigationController {
+                if let vc = navi.viewControllers.first as? ProfileViewController {
+                    vc.myInfo = self.myInfo
+                }
             }
         }
     }

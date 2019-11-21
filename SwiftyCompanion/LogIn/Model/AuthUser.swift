@@ -54,6 +54,7 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
+                    print(self.tokenJson ?? 0)
                     completion()
                 } else {
                     print("Json error")
@@ -77,8 +78,8 @@ extension AuthUser {
                 do
                 {
                     guard let data = data else { return }
-                    let json = try JSONSerialization.jsonObject(with: data)
-                    print(json)
+//                    let json = try JSONSerialization.jsonObject(with: data)
+//                    print(json)
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     self.getCoalitionInfo(completion: { (coalition) in
                         self.getExamInfo(completion: { (exams, intern) in
@@ -112,7 +113,7 @@ extension AuthUser {
 //                let json = try JSONSerialization.jsonObject(with: data)
 //                print(json)
                 self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
-                self.getSkillInfo()
+//                self.getSkillInfo()
                 completion(self.coalitionData[0]!)
             }
             catch let error {
@@ -170,7 +171,7 @@ extension AuthUser {
 extension AuthUser {
     func getSkillInfo() {
         let token = tokenJson!["access_token"] as! String
-        let url = NSURL(string: "\(self.intraURL)/v2/projects_users/1603179")
+        let url = NSURL(string: "\(self.intraURL)/v2/campus_users")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")

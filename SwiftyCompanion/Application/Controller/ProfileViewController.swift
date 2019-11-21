@@ -11,10 +11,6 @@ import UIKit
 class ProfileViewController: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var projectsMoreButton: UIButton!
-    @IBOutlet weak var evalMoreButton: UIButton!
-    @IBOutlet weak var eventsMoreButton: UIButton!
-    @IBOutlet weak var evalView: UIView!
-    @IBOutlet weak var eventsView: UIView!
     @IBOutlet weak var profileViewConstr: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
@@ -115,25 +111,9 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileInternLabel.text = String("Internships: \(String(self.myInfo.internPassed)) of 2")
     }
     
-    func hideEnableViews() { // enables and hides evaluations and events views, needed if a user is searching not for his profile
-        if evalView.isHidden == false {
-            evalView.isHidden = true
-            eventsView.isHidden = true
-            profileViewConstr.constant = 500
-        } else {
-            evalView.isHidden = false
-            eventsView.isHidden = false
-            profileViewConstr.constant = 988
-        }
-    }
-    
     func setFramesForElems() {
         projectsMoreButton.layer.borderWidth = 1.0
         projectsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
-        eventsMoreButton.layer.borderWidth = 1.0
-        eventsMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
-        evalMoreButton.layer.borderWidth = 1.0
-        evalMoreButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
     }
     
     func getInProgressProjects() {
@@ -173,6 +153,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SkillCell", for: indexPath) as! SkillsTableViewCell
             cell.skillNameLabel.text = userInfo.cursus_users[0]?.skills[indexPath.row]?.name
             cell.skillLevelLabel.text = String(userInfo.cursus_users[0]?.skills[indexPath.row]?.level ?? 0)
+            cell.skillProgressBar.progress = Float((userInfo.cursus_users[0]?.skills[indexPath.row]?.level ?? 0) / 21)
             return cell
         }
         return UITableViewCell()
