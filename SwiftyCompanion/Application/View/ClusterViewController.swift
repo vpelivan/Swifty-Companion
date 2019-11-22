@@ -14,7 +14,7 @@ class ClusterViewController: UIViewController {
     var row: Int = 1
     var place: Int = 1
     var location: String = "location"
-    var cellId: Int = 1
+    var cellId: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +32,15 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyMacCell", for: indexPath)
-        
-        return cell
+        cellId += 1
+        if (cellId >= 3 && cellId <= 16) {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "notMacCell", for: indexPath)
+            
+                return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyMacCell", for: indexPath)
+            return cell
+        }
     }
 
 }
