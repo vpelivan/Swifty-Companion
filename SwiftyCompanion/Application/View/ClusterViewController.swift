@@ -10,7 +10,6 @@ import UIKit
 
 class ClusterViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
     var row: Int = 1
     var place: Int = 1
     var location: String = "location"
@@ -18,29 +17,12 @@ class ClusterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
         self.location = String("e1r\(self.row)p\(self.place)")
         print(self.location)
     }
 
+    func CreateCluster() {
+        
+    }
 }
 
-extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 240
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        cellId += 1
-        if (cellId >= 3 && cellId <= 16) {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "notMacCell", for: indexPath)
-            
-                return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyMacCell", for: indexPath)
-            return cell
-        }
-    }
-
-}

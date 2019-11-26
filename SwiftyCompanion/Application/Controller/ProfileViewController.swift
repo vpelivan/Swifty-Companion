@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var profileSurnameLabel: UILabel!
     @IBOutlet weak var profileLoginLabel: UILabel!
     @IBOutlet weak var profileCampusLabel: UILabel!
-    @IBOutlet weak var profileAdressLabel: UILabel!
+    @IBOutlet weak var profilePhoneLabel: UILabel!
     @IBOutlet weak var profileEmailLabel: UILabel!
     @IBOutlet weak var profileLocationLabel: UILabel!
     @IBOutlet weak var profileLevelLabel: UILabel!
@@ -48,6 +48,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         projectsTableView.dataSource = self
         skillsTableView.delegate = self
         skillsTableView.dataSource = self
+        self.profilePhoneLabel.isHidden = true
     }
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
@@ -105,7 +106,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileGradeLabel.text = String("Grade: \(userData?.cursus_users[0]?.grade ?? "no grade")")
         profileEmailLabel.text = userData?.email
         profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
-        profileAdressLabel.text = String("\(userData?.campus[0]?.address ?? "none")")
+//        profilePhoneLabel.text = String("Phone: \(userData?.campus[0]?. ?? "none")")
         profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
         profileExamsLabel.text = String("Exams passed: \(String(self.myInfo.examsPassed)) of 5")
         profileInternLabel.text = String("Internships: \(String(self.myInfo.internPassed)) of 2")
@@ -127,6 +128,9 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         }
 //        print(inProgressProjects)
     }
+    
+    
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -139,6 +143,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let userInfo = self.myInfo.profileInfo!
@@ -160,7 +165,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        if tableView == self.projectsTableView {
+            if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
+                vc.projectInfo = self.inProgressProjects[indexPath.row]
+                navigationController?.pushViewController(vc, animated: true)
+                //            present(vc, animated: true, completion: nil)
+            }
+        }
     }
-    
+
 }

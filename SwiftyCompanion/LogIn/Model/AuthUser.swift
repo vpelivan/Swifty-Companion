@@ -83,6 +83,7 @@ extension AuthUser {
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     self.getCoalitionInfo(completion: { (coalition) in
                         self.getExamInfo(completion: { (exams, intern) in
+//                            print(self.userData)
                             completion(self.userData!, coalition, exams, intern)
                             })
                         })
@@ -113,7 +114,7 @@ extension AuthUser {
 //                let json = try JSONSerialization.jsonObject(with: data)
 //                print(json)
                 self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
-                self.getSkillInfo()
+//                self.getSkillInfo()
                 completion(self.coalitionData[0]!)
             }
             catch let error {
@@ -123,70 +124,67 @@ extension AuthUser {
     }
 }
 
+//118,212,
 //Exams, Internships
 extension AuthUser {
     func getExamInfo(completion: @escaping (Int, Int) -> ()) {
         let token = tokenJson!["access_token"] as! String
-        let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=118,212,11&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")
+        let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")
         let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         let session = URLSession.shared
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
+            guard let data = data else { return }
             do
             {
-                guard let data = data else { return }
-//                let json = try JSONSerialization.jsonObject(with: data)
-//                print(json)
-                if let dic: [NSDictionary] = try JSONSerialization.jsonObject(with: data) as? [NSDictionary] {
-                    let a = dic[0]["teams"] as! [NSDictionary]
-                    for i in 0..<a.count
-                    {
-                        if a[i]["validated?"] as! Int? == 1 {
-                            self.examsPassed += 1
-                        }
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
+                guard let teams = json![0]["teams"] as? [NSDictionary] else { return }
+                for i in 0..<teams.count
+                {
+                    if teams[i]["validated?"] as? Int? == 1 {
+                        self.examsPassed += 1
                     }
-                    if dic.count > 0 {
-                        if dic.count > 1 && dic[1]["validated?"] as? Bool? == true {
+                }
+                if json!.count > 0 {
+                    if json!.count > 1 && json![1]["validated?"] as? Bool? == true {
+                        self.internshipsPassed += 1
+                    }
+                    if json!.count > 2 {
+                        if json![2]["validated?"] as? Bool? == true {
                             self.internshipsPassed += 1
-                        }
-                        if dic.count > 2 {
-                            if dic[2]["validated?"] as? Bool? == true {
-                                self.internshipsPassed += 1
-                            }
                         }
                     }
                 }
                 completion(self.examsPassed, self.internshipsPassed)
             }
-            catch let error {
-                return print(error)
-            }
-            }.resume()
-    }
-}
-
-// /v2/skills/:id
-extension AuthUser {
-    func getSkillInfo() {
-        let token = tokenJson!["access_token"] as! String
-        let url = NSURL(string: "\(self.intraURL)/v2/campus/8/locations")
-        let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "GET"
-        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        let session = URLSession.shared
-        session.dataTask(with: request as URLRequest) {
-            (data, response, error) in
-            do
-            {
-                guard let data = data else { return }
-                let json = try JSONSerialization.jsonObject(with: data)
-                print("Campus users: \(json)")
-            }
-            catch let error {
-                return print(error)
+            catch {
+                return print("This error:\(error)")
             }
         }.resume()
     }
 }
+
+// /v2/skills/:id
+//extension AuthUser {
+//    func getSkillInfo() {
+//        let token = tokenJson!["access_token"] as! String
+//        let url = NSURL(string: "\(self.intraURL)/v2/campus/8/locations")
+//        let request = NSMutableURLRequest(url: url! as URL)
+//        request.httpMethod = "GET"
+//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+//        let session = URLSession.shared
+//        session.dataTask(with: request as URLRequest) {
+//            (data, response, error) in
+//            do
+//            {
+//                guard let data = data else { return }
+//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
+//                print("Campus users: \(json ?? [])")
+//            }
+//            catch let error {
+//                return print("Another error:\(error)")
+//            }
+//        }.resume()
+//    }
+//}
