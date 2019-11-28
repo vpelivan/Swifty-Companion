@@ -115,7 +115,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         profileGradeLabel.text = String("Grade: \(userData?.cursus_users[0]?.grade ?? "no grade")")
         profileEmailLabel.text = userData?.email
         profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
-//        profilePhoneLabel.text = String("Phone: \(userData?.campus[0]?. ?? "none")")
+//        profilePhoneLabel.text = String("Phone: \(userData?. ?? "none")")
         profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
         profileExamsLabel.text = String("Exams passed: \(String(self.myInfo.examsPassed)) of 5")
         profileInternLabel.text = String("Internships: \(String(self.myInfo.internPassed)) of 2")
@@ -174,11 +174,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if tableView == self.projectsTableView {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
                 vc.projectInfo = self.inProgressProjects[indexPath.row]
+                vc.projectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
                 navigationController?.pushViewController(vc, animated: true)
-                //            present(vc, animated: true, completion: nil)
             }
         }
     }

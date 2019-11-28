@@ -15,6 +15,7 @@ struct Projects: Decodable {
     var cursus_ids: [Int?]
 //    var teams: [Teams?]
     var project: Project?
+    var validated: Int?
 
     //"current_team_id" = 2837609;
     //"cursus_ids" =             (

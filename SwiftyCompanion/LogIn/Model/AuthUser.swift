@@ -78,9 +78,16 @@ extension AuthUser {
                 do
                 {
                     guard let data = data else { return }
-                    let json = try JSONSerialization.jsonObject(with: data)
-                    print(json)
+
                     self.userData = try JSONDecoder().decode(User.self, from: data)
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                    guard let projects = json!["projects_users"] as? [NSDictionary] else { return }
+                    for i in 0..<projects.count
+                    {
+                        if projects[i]["validated?"] as? Int? == 1 {
+                            self.userData?.projects_users[i]?.validated = 1
+                        }
+                    }
                     self.getCoalitionInfo(completion: { (coalition) in
                         self.getExamInfo(completion: { (exams, intern) in
 //                            print(self.userData)
