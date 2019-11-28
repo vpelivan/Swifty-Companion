@@ -78,8 +78,8 @@ extension AuthUser {
                 do
                 {
                     guard let data = data else { return }
-//                    let json = try JSONSerialization.jsonObject(with: data)
-//                    print(json)
+                    let json = try JSONSerialization.jsonObject(with: data)
+                    print(json)
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     self.getCoalitionInfo(completion: { (coalition) in
                         self.getExamInfo(completion: { (exams, intern) in

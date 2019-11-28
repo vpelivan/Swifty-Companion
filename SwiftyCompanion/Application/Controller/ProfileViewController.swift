@@ -50,6 +50,15 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         skillsTableView.dataSource = self
         self.profilePhoneLabel.isHidden = true
     }
+
+    @IBAction func tapAllProjects(_ sender: UIButton) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
+            vc.ProjectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
+            navigationController?.pushViewController(vc, animated: true)
+            //            present(vc, animated: true, completion: nil)
+        }
+    }
+    
     
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
         searchController?.searchBar.becomeFirstResponder()
@@ -150,7 +159,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
         if tableView == self.projectsTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectCell", for: indexPath) as! ProjectTableViewCell
-            cell.projectNameLabel.text = inProgressProjects[indexPath.row]?.project?.slug
+            cell.projectNameLabel.text = inProgressProjects[indexPath.row]?.project?.name
             cell.tag = inProgressProjects[indexPath.row]?.project?.id ?? 0
             return cell
         }
