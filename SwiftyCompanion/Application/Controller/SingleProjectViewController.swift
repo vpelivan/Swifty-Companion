@@ -27,13 +27,11 @@ class SingleProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print(projectInfo!)
         navigationItem.title = projectInfo.project?.name
         getPoolDays()
         fetchProjectInfo()
         tableView.delegate = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
     }
 
     func getPoolDays() {
@@ -70,10 +68,8 @@ class SingleProjectViewController: UIViewController {
             }
         }
         
-        
-//        markLabel.text = String(projectInfo.final_mark)
     }
-
+    
 }
 
 extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegate {
@@ -97,6 +93,11 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
+            vc.projectInfo = self.neededProjects[indexPath.row]
+            vc.projectsInfo = self.projectsInfo
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
