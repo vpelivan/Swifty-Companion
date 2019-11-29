@@ -15,31 +15,31 @@ class AuthUser {
     private let callbackURI = "SwiftyCompanion://SwiftyCompanion"
     private let UID = "7717d9aef2c877094b2020ebcf0fef76c9725112efc3934dff52774031732002"
     private let secretKey = "41a3ab521d7b5f7d0d402c019f7d73f0b8d10b2e32b506b2d88a3771930bee07"
-    private let intraURL = "https://api.intra.42.fr/"
     private var webAuthSession: ASWebAuthenticationSession?
     private var tokenJson: NSDictionary?
     private var userData: User?
     private var coalitionData: [Coalition?] = []
     private var examsPassed: Int = 0
     private var internshipsPassed: Int = 0
+    let intraURL = "https://api.intra.42.fr/"
     
     private init() {}
 }
 
 extension AuthUser {
-    func authorizeUser(completion: @escaping () -> ()) {
+    func authorizeUser(completion: @escaping (NSDictionary) -> ()) {
             webAuthSession = ASWebAuthenticationSession(url: URL(string: intraURL+"oauth/authorize?client_id=\(UID)&redirect_uri=\(callbackURI)&response_type=code&scope=public+forum+projects+profile+elearning+tig")!,
                 callbackURLScheme: callbackURI, completionHandler: { (url, error) in
             guard error == nil else { return }
             guard let url = url else { return }
-            self.getUserToken(bearer: url.query!, completion: { () in
-                completion()
+            self.getUserToken(bearer: url.query!, completion: { (token) in
+                completion(self.tokenJson!)
             })
         })
         webAuthSession?.start()
     }
     
-    private func getUserToken(bearer: String, completion: @escaping () -> ()) {
+    private func getUserToken(bearer: String, completion: @escaping (NSDictionary) -> ()) {
         guard let url = NSURL(string: intraURL+"oauth/token") else { return }
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
@@ -54,8 +54,8 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
-                    print(self.tokenJson ?? 0)
-                    completion()
+//                    print(self.tokenJson ?? 0)
+                    completion(self.tokenJson!)
                 } else {
                     print("Json error")
                 }
@@ -131,7 +131,6 @@ extension AuthUser {
     }
 }
 
-//118,212,
 //Exams, Internships
 extension AuthUser {
     func getExamInfo(completion: @escaping (Int, Int) -> ()) {

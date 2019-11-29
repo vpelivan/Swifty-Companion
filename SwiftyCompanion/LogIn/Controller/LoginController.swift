@@ -17,18 +17,19 @@ class LoginController: UIViewController {
     }
     
     @IBAction func tapLogIn(_ sender: UIButton) {
-        AuthUser.shared.authorizeUser {
+        AuthUser.shared.authorizeUser(completion: { tokenJson in
             AuthUser.shared.getUserInfo(completion: {userInfo, coalitionInfo, examsPassed, internPassed in
                 self.myInfo.profileInfo = userInfo
                 self.myInfo.coalitionInfo = coalitionInfo
                 self.myInfo.examsPassed = examsPassed
                 self.myInfo.internPassed = internPassed
+                self.myInfo.tokenJson = tokenJson
 //                self.myInfo.projectsInfo = projectsInfo
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "goToProfile", sender: nil)
                 }
             })
-        }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

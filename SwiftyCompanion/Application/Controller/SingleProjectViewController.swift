@@ -21,6 +21,7 @@ class SingleProjectViewController: UIViewController {
     var colorRed = UIColor(red: 223.0/255.0, green: 134.0/255.0, blue: 125.0/255.0, alpha: 1.0)
     var colorGreen = UIColor (red: 115.0/255.0, green: 182.0/255.0, blue: 102.0/255.0, alpha: 1.0)
     var projectInfo: Projects!
+    var token: String!
     var projectsInfo: [Projects]!
     var neededProjects: [Projects] = []
     
@@ -29,6 +30,7 @@ class SingleProjectViewController: UIViewController {
         
         navigationItem.title = projectInfo.project?.name
         getPoolDays()
+        getProjectInfo()
         fetchProjectInfo()
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,7 +42,10 @@ class SingleProjectViewController: UIViewController {
                     neededProjects.append(projectsInfo[i])
                 }
             }
-        print(neededProjects)
+        if neededProjects.count == 0 {
+            tableView.isHidden = true
+        }
+        
     }
     
     func fetchProjectInfo() {
@@ -101,3 +106,32 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
     }
     
 }
+
+extension SingleProjectViewController {
+    
+    func getProjectInfo() {
+                let intraURL = AuthUser.shared.intraURL
+                let project_id = projectInfo.project?.id
+        print(intraURL)
+        print(token ?? 0)
+        print(project_id ?? 0)
+        let url = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
+                let request = NSMutableURLRequest(url: url! as URL)
+                request.httpMethod = "GET"
+                request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+                let session = URLSession.shared
+                session.dataTask(with: request as URLRequest) {
+                    (data, response, error) in
+                    do
+                    {
+                        guard let data = data else { return }
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
+                        print(json!)
+                    }
+                    catch let error {
+                        return print(error)
+                    }
+                }.resume()
+            }
+}
+

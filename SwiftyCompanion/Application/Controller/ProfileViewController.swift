@@ -54,6 +54,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBAction func tapAllProjects(_ sender: UIButton) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
             vc.ProjectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
+            vc.token = self.myInfo.tokenJson!["access_token"] as? String
             navigationController?.pushViewController(vc, animated: true)
             //            present(vc, animated: true, completion: nil)
         }
@@ -178,6 +179,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == self.projectsTableView {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
                 vc.projectInfo = self.inProgressProjects[indexPath.row]
+                vc.token = self.myInfo.tokenJson!["access_token"] as? String
                 vc.projectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
                 navigationController?.pushViewController(vc, animated: true)
             }

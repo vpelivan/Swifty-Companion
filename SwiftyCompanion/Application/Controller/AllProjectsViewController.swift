@@ -16,6 +16,7 @@ class AllProjectsViewController: UIViewController {
     
     @IBOutlet weak var projectsTableView: UITableView!
     var ProjectsInfo: [Projects]!
+    var token: String?
     var NeededProjects: [Projects] = []
     
     override func viewDidLoad() {
@@ -71,6 +72,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
         if tableView == self.projectsTableView {
             if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
                 vc.projectInfo = self.NeededProjects[indexPath.row]
+                vc.token = self.token!
                 vc.projectsInfo = self.ProjectsInfo
                 navigationController?.pushViewController(vc, animated: true)
             }
