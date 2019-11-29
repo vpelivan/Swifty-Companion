@@ -27,7 +27,6 @@ class SingleProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = projectInfo.project?.name
         getPoolDays()
         getProjectInfo()
@@ -100,6 +99,7 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
         tableView.deselectRow(at: indexPath, animated: true)
         if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
             vc.projectInfo = self.neededProjects[indexPath.row]
+            vc.token = self.token!
             vc.projectsInfo = self.projectsInfo
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -115,7 +115,8 @@ extension SingleProjectViewController {
         print(intraURL)
         print(token ?? 0)
         print(project_id ?? 0)
-        let url = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
+//        let url = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
+        let url = NSURL(string: "\(intraURL)/v2/projects/\(project_id ?? 0)")
                 let request = NSMutableURLRequest(url: url! as URL)
                 request.httpMethod = "GET"
                 request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
@@ -125,7 +126,7 @@ extension SingleProjectViewController {
                     do
                     {
                         guard let data = data else { return }
-                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                         print(json!)
                     }
                     catch let error {

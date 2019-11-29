@@ -81,6 +81,7 @@ extension AuthUser {
 
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+//                    print(json!)
                     guard let projects = json!["projects_users"] as? [NSDictionary] else { return }
                     for i in 0..<projects.count
                     {
