@@ -9,6 +9,6 @@
 import UIKit
 
 class AllProjectsTableViewCell: UITableViewCell {
-    @IBOutlet weak var projectNameLabel: UILabel!
-    @IBOutlet weak var projectStatusLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
 }

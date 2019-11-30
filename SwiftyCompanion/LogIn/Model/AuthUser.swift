@@ -16,12 +16,12 @@ class AuthUser {
     private let UID = "7717d9aef2c877094b2020ebcf0fef76c9725112efc3934dff52774031732002"
     private let secretKey = "41a3ab521d7b5f7d0d402c019f7d73f0b8d10b2e32b506b2d88a3771930bee07"
     private var webAuthSession: ASWebAuthenticationSession?
-    private var tokenJson: NSDictionary?
     private var userData: User?
     private var coalitionData: [Coalition?] = []
     private var examsPassed: Int = 0
     private var internshipsPassed: Int = 0
     let intraURL = "https://api.intra.42.fr/"
+    var tokenJson: NSDictionary?
     
     private init() {}
 }
@@ -36,7 +36,7 @@ extension AuthUser {
                 completion(self.tokenJson!)
             })
         })
-        webAuthSession?.start()
+        webAuthSession?.start() 
     }
     
     private func getUserToken(bearer: String, completion: @escaping (NSDictionary) -> ()) {

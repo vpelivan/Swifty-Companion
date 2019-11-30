@@ -21,6 +21,9 @@ class AllProjectsViewController: UIViewController {
     
     override func viewDidLoad() {
         getNeededProjects()
+//        for i in 0..<NeededProjects.count {
+//            print(NeededProjects[i])
+//        }
         projectsTableView.delegate = self
         projectsTableView.dataSource = self
     }
@@ -42,28 +45,34 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AllProjectsCell", for: indexPath) as! AllProjectsTableViewCell
-                        if NeededProjects[indexPath.row].status == "in_progress" || NeededProjects[indexPath.row].status == "searching_a_group" {
-                            cell.projectNameLabel.text = NeededProjects[indexPath.row].project?.name
-                            cell.projectNameLabel.textColor = self.colorCyan
-                            cell.projectStatusLabel.textColor = self.colorCyan
-                            if NeededProjects[indexPath.row].status == "in_progress" {
-                                cell.projectStatusLabel.text = "in progress"
-                            } else {
-                                cell.projectStatusLabel.text = "searching a group"
-                            }
-                            cell.projectStatusLabel.textColor = self.colorCyan
-                        } else if NeededProjects[indexPath.row].status == "finished" {
-                            cell.projectNameLabel.text = NeededProjects[indexPath.row].project?.name
-                            if NeededProjects[indexPath.row].validated == 1 {
-                                cell.projectStatusLabel.text = NeededProjects[indexPath.row].status
-                                cell.projectNameLabel.textColor = self.colorGreen
-                                cell.projectStatusLabel.textColor = self.colorGreen
-                            } else {
-                                cell.projectStatusLabel.text = "failed"
-                                cell.projectNameLabel.textColor = self.colorRed
-                                cell.projectStatusLabel.textColor = self.colorRed
-                            }
-                        }
+        let status = NeededProjects[indexPath.row].status
+        let name = NeededProjects[indexPath.row].project?.name
+        let validated = NeededProjects[indexPath.row].validated
+        if status == "in_progress" || status == "searching_a_group" ||
+        status == "creating_group" {
+            cell.nameLabel.text = name
+            cell.nameLabel.textColor = self.colorCyan
+            cell.statusLabel.textColor = self.colorCyan
+            if status == "in_progress" {
+                cell.statusLabel.text = "in progress"
+            } else if status == "searching_a_group" {
+                cell.statusLabel.text = "searching a group"
+            } else if status == "creating_group" {
+                cell.statusLabel.text = "creating group"
+            }
+            cell.statusLabel.textColor = self.colorCyan
+        } else if status == "finished" {
+            cell.nameLabel.text = name
+            if validated == 1 {
+                cell.statusLabel.text = status
+                cell.nameLabel.textColor = self.colorGreen
+                cell.statusLabel.textColor = self.colorGreen
+            } else {
+                cell.statusLabel.text = "failed"
+                cell.nameLabel.textColor = self.colorRed
+                cell.statusLabel.textColor = self.colorRed
+            }
+        }
         return cell
     }
     

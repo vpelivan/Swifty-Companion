@@ -13,29 +13,8 @@ struct Projects: Decodable {
     var id: Int?
     var status: String?
     var cursus_ids: [Int?]
-//    var teams: [Teams?]
     var project: Project?
     var validated: Int?
-
-    //"current_team_id" = 2837609;
-    //"cursus_ids" =             (
-    //    1
-    //);
-    //"final_mark" = 100;
-    //id = 1582886;
-    //marked = 1;
-    //"marked_at" = "2019-10-09T11:40:08.563Z";
-    //occurrence = 0;
-    //project =             {
-    //    id = 750;
-    //    name = "Day 05";
-    //    "parent_id" = 742;
-    //    slug = "piscine-swift-ios-day-05";
-    //};
-    //"retriable_at" = "2019-10-09T11:40:08.779Z";
-    //status = finished;
-    //"validated?" = 1;
-
 }
 
 struct Project: Decodable {
@@ -45,66 +24,49 @@ struct Project: Decodable {
     var slug: String?
 }
 
-//struct Teams: Decodable {
-//    var created_at: String?
-//    var closed_at: String?
-//}
+struct ProjectsUsers: Decodable{
+    var project_sessions: [ProjectSession?]
+}
 
-
+struct ProjectSession: Decodable {
+    var description: String?
+    var difficulty: Int?
+    var estimate_time: Int?
+    var solo: Bool?
+    var objectives: [String]?
+}
 //{
-//    "cursus_ids" =         (
-//        1
+//    "begin_at" = "<null>";
+//    "campus_id" = 15;
+//    commit = "<null>";
+//    "created_at" = "2019-10-15T11:16:56.083Z";
+//    "cursus_id" = 8;
+//    description = "This project invites you to create a virtual arena and to compete with programs coded in a simplistic language. You will thus approach the design of a VM (with the instructions that it recognizes, the registers, etc), and the problems of compilation of an assembly language in bytecode. With, as a bonus, the pleasure of making your champions compete on your arena!";
+//    difficulty = 375;
+//    "duration_days" = "<null>";
+//    "end_at" = "<null>";
+//    "estimate_time" = "<null>";
+//    id = 3919;
+//    "is_subscriptable" = 1;
+//    "max_people" = "<null>";
+//    objectives =     (
+//        Compilation,
+//        "Simplistic virtual machine",
+//        "Simplistic assembly type language",
+//        "Visual rendering"
 //    );
-//    "final_mark" = 100;
-//    id = 1582886;
-//    marked = 1;
-//    "marked_at" = "2019-10-09T11:40:08.563Z";
-//    occurrence = 0;
-//    project =         {
-//        id = 750;
-//        name = "Day 05";
-//        "parent_id" = 742;
-//        slug = "piscine-swift-ios-day-05";
-//    };
-//    "retriable_at" = "2019-10-09T11:40:08.779Z";
-//    status = finished;
-//    teams =         (
+//    "project_id" = 22;
+//    scales =     (
 //        {
-//            "closed?" = 1;
-//            "closed_at" = "2019-10-08T20:42:31.027Z";
-//            "created_at" = "2019-10-04T11:50:12.543Z";
-//            "final_mark" = 100;
-//            id = 2837609;
-//            "locked?" = 1;
-//            "locked_at" = "2019-10-04T11:50:12.613Z";
-//            name = "vpelivan's group";
-//            "project_gitlab_path" = "<null>";
-//            "project_id" = 750;
-//            "project_session_id" = 2072;
-//            "repo_url" = "vogsphere@vogsphere-2.unit.ua:intra/2019/activities/piscine_swift_ios_day_05/vpelivan";
-//            "repo_uuid" = "intra-uuid-e01a8f8a-c507-4251-86bf-3850f29e3795-2837609";
-//            status = finished;
-//            "terminating_at" = "2019-10-23T20:42:31.027Z";
-//            "updated_at" = "2019-10-09T11:40:08.852Z";
-//            url = "https://api.intra.42.fr/v2/teams/2837609";
-//            users =                 (
-//                {
-//                    id = 33768;
-//                    leader = 1;
-//                    login = vpelivan;
-//                    occurrence = 0;
-//                    "projects_user_id" = 1582886;
-//                    url = "https://api.intra.42.fr/v2/users/vpelivan";
-//                    validated = 1;
-//                }
-//            );
-//            "validated?" = 1;
+//            "correction_number" = 5;
+//            id = 55;
+//            "is_primary" = 1;
 //        }
 //    );
-//    user =         {
-//        id = 33768;
-//        login = vpelivan;
-//        url = "https://api.intra.42.fr/v2/users/vpelivan";
-//    };
-//    "validated?" = 1;
+//    solo = 0;
+//    "team_behaviour" = user;
+//    "terminating_after" = 14;
+//    "updated_at" = "2019-10-23T16:32:49.594Z";
+//    uploads =     (
+//    );
 //},

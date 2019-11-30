@@ -16,23 +16,32 @@ class SingleProjectViewController: UIViewController {
     @IBOutlet weak var of100Label: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var projectType: UILabel!
+    @IBOutlet weak var registredLabel: UILabel!
+    @IBOutlet weak var finishedLabel: UILabel!
+    @IBOutlet weak var correctionsLabel: UILabel!
+    @IBOutlet weak var seeButton: UIButton!
+    @IBOutlet weak var descriptionView: UITextView!
+    
+    
     var colorCyan = UIColor(red: 82.0/255.0, green: 183.0/255.0, blue: 186.0/255.0, alpha: 1.0)
     var colorRed = UIColor(red: 223.0/255.0, green: 134.0/255.0, blue: 125.0/255.0, alpha: 1.0)
     var colorGreen = UIColor (red: 115.0/255.0, green: 182.0/255.0, blue: 102.0/255.0, alpha: 1.0)
     var projectInfo: Projects!
     var token: String!
     var projectsInfo: [Projects]!
+    var projectSessions: ProjectsUsers?
     var neededProjects: [Projects] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = projectInfo.project?.name
+        
         getPoolDays()
         getProjectInfo()
-        fetchProjectInfo()
         tableView.delegate = self
         tableView.dataSource = self
+        fetchProjectInfo()
     }
 
     func getPoolDays() {
@@ -48,7 +57,8 @@ class SingleProjectViewController: UIViewController {
     }
     
     func fetchProjectInfo() {
-        if projectInfo.status == "in_progress" || projectInfo.status == "searching_a_group" {
+        if projectInfo.status == "in_progress" || projectInfo.status == "searching_a_group"
+        || projectInfo.status == "creating_group" {
             statusLabel.text = "subscribed"
             markView.backgroundColor = colorCyan
             markLabel.isHidden = true
@@ -104,35 +114,37 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
 }
 
 extension SingleProjectViewController {
     
     func getProjectInfo() {
-                let intraURL = AuthUser.shared.intraURL
-                let project_id = projectInfo.project?.id
-        print(intraURL)
-        print(token ?? 0)
-        print(project_id ?? 0)
-//        let url = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
-        let url = NSURL(string: "\(intraURL)/v2/projects/\(project_id ?? 0)")
-                let request = NSMutableURLRequest(url: url! as URL)
-                request.httpMethod = "GET"
-                request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-                let session = URLSession.shared
-                session.dataTask(with: request as URLRequest) {
-                    (data, response, error) in
-                    do
-                    {
-                        guard let data = data else { return }
-                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                        print(json!)
-                    }
-                    catch let error {
-                        return print(error)
-                    }
-                }.resume()
+        let intraURL = AuthUser.shared.intraURL
+        let project_id = projectInfo.project?.id
+//      let urlUserProject = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
+        let urlDescription = NSURL(string: "\(intraURL)/v2/projects/\(project_id ?? 0)")
+        let request = NSMutableURLRequest(url: urlDescription! as URL)
+        let sessionDescription = URLSession.shared
+//        let sessionUserProject = URLSession.shared
+        
+        request.httpMethod = "GET"
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        sessionDescription.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            do
+            {
+                guard let data = data else { return }
+//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+//                print(json)
+                self.projectSessions = try JSONDecoder().decode(ProjectsUsers?.self, from: data)
+                DispatchQueue.main.async {
+                    self.descriptionView.text = self.projectSessions?.project_sessions[0]?.description
+                }
             }
+            catch let error {
+                return print(error)
+            }
+            }.resume()
+    }
 }
 
