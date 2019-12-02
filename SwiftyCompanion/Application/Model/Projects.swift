@@ -41,6 +41,24 @@ struct ProjectSession: Decodable {
 struct Scales: Decodable {
     var correction_number: Int?
 }
+
+//struct UserProjectInfo: Decodable {
+//    var teams: [Teams?]
+//}
+//
+//struct Teams: Decodable {
+//    var name: String?
+//    var users: [TeamUser?]
+//}
+//
+//struct TeamUser: Decodable {
+//    var id: Int?
+//    var login: String?
+//    var leader: Int?
+//    var occurence: Int?
+//    var url: String?
+//}
+
 //{
 //    "begin_at" = "<null>";
 //    "campus_id" = 15;

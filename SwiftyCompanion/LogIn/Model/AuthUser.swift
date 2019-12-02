@@ -54,7 +54,7 @@ extension AuthUser {
                 
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
-//                    print(self.tokenJson ?? 0)
+                    print(self.tokenJson ?? 0)
                     completion(self.tokenJson!)
                 } else {
                     print("Json error")
@@ -81,7 +81,7 @@ extension AuthUser {
 
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-//                    print(json!)
+                    print(json!)
                     guard let projects = json!["projects_users"] as? [NSDictionary] else { return }
                     for i in 0..<projects.count
                     {
