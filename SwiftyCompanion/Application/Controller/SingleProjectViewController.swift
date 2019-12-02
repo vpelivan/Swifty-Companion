@@ -30,7 +30,7 @@ class SingleProjectViewController: UIViewController {
     var projectInfo: Projects!
     var token: String!
     var projectsInfo: [Projects]!
-    var projectSessions: ProjectsUsers?
+    var projectSessions: [ProjectsUsers]?
     var neededProjects: [Projects] = []
     
     override func viewDidLoad() {
@@ -122,7 +122,8 @@ extension SingleProjectViewController {
         let intraURL = AuthUser.shared.intraURL
         let project_id = projectInfo.project?.id
 //      let urlUserProject = NSURL(string: "\(intraURL)/v2/users/33768/projects_users?filter[project_id]=\(project_id ?? 0)")
-        let urlDescription = NSURL(string: "\(intraURL)/v2/projects/\(project_id ?? 0)")
+//        let urlDescription = NSURL(string: "\(intraURL)/v2/projects/\(project_id ?? 0)")
+        let urlDescription = NSURL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(project_id ?? 0)&page[size]=100")
         let request = NSMutableURLRequest(url: urlDescription! as URL)
         let sessionDescription = URLSession.shared
 //        let sessionUserProject = URLSession.shared
@@ -134,11 +135,24 @@ extension SingleProjectViewController {
             do
             {
                 guard let data = data else { return }
-//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
 //                print(json)
-                self.projectSessions = try JSONDecoder().decode(ProjectsUsers?.self, from: data)
+                self.projectSessions = try JSONDecoder().decode([ProjectsUsers]?.self, from: data)
+//                print(self.projectSessions)
+//                print(self.projectSessions?[0].project_sessions[0]?.description)
                 DispatchQueue.main.async {
-                    self.descriptionView.text = self.projectSessions?.project_sessions[0]?.description
+                    if let count = self.projectSessions?[0].project_sessions.count {
+                        for i in 0..<count {
+                            if self.projectSessions?[0].project_sessions[i]?.campus_id == 13 {
+                                self.descriptionView.text = self.projectSessions?[0].project_sessions[i]?.description
+                                self.correctionsLabel.text = String("Corrections needed: \(self.projectSessions?[0].project_sessions[i]?.scales[0]?.correction_number ?? 0)")
+                                    break
+                            } else {
+                                self.descriptionView.text = self.projectSessions?[0].project_sessions[0]?.description
+                            }
+                            
+                        }
+                    }
                 }
             }
             catch let error {

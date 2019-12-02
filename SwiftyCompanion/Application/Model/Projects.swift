@@ -24,16 +24,22 @@ struct Project: Decodable {
     var slug: String?
 }
 
-struct ProjectsUsers: Decodable{
+struct ProjectsUsers: Decodable {
     var project_sessions: [ProjectSession?]
 }
 
 struct ProjectSession: Decodable {
     var description: String?
+    var campus_id: Int?
     var difficulty: Int?
     var estimate_time: Int?
     var solo: Bool?
-    var objectives: [String]?
+    var objectives: [String?]
+    var scales: [Scales?]
+}
+
+struct Scales: Decodable {
+    var correction_number: Int?
 }
 //{
 //    "begin_at" = "<null>";
