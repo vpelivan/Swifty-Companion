@@ -858,24 +858,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NaE-Qx-y0P">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OZa-3g-wqC">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                            </scrollView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewLayout key="collectionViewLayout" id="plm-nT-Vci" customClass="CustomLayout" customModule="SwiftyCompanion" customModuleProvider="target"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="macCell" id="YYm-5Q-ESN" customClass="CollectionViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="99" height="61"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="99" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxA-sY-79R">
+                                                    <rect key="frame" x="28.5" y="20" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="TxA-sY-79R" firstAttribute="centerX" secondItem="YYm-5Q-ESN" secondAttribute="centerX" id="0lA-GB-mAZ"/>
+                                            <constraint firstItem="TxA-sY-79R" firstAttribute="centerY" secondItem="YYm-5Q-ESN" secondAttribute="centerY" id="bvZ-DQ-JQc"/>
+                                        </constraints>
+                                        <size key="customSize" width="99" height="61"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="TxA-sY-79R" id="u6L-vR-ABG"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="NaE-Qx-y0P" firstAttribute="bottom" secondItem="hcK-oC-UaU" secondAttribute="bottom" id="6T7-KS-SHe"/>
-                            <constraint firstItem="NaE-Qx-y0P" firstAttribute="leading" secondItem="hcK-oC-UaU" secondAttribute="leading" id="Xaa-ou-5S5"/>
-                            <constraint firstItem="NaE-Qx-y0P" firstAttribute="trailing" secondItem="hcK-oC-UaU" secondAttribute="trailing" id="bIg-rd-FWf"/>
-                            <constraint firstItem="NaE-Qx-y0P" firstAttribute="top" secondItem="hcK-oC-UaU" secondAttribute="top" id="blx-vl-cnO"/>
+                            <constraint firstItem="OZa-3g-wqC" firstAttribute="trailing" secondItem="hcK-oC-UaU" secondAttribute="trailing" id="VTB-BL-OTJ"/>
+                            <constraint firstItem="OZa-3g-wqC" firstAttribute="bottom" secondItem="hcK-oC-UaU" secondAttribute="bottom" id="XAq-cv-nAJ"/>
+                            <constraint firstItem="OZa-3g-wqC" firstAttribute="leading" secondItem="hcK-oC-UaU" secondAttribute="leading" id="XjA-jv-ygb"/>
+                            <constraint firstItem="OZa-3g-wqC" firstAttribute="top" secondItem="hcK-oC-UaU" secondAttribute="top" id="iRe-nJ-95c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hcK-oC-UaU"/>
                     </view>
                     <navigationItem key="navigationItem" title="Cluster" id="PwQ-BG-Rv7"/>
+                    <connections>
+                        <outlet property="collectionView" destination="OZa-3g-wqC" id="4TC-Pw-ivc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y2x-E6-a1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-360" y="1742.9577464788733"/>
+            <point key="canvasLocation" x="-360.80000000000001" y="1742.8785607196403"/>
         </scene>
         <!--Agenda-->
         <scene sceneID="EOa-tA-vjb">

@@ -40,7 +40,7 @@ class SingleProjectViewController: UIViewController {
 //        print(projectInfo)
         getPoolDays()
         getProjectInfo()
-        getTeamsInfo()
+//        getTeamsInfo()
         tableView.delegate = self
         tableView.dataSource = self
         fetchProjectInfo()
@@ -56,7 +56,6 @@ class SingleProjectViewController: UIViewController {
         if neededProjects.count == 0 {
             tableView.isHidden = true
         }
-        
     }
     
     func fetchProjectInfo() {
@@ -134,26 +133,26 @@ extension SingleProjectViewController: UICollectionViewDelegate, UICollectionVie
 
 extension SingleProjectViewController {
   
-    func getTeamsInfo() {
-        let intraURL = AuthUser.shared.intraURL
-        let urlUserProject = NSURL(string: "\(intraURL)/v2/projects_users/\(self.projectInfo.id ?? 0)")
-        let request = NSMutableURLRequest(url: urlUserProject! as URL)
-        let sessionUserProject = URLSession.shared
-        request.httpMethod = "GET"
-        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        sessionUserProject.dataTask(with: request as URLRequest) {
-            (data, response, error) in
-            do {
-                guard let data = data else { return }
-                let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                
-
-            }
-            catch let error {
-                print(error)
-            }
-            }.resume()
-    }
+//    func getTeamsInfo() {
+//        let intraURL = AuthUser.shared.intraURL
+//        let urlUserProject = NSURL(string: "\(intraURL)/v2/projects_users/\(self.projectInfo.id ?? 0)")
+//        let request = NSMutableURLRequest(url: urlUserProject! as URL)
+//        let sessionUserProject = URLSession.shared
+//        request.httpMethod = "GET"
+//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+//        sessionUserProject.dataTask(with: request as URLRequest) {
+//            (data, response, error) in
+//            do {
+//                guard let data = data else { return }
+////                let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+////                print(json)
+//
+//            }
+//            catch let error {
+//                print(error)
+//            }
+//            }.resume()
+//    }
     
     func getProjectInfo() {
         let intraURL = AuthUser.shared.intraURL

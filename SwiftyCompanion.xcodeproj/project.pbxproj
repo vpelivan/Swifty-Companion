@@ -15,6 +15,8 @@
 		A354918F237077F00056D05B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918E237077F00056D05B /* LoginController.swift */; };
 		A3577237237C1CCD009284CB /* Coalition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3577236237C1CCD009284CB /* Coalition.swift */; };
 		A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FCDA223883A0800535212 /* SingleProjectViewController.swift */; };
+		A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D6E2396F47300403959 /* CustomLayout.swift */; };
+		A36A3D712396F6B800403959 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D702396F6B800403959 /* CollectionViewCell.swift */; };
 		A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38445E3237AEF7000E0C78A /* UserViewController.swift */; };
 		A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D84238D59E5007540D0 /* EventTableViewCell.swift */; };
 		A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D86238D6DDB007540D0 /* EventsViewController.swift */; };
@@ -42,6 +44,8 @@
 		A354918E237077F00056D05B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A3577236237C1CCD009284CB /* Coalition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coalition.swift; sourceTree = "<group>"; };
 		A35FCDA223883A0800535212 /* SingleProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleProjectViewController.swift; sourceTree = "<group>"; };
+		A36A3D6E2396F47300403959 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		A36A3D702396F6B800403959 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		A38445E3237AEF7000E0C78A /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		A3865D84238D59E5007540D0 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		A3865D86238D6DDB007540D0 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +95,9 @@
 				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
 				A3865D8A238D808C007540D0 /* TableViewCell.swift */,
 				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
+				A36A3D702396F6B800403959 /* CollectionViewCell.swift */,
 				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
+				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
 				A38445E3237AEF7000E0C78A /* UserViewController.swift */,
@@ -284,7 +290,9 @@
 				A354918D237072A40056D05B /* SearchTableView.swift in Sources */,
 				A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */,
 				A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */,
+				A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */,
 				A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */,
+				A36A3D712396F6B800403959 /* CollectionViewCell.swift in Sources */,
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
