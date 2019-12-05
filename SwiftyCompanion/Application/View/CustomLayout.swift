@@ -14,7 +14,6 @@ class CustomLayout: UICollectionViewLayout {
         let CELL_HEIGHT: CGFloat = 60
         let CELL_WIDTH: CGFloat = 60
         
-        
         var cellAttributesDictionary = Dictionary<IndexPath, UICollectionViewLayoutAttributes>()
         var contentSize = CGSize.zero
         
@@ -23,35 +22,34 @@ class CustomLayout: UICollectionViewLayout {
                 return contentSize
             }
         }
-        
         var dataSourceDidUpdate = true
         
         override func prepare() {
             
-            let STATUS_BAR_HEIGHT = UIApplication.shared.statusBarFrame.height
-            let NAV_BAR_HEIGHT = UINavigationController().navigationBar.frame.size.height
+//            let STATUS_BAR_HEIGHT = UIApplication.shared.statusBarFrame.height
+//            let NAV_BAR_HEIGHT = UINavigationController().navigationBar.frame.size.height
             
             collectionView?.bounces = false
             
-            if !dataSourceDidUpdate {
-                
-                let yOffSet = collectionView!.contentOffset.y
-                
-                for section in 0 ..< collectionView!.numberOfSections {
-                    if section == 0 {
-                        for item in 0 ..< collectionView!.numberOfItems(inSection: section) {
-                            let cellIndexPath = IndexPath(item: item, section: section)
-                            if let attrs = cellAttributesDictionary[cellIndexPath] {
-                                var frame = attrs.frame
-                                frame.origin.y = yOffSet + STATUS_BAR_HEIGHT + NAV_BAR_HEIGHT
-                                attrs.frame = frame
-                            }
-                        }
-                    }
-                }
-                return
-            }
-            
+//            if !dataSourceDidUpdate {
+//
+//                let yOffSet = collectionView!.contentOffset.y
+//
+//                for section in 0 ..< collectionView!.numberOfSections {
+//                    if section == 0 {
+//                        for item in 0 ..< collectionView!.numberOfItems(inSection: section) {
+//                            let cellIndexPath = IndexPath(item: item, section: section)
+//                            if let attrs = cellAttributesDictionary[cellIndexPath] {
+//                                var frame = attrs.frame
+//                                frame.origin.y = yOffSet/* + STATUS_BAR_HEIGHT + NAV_BAR_HEIGHT*/
+//                                attrs.frame = frame
+//                            }
+//                        }
+//                    }
+//                }
+//                return
+//            }
+//
             dataSourceDidUpdate = false
             
             for section in 0 ..< collectionView!.numberOfSections {
@@ -73,9 +71,7 @@ class CustomLayout: UICollectionViewLayout {
                     } else {
                         cellAttributes.zIndex = 1
                     }
-                    
                     cellAttributesDictionary[cellIndexPath] = cellAttributes
-                    
                 }
             }
             
@@ -86,13 +82,12 @@ class CustomLayout: UICollectionViewLayout {
         
         override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
             var attributesInRect = [UICollectionViewLayoutAttributes]()
-            
+
             for cellAttrs in cellAttributesDictionary.values {
                 if rect.intersects(cellAttrs.frame) {
                     attributesInRect.append(cellAttrs)
                 }
             }
-            
             return attributesInRect
         }
         

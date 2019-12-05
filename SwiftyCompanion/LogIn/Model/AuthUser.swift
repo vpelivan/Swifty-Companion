@@ -81,7 +81,7 @@ extension AuthUser {
 
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                    print(json!)
+//                    print(json!)
                     guard let projects = json!["projects_users"] as? [NSDictionary] else { return }
                     for i in 0..<projects.count
                     {
@@ -172,26 +172,3 @@ extension AuthUser {
     }
 }
 
-// /v2/skills/:id
-//extension AuthUser {
-//    func getSkillInfo() {
-//        let token = tokenJson!["access_token"] as! String
-//        let url = NSURL(string: "\(self.intraURL)/v2/campus/8/locations")
-//        let request = NSMutableURLRequest(url: url! as URL)
-//        request.httpMethod = "GET"
-//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//        let session = URLSession.shared
-//        session.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//            do
-//            {
-//                guard let data = data else { return }
-//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
-//                print("Campus users: \(json ?? [])")
-//            }
-//            catch let error {
-//                return print("Another error:\(error)")
-//            }
-//        }.resume()
-//    }
-//}
