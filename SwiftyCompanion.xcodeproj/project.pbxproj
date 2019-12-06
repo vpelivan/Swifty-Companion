@@ -32,6 +32,7 @@
 		A3C076822362FE220098A25F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076802362FE220098A25F /* Main.storyboard */; };
 		A3C076872362FE260098A25F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3C076862362FE260098A25F /* Assets.xcassets */; };
 		A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076882362FE260098A25F /* LaunchScreen.storyboard */; };
+		A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */; };
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
@@ -65,6 +66,7 @@
 		A3C076862362FE260098A25F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3C076892362FE260098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3C0768B2362FE260098A25F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMacCellController.swift; sourceTree = "<group>"; };
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
 				A3865D8A238D808C007540D0 /* TableViewCell.swift */,
 				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
+				A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */,
 				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
 				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
 				A374D862239950AA005AA0A2 /* LabelMacCell.swift */,
@@ -303,6 +306,7 @@
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
+				A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */,
 				A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */,
 				A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */,
 				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
