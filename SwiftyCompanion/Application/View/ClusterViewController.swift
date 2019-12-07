@@ -25,10 +25,15 @@ class ClusterViewController: UIViewController {
         super.viewDidLoad()
 
         collectionView.isScrollEnabled = true
-        getClusterInfo()
+        for i in 1...3 {
+            getClusterInfo(num: i)
+        }
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.reloadData()
+//        collectionView.reloadData()
+    }
+    @IBAction func closeButton(_ sender: Any) {
+        userView.isHidden = true
     }
 }
 
@@ -43,23 +48,38 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         return CreateCluster(indexPath: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.userView.isHidden = false
-//        if let login = clusterDict["\(LoggedMacCell.)"]??.user?.login {
-//            loggedMacCell.textLabel.text =
-//            guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { print("fail"); return loggedMacCell}
-//            let session = URLSession.shared
-//            session.dataTask(with: url) {(data, response, error) in
-//                DispatchQueue.main.async {
-//                    if let data = data, let image = UIImage(data: data) {
-//                        loggedMacCell.imageView.image = image
-//                    }
-//                }
-//                }.resume()
-//        }
+        let pos = indexPath.item
+        let row = 12 - indexPath.section
+        let location = getLocation(pos: pos, row: row)
+        
+        
+        if clusterDict["\(location)"] != nil {
+            self.userView.isHidden = false
+            let login = clusterDict["\(location)"]??.user?.login
+            if let url = URL(string: "https://cdn.intra.42.fr/users/\(login ?? "").jpg") {
+                let session = URLSession.shared
+                session.dataTask(with: url) {(data, response, error) in
+                    DispatchQueue.main.async {
+                        if let data = data, let image = UIImage(data: data) {
+                            self.userViewPicture.image = image
+                        }
+                    }
+                }.resume()
+            }
+            self.userViewButton.setTitle(login, for: .normal)
+            self.userViewLocation.text = location
+            var begin = String(self.clusterDict["\(location)"]??.begin_at ?? "")
+            begin = begin.prefix(16).replacingOccurrences(of: "T", with: " ")
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            let beginDate = dateFormatter.date(from: String(begin))!
+            self.userViewBeginSess.text = ("Began At: \(beginDate)")
+        }
         
     }
     func CreateCluster(indexPath: IndexPath) -> UICollectionViewCell {
@@ -156,10 +176,10 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension ClusterViewController {
-    func getClusterInfo() {
+    func getClusterInfo(num: Int) {
         let token = AuthUser.shared.tokenJson?["access_token"] as! String
         let intraURL = AuthUser.shared.intraURL
-        let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100")
+        let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
@@ -169,8 +189,6 @@ extension ClusterViewController {
             do
             {
                 guard let data = data else { return }
-                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
-                print("Campus users: \(json ?? [])")
                 self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
                 self.fillClusterInfo()
             }
@@ -185,6 +203,9 @@ extension ClusterViewController {
             if ClusterLoggedUsers[i]?.end_at == nil {
                 self.clusterDict.updateValue(ClusterLoggedUsers[i], forKey: ClusterLoggedUsers[i]?.host ?? "empty")
             }
+        }
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
         }
         print("Total Cluster Users: \(clusterDict.count)")
     }
