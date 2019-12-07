@@ -13,6 +13,13 @@ class ClusterViewController: UIViewController {
     var ClusterLoggedUsers: [ClusterUsers?] = []
     var clusterDict: [String: ClusterUsers?] = [:]
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var userView: UIView!
+    @IBOutlet weak var userViewPicture: UIImageView!
+    @IBOutlet weak var userViewName: UILabel!
+    @IBOutlet weak var userViewLocation: UILabel!
+    @IBOutlet weak var userViewButton: UIButton!
+    @IBOutlet weak var userViewBeginSess: UILabel!
+    @IBOutlet weak var userViewSessTime: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +46,22 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
         return CreateCluster(indexPath: indexPath)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.userView.isHidden = false
+//        if let login = clusterDict["\(LoggedMacCell.)"]??.user?.login {
+//            loggedMacCell.textLabel.text =
+//            guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { print("fail"); return loggedMacCell}
+//            let session = URLSession.shared
+//            session.dataTask(with: url) {(data, response, error) in
+//                DispatchQueue.main.async {
+//                    if let data = data, let image = UIImage(data: data) {
+//                        loggedMacCell.imageView.image = image
+//                    }
+//                }
+//                }.resume()
+//        }
+        
+    }
     func CreateCluster(indexPath: IndexPath) -> UICollectionViewCell {
         let pos = indexPath.item
         let row = 12 - indexPath.section
