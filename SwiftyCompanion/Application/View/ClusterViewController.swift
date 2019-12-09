@@ -35,6 +35,12 @@ class ClusterViewController: UIViewController {
     @IBAction func closeButton(_ sender: Any) {
         userView.isHidden = true
     }
+    @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
+        for i in 1...3 {
+            getClusterInfo(num: i)
+            userView.isHidden = true
+        }
+    }
 }
 
 extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -191,6 +197,12 @@ extension ClusterViewController {
                 guard let data = data else { return }
                 self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
                 self.fillClusterInfo()
+                if num == 1 {
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                            self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+                    }
+                }
             }
             catch let error {
                 return print("Another error:\(error)")
@@ -204,9 +216,7 @@ extension ClusterViewController {
                 self.clusterDict.updateValue(ClusterLoggedUsers[i], forKey: ClusterLoggedUsers[i]?.host ?? "empty")
             }
         }
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
         print("Total Cluster Users: \(clusterDict.count)")
     }
+
 }
