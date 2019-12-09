@@ -63,7 +63,6 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
         let row = 12 - indexPath.section
         let location = getLocation(pos: pos, row: row)
         
-        
         if clusterDict["\(location)"] != nil {
             self.userView.isHidden = false
             let login = clusterDict["\(location)"]??.user?.login
@@ -79,12 +78,21 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
             self.userViewButton.setTitle(login, for: .normal)
             self.userViewLocation.text = location
+//            let time = self.clusterDict["\(location)"]??.begin_at!
+//            let begin = String(time!.prefix(16)).replacingOccurrences(of: ".", with: " ")
+            print(self.clusterDict["\(location)"]??.begin_at ?? "")
             var begin = String(self.clusterDict["\(location)"]??.begin_at ?? "")
-            begin = begin.prefix(16).replacingOccurrences(of: "T", with: " ")
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-            let beginDate = dateFormatter.date(from: String(begin))!
-            self.userViewBeginSess.text = ("Began At: \(beginDate)")
+            begin = String(begin.prefix(16)).replacingOccurrences(of: "T", with: " ")
+            let beginGMT = dateFormatter.date(from: begin)!
+            begin = dateFormatter.string(from: beginGMT.addingTimeInterval(7200))
+            let end = dateFormatter.string(from: Date().addingTimeInterval(7200))
+            let beginDate = dateFormatter.date(from: begin)!
+            let endDate = dateFormatter.date(from: end)!
+            let diffInHours = Calendar.current.dateComponents([.hour], from: beginDate, to: endDate).hour
+            self.userViewBeginSess.text = "Began At: \(begin)"
+            self.userViewSessTime.text = "Session Time: \(diffInHours ?? 0) hour(s)"
         }
         
     }
@@ -200,7 +208,7 @@ extension ClusterViewController {
                 if num == 1 {
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
-                            self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
                     }
                 }
             }
