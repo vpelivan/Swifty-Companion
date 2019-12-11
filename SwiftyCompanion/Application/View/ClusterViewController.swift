@@ -82,6 +82,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
         if clusterDict["\(location)"] != nil {
             self.userView.isHidden = false
             let login = clusterDict["\(location)"]??.user?.login
+            self.userViewName.text = login
             self.userViewPicture.image = pictureDict["\(location)"] as? UIImage
 //            if let url = URL(string: "https://cdn.intra.42.fr/users/\(login ?? "").jpg") {
 //                let session = URLSession.shared
@@ -92,7 +93,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 //                    }
 //                }.resume()
 //            }
-            self.userViewButton.setTitle(login, for: .normal)
+            self.userViewButton.setTitle("View Profile", for: .normal)
             self.userViewLocation.text = location
 //            let time = self.clusterDict["\(location)"]??.begin_at!
 //            let begin = String(time!.prefix(16)).replacingOccurrences(of: ".", with: " ")
@@ -136,6 +137,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             
         else if clusterDict["\(location)"] != nil {
             let loggedMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoggedMacCell", for: indexPath) as! LoggedMacCell
+            loggedMacCell.imageView.image = UIImage()
             if let login = clusterDict["\(location)"]??.user?.login {
                 loggedMacCell.textLabel.text = login
                 if self.pictureDict[location] == nil {
