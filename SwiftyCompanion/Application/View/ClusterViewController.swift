@@ -83,16 +83,16 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             print(self.clusterDict["\(location)"]??.begin_at ?? "")
             var begin = String(self.clusterDict["\(location)"]??.begin_at ?? "")
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
             begin = String(begin.prefix(16)).replacingOccurrences(of: "T", with: " ")
             let beginGMT = dateFormatter.date(from: begin)!
             begin = dateFormatter.string(from: beginGMT.addingTimeInterval(7200))
-            let end = dateFormatter.string(from: Date().addingTimeInterval(7200))
+            let end = dateFormatter.string(from: Date())
             let beginDate = dateFormatter.date(from: begin)!
             let endDate = dateFormatter.date(from: end)!
             let diffInHours = Calendar.current.dateComponents([.hour], from: beginDate, to: endDate).hour
-            self.userViewBeginSess.text = "Began At: \(begin)"
-            self.userViewSessTime.text = "Session Time: \(diffInHours ?? 0) hour(s)"
+            self.userViewBeginSess.text = "Began At:\n\(begin)"
+            self.userViewSessTime.text = "Session Time:\n\(diffInHours ?? 0) hour(s)"
         }
         
     }
