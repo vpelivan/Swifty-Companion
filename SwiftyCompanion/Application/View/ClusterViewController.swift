@@ -138,18 +138,15 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             let loggedMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoggedMacCell", for: indexPath) as! LoggedMacCell
             if let login = clusterDict["\(location)"]??.user?.login {
                 loggedMacCell.textLabel.text = login
-                
                 if self.pictureDict[location] == nil {
-                    guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell}
-                    let session = URLSession.shared
-                    session.dataTask(with: url) {(data, response, error) in
-                        DispatchQueue.main.async {
-                            if let data = data, let image = UIImage(data: data) {
-                                self.pictureDict[location] = image
-                                loggedMacCell.imageView.image = image
-                            }
-                        }
-                        }.resume()
+                    guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
+                    guard let data = try? Data(contentsOf: url) else { return loggedMacCell }
+                    if let image = UIImage(data: data) {
+                        self.pictureDict[location] = image
+                        loggedMacCell.imageView.image = image
+//                        loggedMacCell.imageView.
+                    }
+
                 } else {
                     loggedMacCell.imageView.image = pictureDict["\(location)"] as? UIImage
                 }
