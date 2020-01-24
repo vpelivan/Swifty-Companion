@@ -27,7 +27,7 @@ class AuthUser {
 }
 
 extension AuthUser {
-    func authorizeUser(completion: @escaping (NSDictionary) -> ()) {
+    func authorizeUser(context: ASWebAuthenticationPresentationContextProviding, completion: @escaping (NSDictionary) -> ()) {
             webAuthSession = ASWebAuthenticationSession(url: URL(string: intraURL+"oauth/authorize?client_id=\(UID)&redirect_uri=\(callbackURI)&response_type=code&scope=public+forum+projects+profile+elearning+tig")!,
                 callbackURLScheme: callbackURI, completionHandler: { (url, error) in
             guard error == nil else { return }
@@ -36,6 +36,7 @@ extension AuthUser {
                 completion(self.tokenJson!)
             })
         })
+        self.webAuthSession?.presentationContextProvider = context
         webAuthSession?.start() 
     }
     

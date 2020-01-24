@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import AuthenticationServices
 
-class LoginController: UIViewController {
-
+class LoginController: UIViewController, ASWebAuthenticationPresentationContextProviding {
+    
     var myInfo: UserInfo!
     
     override func viewDidLoad() {
@@ -17,7 +18,7 @@ class LoginController: UIViewController {
     }
     
     @IBAction func tapLogIn(_ sender: UIButton) {
-        AuthUser.shared.authorizeUser(completion: { tokenJson in
+        AuthUser.shared.authorizeUser(context: self, completion: { tokenJson in
             AuthUser.shared.getUserInfo(completion: {userInfo, coalitionInfo, examsPassed, internPassed in
                 self.myInfo.profileInfo = userInfo
                 self.myInfo.coalitionInfo = coalitionInfo
@@ -40,5 +41,9 @@ class LoginController: UIViewController {
                 }
             }
         }
+    }
+    
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
     }
 }

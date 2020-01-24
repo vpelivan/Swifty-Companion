@@ -71,7 +71,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         searchController?.searchBar.placeholder = "Search user"
         searchController?.searchBar.delegate = self
         searchController?.hidesNavigationBarDuringPresentation = true
-        searchController?.dimsBackgroundDuringPresentation = true
+//        searchController?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         navigationItem.searchController = searchController
     }
