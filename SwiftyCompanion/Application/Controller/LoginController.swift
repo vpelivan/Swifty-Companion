@@ -1,46 +1,87 @@
 //
-//  AuthUser.swift
+//  LoginController.swift
 //  SwiftyCompanion
 //
-//  Created by Viktor PELIVAN on 11/6/19.
+//  Created by Viktor PELIVAN on 11/4/19.
 //  Copyright © 2019 Viktor PELIVAN. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import AuthenticationServices
 
-class AuthUser {
-    static let shared = AuthUser()
-
-    private let callbackURI = "SwiftyCompanion://SwiftyCompanion"
-    private let UID = "7717d9aef2c877094b2020ebcf0fef76c9725112efc3934dff52774031732002"
-    private let secretKey = "41a3ab521d7b5f7d0d402c019f7d73f0b8d10b2e32b506b2d88a3771930bee07"
-    private var webAuthSession: ASWebAuthenticationSession?
-    private var userData: User?
-    private var coalitionData: [Coalition?] = []
-    private var examsPassed: Int = 0
-    private var internshipsPassed: Int = 0
-    let intraURL = "https://api.intra.42.fr/"
-    var tokenJson: NSDictionary?
+class LoginController: UIViewController, ASWebAuthenticationPresentationContextProviding {
     
-    private init() {}
+    @IBOutlet weak var logInButton: UIButton!
+    var myInfo: UserInfo!
+    let intraURL = AuthUser.shared.intraURL
+    let callbackURI = AuthUser.shared.callbackURI
+    let UID = AuthUser.shared.UID
+    var tokenJson: NSDictionary?
+    var userData: User?
+    var coalitionData: [Coalition?] = []
+    var examsPassed: Int = 0
+    var internshipsPassed: Int = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        logInButton.layer.cornerRadius = 5.0
+    }
+    
+    @IBAction func tapLogIn(_ sender: UIButton) {
+        authorizeUser(context: self, completion: { tokenJson in
+            self.getUserInfo(completion: {userInfo, coalitionInfo, examsPassed, internPassed in
+                self.myInfo.profileInfo = userInfo
+                self.myInfo.coalitionInfo = coalitionInfo
+                self.myInfo.examsPassed = examsPassed
+                self.myInfo.internPassed = internPassed
+                self.myInfo.tokenJson = tokenJson
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "goToProfile", sender: nil)
+                }
+            })
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let tabBar = segue.destination as? UITabBarController {
+            if let navi = tabBar.viewControllers?[0] as? UINavigationController {
+                if let vc = navi.viewControllers.first as? ProfileViewController {
+                    vc.myInfo = self.myInfo
+                }
+            }
+        }
+    }
+    
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
+    
+    }
+    
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
+    }
 }
 
-extension AuthUser {
+extension LoginController {
     func authorizeUser(context: ASWebAuthenticationPresentationContextProviding, completion: @escaping (NSDictionary) -> ()) {
-            webAuthSession = ASWebAuthenticationSession(url: URL(string: intraURL+"oauth/authorize?client_id=\(UID)&redirect_uri=\(callbackURI)&response_type=code&scope=public+forum+projects+profile+elearning+tig")!,
-                callbackURLScheme: callbackURI, completionHandler: { (url, error) in
+        var webAuthSession: ASWebAuthenticationSession?
+        let scope = AuthUser.shared.scope
+        
+        webAuthSession = ASWebAuthenticationSession(url: URL(string: intraURL+"oauth/authorize?client_id=\(UID)&redirect_uri=\(callbackURI)&response_type=code&scope=\(scope)")!,
+            callbackURLScheme: callbackURI, completionHandler: { (url, error) in
             guard error == nil else { return }
             guard let url = url else { return }
             self.getUserToken(bearer: url.query!, completion: { (token) in
-                completion(self.tokenJson!)
+                AuthUser.shared.tokenJson = self.tokenJson
+            completion(self.tokenJson!)
             })
         })
-        self.webAuthSession?.presentationContextProvider = context
-        webAuthSession?.start() 
+        webAuthSession?.presentationContextProvider = context
+        webAuthSession?.start()
     }
     
     private func getUserToken(bearer: String, completion: @escaping (NSDictionary) -> ()) {
+        let secretKey = AuthUser.shared.secretKey
+        
         guard let url = NSURL(string: intraURL+"oauth/token") else { return }
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "POST"
@@ -79,7 +120,6 @@ extension AuthUser {
                 do
                 {
                     guard let data = data else { return }
-
                     self.userData = try JSONDecoder().decode(User.self, from: data)
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
 //                    print(json!)
@@ -102,11 +142,9 @@ extension AuthUser {
                 }
             }.resume()
         }
-}
-
-
+    
 //Coaltions
-extension AuthUser {
+
     func getCoalitionInfo(completion: @escaping (Coalition) -> ()) {
         let token = tokenJson!["access_token"] as! String
         let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/coalitions")
@@ -131,10 +169,8 @@ extension AuthUser {
             }
             }.resume()
     }
-}
 
 //Exams, Internships
-extension AuthUser {
     func getExamInfo(completion: @escaping (Int, Int) -> ()) {
         let token = tokenJson!["access_token"] as! String
         let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")

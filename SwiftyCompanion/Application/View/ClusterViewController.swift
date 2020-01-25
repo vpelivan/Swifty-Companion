@@ -24,26 +24,24 @@ class ClusterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.isScrollEnabled = true
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getClusterInfo(num: 1) {
             self.getClusterInfo(num: 2) {
                 self.getClusterInfo(num: 3) {
-                        DispatchQueue.main.async {
-                            self.collectionView.delegate = self
-                            self.collectionView.dataSource = self
-//                            self.collectionView.reloadData()
-                            self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
-                        }
+                    DispatchQueue.main.async {
+                        self.collectionView.delegate = self
+                        self.collectionView.dataSource = self
+                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+                    }
                 }
             }
         }
-        
-        
-//        collectionView.delegate = self
-//        collectionView.dataSource = self
-//        collectionView.reloadData()
     }
+    
     @IBAction func closeButton(_ sender: Any) {
         userView.isHidden = true
     }

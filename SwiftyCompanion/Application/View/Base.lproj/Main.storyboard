@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +11,7 @@
         <!--Login Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -20,11 +20,15 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfN-mR-JCW">
-                                <rect key="frame" x="145" y="313" width="85" height="41"/>
+                                <rect key="frame" x="131.5" y="313" width="112" height="41"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.70007152288732399" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="5zO-A1-vry"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="112" id="UWP-Cf-wa5"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="  Log In  ">
+                                <state key="normal" title="Log In">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -45,17 +49,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="logInButton" destination="nfN-mR-JCW" id="s9f-FP-4Pq"/>
                         <segue destination="Iwa-Jk-qbd" kind="show" identifier="goToProfile" id="eLA-fg-tgl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-360" y="110"/>
+            <point key="canvasLocation" x="-360.80000000000001" y="109.29535232383809"/>
         </scene>
         <!--Swifty Companion-->
         <scene sceneID="Tdp-Mn-D3N">
             <objects>
-                <viewController id="oAI-sc-aoC" customClass="ProfileViewController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oAI-sc-aoC" customClass="ProfileViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MUI-b5-vbh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="968"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -315,7 +320,7 @@
                                                                 <rect key="frame" x="8" y="50" width="382" height="182"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <prototypes>
-                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProjectCell" id="OCW-MG-hc6" customClass="ProjectTableViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProjectCell" id="OCW-MG-hc6" customClass="ProjectTableViewCell" customModule="Companion" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="28" width="382" height="43.5"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OCW-MG-hc6" id="Zu8-Oj-A0P">
@@ -380,7 +385,7 @@
                                                                 <rect key="frame" x="8" y="50" width="382" height="178"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <prototypes>
-                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SkillCell" id="ESD-hW-8by" customClass="SkillsTableViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SkillCell" id="ESD-hW-8by" customClass="SkillsTableViewCell" customModule="Companion" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="28" width="382" height="45.5"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ESD-hW-8by" id="tOz-s3-nbI">
@@ -473,7 +478,11 @@
                         <viewLayoutGuide key="safeArea" id="Zj9-TS-g3J"/>
                     </view>
                     <navigationItem key="navigationItem" title="Swifty Companion" id="Yds-oj-aOc">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="vME-zS-Pm9"/>
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="vME-zS-Pm9">
+                            <connections>
+                                <action selector="tapLogOut:" destination="oAI-sc-aoC" id="5sm-SR-7z7"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Rk0-Ci-x27">
                             <connections>
                                 <action selector="tapSearch:" destination="oAI-sc-aoC" id="2uR-A7-D7x"/>
@@ -512,7 +521,7 @@
         <!--Project Info-->
         <scene sceneID="pxo-fs-xRb">
             <objects>
-                <viewController storyboardIdentifier="projectInfo" title="Project Info" id="gKU-D4-k4l" customClass="SingleProjectViewController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="projectInfo" title="Project Info" id="gKU-D4-k4l" customClass="SingleProjectViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HED-q0-tfa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -521,7 +530,7 @@
                                 <rect key="frame" x="8" y="419" width="359" height="240"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PooldDaysCell" id="wgw-gg-YgC" customClass="PoolDayTableViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PooldDaysCell" id="wgw-gg-YgC" customClass="PoolDayTableViewCell" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="359" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wgw-gg-YgC" id="EWK-um-i9x">
@@ -781,7 +790,7 @@
         <!--All Projects-->
         <scene sceneID="7To-gq-lPD">
             <objects>
-                <viewController storyboardIdentifier="AllProjects" title="All Projects" id="eCo-0c-9dQ" customClass="AllProjectsViewController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AllProjects" title="All Projects" id="eCo-0c-9dQ" customClass="AllProjectsViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5My-uW-LRR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -790,7 +799,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AllProjectsCell" id="Y95-uK-flh" customClass="AllProjectsTableViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AllProjectsCell" id="Y95-uK-flh" customClass="AllProjectsTableViewCell" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Y95-uK-flh" id="vvf-cW-W56">
@@ -850,7 +859,7 @@
         <!--Cluster-->
         <scene sceneID="EQ2-dy-ZYi">
             <objects>
-                <viewController title="Cluster" id="DXd-HY-dsY" customClass="ClusterViewController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Cluster" id="DXd-HY-dsY" customClass="ClusterViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q8n-gt-k6B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -858,9 +867,9 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OZa-3g-wqC">
                                 <rect key="frame" x="0.0" y="56" width="375" height="542"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewLayout key="collectionViewLayout" id="plm-nT-Vci" customClass="CustomLayout" customModule="SwiftyCompanion" customModuleProvider="target"/>
+                                <collectionViewLayout key="collectionViewLayout" id="plm-nT-Vci" customClass="CustomLayout" customModule="Companion" customModuleProvider="target"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LoggedMacCell" id="oeN-7S-cDu" customClass="LoggedMacCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LoggedMacCell" id="oeN-7S-cDu" customClass="LoggedMacCell" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -899,7 +908,7 @@
                                             <outlet property="textLabel" destination="K0N-DE-InW" id="JeV-jQ-vpb"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emptyMacCell" id="GGD-WQ-jgG" customClass="EmptyMacCellController" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="emptyMacCell" id="GGD-WQ-jgG" customClass="EmptyMacCellController" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="79" y="0.0" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -962,7 +971,7 @@
                                         </constraints>
                                         <size key="customSize" width="60" height="60"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LabelCell" id="i3V-Ym-99C" customClass="LabelMacCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LabelCell" id="i3V-Ym-99C" customClass="LabelMacCell" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="315" y="0.0" width="60" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -1108,7 +1117,7 @@
         <!--Agenda-->
         <scene sceneID="EOa-tA-vjb">
             <objects>
-                <viewController id="Kd1-1n-4sh" customClass="EventsViewController" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kd1-1n-4sh" customClass="EventsViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dmA-Oi-x1f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1117,7 +1126,7 @@
                                 <rect key="frame" x="0.0" y="56" width="375" height="542"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="80" id="YDF-AG-uI7" customClass="EventTableViewCell" customModule="SwiftyCompanion" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="80" id="YDF-AG-uI7" customClass="EventTableViewCell" customModule="Companion" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YDF-AG-uI7" id="Y7A-xI-f8u">
@@ -1297,7 +1306,7 @@
         <!--Search Table View-->
         <scene sceneID="1cY-8O-BfK">
             <objects>
-                <tableViewController storyboardIdentifier="SearchTableView" id="pPw-Ch-NwM" customClass="SearchTableView" customModule="SwiftyCompanion" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchTableView" id="pPw-Ch-NwM" customClass="SearchTableView" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qw8-uz-w3J">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

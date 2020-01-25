@@ -27,7 +27,6 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
-        cell.eventType = "exam"
         cell.getColor()
         return cell
     }
@@ -54,7 +53,7 @@ extension EventsViewController {
             {
                 guard let data = data else { return }
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                print(json)
+                print(json ?? "")
             }
             catch let error {
                 return print(error)

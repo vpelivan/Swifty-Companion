@@ -64,7 +64,9 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @IBAction func tapSearch(_ sender: UIBarButtonItem) {
         searchController?.searchBar.becomeFirstResponder()
     }
-    
+    @IBAction func tapLogOut(_ sender: UIBarButtonItem) {
+        
+    }
     func setSearchBar() {
         let searchTableView = storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
         searchController = UISearchController(searchResultsController: searchTableView)
