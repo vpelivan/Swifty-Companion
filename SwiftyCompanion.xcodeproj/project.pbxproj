@@ -36,6 +36,11 @@
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
+		A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */; };
+		A3F2D68B23DCA44E003FAB32 /* CurrentProjectsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */; };
+		A3F2D68C23DCA44E003FAB32 /* CurrentProjectsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */; };
+		A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */; };
+		A3F2D69023DCC64D003FAB32 /* SkillsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +75,11 @@
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
+		A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
+		A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentProjectsViewCell.swift; sourceTree = "<group>"; };
+		A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentProjectsViewCell.xib; sourceTree = "<group>"; };
+		A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsViewCell.swift; sourceTree = "<group>"; };
+		A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +117,12 @@
 				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
 				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
 				A374D862239950AA005AA0A2 /* LabelMacCell.swift */,
+				A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */,
+				A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */,
 				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
+				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
+				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
+				A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
 				A38445E3237AEF7000E0C78A /* UserViewController.swift */,
@@ -242,8 +257,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3F2D68C23DCA44E003FAB32 /* CurrentProjectsViewCell.xib in Resources */,
 				A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */,
 				A3C076872362FE260098A25F /* Assets.xcassets in Resources */,
+				A3F2D69023DCC64D003FAB32 /* SkillsViewCell.xib in Resources */,
 				A3C076822362FE220098A25F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,17 +276,20 @@
 				A326F2932373066D009D3E12 /* NetworkService.swift in Sources */,
 				A354918D237072A40056D05B /* SearchTableView.swift in Sources */,
 				A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */,
+				A3F2D68B23DCA44E003FAB32 /* CurrentProjectsViewCell.swift in Sources */,
 				A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */,
 				A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */,
 				A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */,
 				A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */,
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
+				A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
 				A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */,
 				A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */,
 				A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */,
 				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
+				A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */,
 				A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */,

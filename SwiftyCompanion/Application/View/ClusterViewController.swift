@@ -172,7 +172,6 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             emptyMacCell.locationLabel.text = location
             return emptyMacCell
         }
-        
     }
     
     func getLocation(pos: Int, row: Int) -> String {
