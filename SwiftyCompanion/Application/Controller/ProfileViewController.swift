@@ -32,7 +32,13 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
             vc.ProjectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
             vc.token = self.myInfo.tokenJson!["access_token"] as? String
             navigationController?.pushViewController(vc, animated: true)
-            //            present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func tapAllSkills(_sender: Any?) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "AllSkills") as? AllSkillsViewController {
+            vc.skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills as? [Skills]
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -108,6 +114,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     func fetchSomeSkillsData()-> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SomeSkillsCell") as! SkillsViewCell
+        cell.moreSkillsButton.addTarget(self, action: #selector(ProfileViewController.tapAllSkills(_sender:)), for: .touchUpInside)
         cell.setBordersToButton()
         guard let skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills else { return cell }
         cell.skillNameOne.text = skills[0]?.name

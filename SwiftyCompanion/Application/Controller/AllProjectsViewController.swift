@@ -21,9 +21,6 @@ class AllProjectsViewController: UIViewController {
     
     override func viewDidLoad() {
         getNeededProjects()
-//        for i in 0..<NeededProjects.count {
-//            print(NeededProjects[i])
-//        }
         projectsTableView.delegate = self
         projectsTableView.dataSource = self
     }

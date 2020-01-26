@@ -22,6 +22,9 @@ class SkillsViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    @IBAction func tapAllSkills(_ sender: Any) {
+        
+    }
     
     public func setBordersToButton() {
         moreSkillsButton.layer.borderWidth = 1.0
