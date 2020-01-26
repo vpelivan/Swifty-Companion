@@ -26,5 +26,4 @@ class ProfileViewCell: UITableViewCell {
    @IBOutlet weak var profileExamsLabel: UILabel!
    @IBOutlet weak var profileCorrectionLabel: UILabel!
    @IBOutlet weak var backgroundImageView: UIImageView!
-    
 }

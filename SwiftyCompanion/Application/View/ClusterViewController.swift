@@ -82,19 +82,8 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             let login = clusterDict["\(location)"]??.user?.login
             self.userViewName.text = login
             self.userViewPicture.image = pictureDict["\(location)"] as? UIImage
-//            if let url = URL(string: "https://cdn.intra.42.fr/users/\(login ?? "").jpg") {
-//                let session = URLSession.shared
-//                session.dataTask(with: url) {(data, response, error) in
-//                    DispatchQueue.main.async {
-//                        if let data = data, let image = UIImage(data: data) {
-//                        }
-//                    }
-//                }.resume()
-//            }
             self.userViewButton.setTitle("View Profile", for: .normal)
             self.userViewLocation.text = location
-//            let time = self.clusterDict["\(location)"]??.begin_at!
-//            let begin = String(time!.prefix(16)).replacingOccurrences(of: ".", with: " ")
             print(self.clusterDict["\(location)"]??.begin_at ?? "")
             var begin = String(self.clusterDict["\(location)"]??.begin_at ?? "")
             let dateFormatter = DateFormatter()
@@ -140,29 +129,12 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
                 loggedMacCell.textLabel.text = login
                 if self.pictureDict[location] == nil {
                     guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
-                    let session = URLSession.shared
-                    session.dataTask(with: url) {(data, response, error) in
-                        DispatchQueue.main.async {
-                            if let data = data, let image = UIImage(data: data) {
-                                self.pictureDict[location] = image
-                                loggedMacCell.imageView.image = image
-                            }
-                        }
-                    }.resume()
+                    NetworkService.shared.getImage(from: url) { image in
+                        loggedMacCell.imageView.image = image
+                    }
                 } else {
                     loggedMacCell.imageView.image = pictureDict["\(location)"] as? UIImage
                 }
-
-                
-//                guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { print("fail"); return loggedMacCell}
-//                let session = URLSession.shared
-//                session.dataTask(with: url) {(data, response, error) in
-//                    DispatchQueue.main.async {
-//                        if let data = data, let image = UIImage(data: data) {
-//                            loggedMacCell.imageView.image = image
-//                        }
-//                    }
-//                    }.resume()
             }
             return loggedMacCell
         }
@@ -238,17 +210,7 @@ extension ClusterViewController {
                 self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
                 for i in 0..<self.ClusterLoggedUsers.count {
                     if self.ClusterLoggedUsers[i]?.end_at == nil {
-//                        let login = self.ClusterLoggedUsers[i]?.user?.login
                         self.clusterDict.updateValue(self.ClusterLoggedUsers[i], forKey: self.ClusterLoggedUsers[i]?.host ?? "empty")
-//                        guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login ?? "0").jpg") else { return }
-//                        let session = URLSession.shared
-//                        session.dataTask(with: url) {(data, response, error) in
-//                            DispatchQueue.main.async {
-//                                if let data = data, let image = UIImage(data: data) {
-//                                    self.pictureDict.updateValue(image, forKey: self.ClusterLoggedUsers[i]?.host ?? "empty")
-//                                }
-//                            }
-//                        }.resume()
                     }
                 }
                 completion()

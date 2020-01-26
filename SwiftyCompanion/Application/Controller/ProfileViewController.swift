@@ -24,9 +24,10 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
+        tableView.register(UINib(nibName: "SkillsViewCell", bundle: nil), forCellReuseIdentifier: "SomeSkillsCell")
     }
 
-    @IBAction func tapAllProjects(_ sender: UIButton) {
+    @objc func tapAllProjects(_ sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
             vc.ProjectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
             vc.token = self.myInfo.tokenJson!["access_token"] as? String
@@ -69,10 +70,9 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     func fetchCurrentProjectsData() -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentProjectsCell") as! CurrentProjectsViewCell
-        cell.allProjectsButton.layer.borderWidth = 1.0
-        cell.allProjectsButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
+        cell.setBorderdersToButton()
+        cell.allProjectsButton.addTarget(self, action: #selector(ProfileViewController.tapAllProjects(_:)), for: .touchUpInside)
         getInProgressProjects()
-        print("Number of Projects: ", projectsNum)
         switch projectsNum {
         case 1:
             cell.projectNameOne.isHidden = false
@@ -106,8 +106,17 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         return cell
     }
     
-    func fetchSomeSkillsData(indexPath: IndexPath)-> UITableViewCell {
-        return UITableViewCell()
+    func fetchSomeSkillsData()-> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SomeSkillsCell") as! SkillsViewCell
+        cell.setBordersToButton()
+        guard let skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills else { return cell }
+        cell.skillNameOne.text = skills[0]?.name
+        cell.levelOne.text = String(skills[0]?.level ?? 0.0)
+        cell.skillNameTwo.text = skills[1]?.name
+        cell.levelTwo.text = String(skills[1]?.level ?? 0.0)
+        cell.skillNameThree.text = skills[2]?.name
+        cell.levelThree.text = String(skills[2]?.level ?? 0.0)
+        return cell
     }
     
     func fetchProfileData(indexPath: IndexPath) -> UITableViewCell {
@@ -122,23 +131,14 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         } else {
             lvlProgressRest = lvlFloat
         }
-        guard let url = URL(string: (userData?.image_url)!) else { return cell }
-        guard let url1 = URL(string: (myInfo.coalitionInfo?.cover_url)!) else { return cell }
-        let session = URLSession.shared
-        session.dataTask(with: url) {(data, response, error) in
-            DispatchQueue.main.async {
-                if let data = data, let image = UIImage(data: data) {
-                    cell.profileImageView.image = image
-                }
-            }
-            }.resume()
-        session.dataTask(with: url1) {(data, response, error) in
-            DispatchQueue.main.async {
-                if let data = data, let image = UIImage(data: data) {
-                    cell.backgroundImageView.image = image
-                }
-            }
-            }.resume()
+        guard let imageUrl = URL(string: (userData?.image_url)!) else { return cell }
+        guard let coverUrl = URL(string: (myInfo.coalitionInfo?.cover_url)!) else { return cell }
+        NetworkService.shared.getImage(from: imageUrl) {image in
+            cell.profileImageView.image = image
+        }
+        NetworkService.shared.getImage(from: coverUrl) { image in
+            cell.backgroundImageView.image = image
+        }
         cell.profileNameLabel.text = userData?.first_name
         cell.profileSurnameLabel.text = userData?.last_name
         cell.profileLoginLabel.text = userData?.login
@@ -161,7 +161,6 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills.count else { return 0 }
         return 3
     }
     
@@ -171,8 +170,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return fetchProfileData(indexPath: indexPath)
         case 1:
             return fetchCurrentProjectsData()
-//        case 2:
-//            return fetchSomeSkillsData(indexPath: indexPath)
+        case 2:
+            return fetchSomeSkillsData()
         default:
             return UITableViewCell()
         }

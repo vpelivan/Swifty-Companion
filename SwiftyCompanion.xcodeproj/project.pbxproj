@@ -112,6 +112,7 @@
 				A3865D84238D59E5007540D0 /* EventTableViewCell.swift */,
 				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
 				A3865D8A238D808C007540D0 /* TableViewCell.swift */,
+				A354918E237077F00056D05B /* LoginController.swift */,
 				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
 				A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */,
 				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
@@ -133,7 +134,6 @@
 		A326F2882372FD6D009D3E12 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A354918E237077F00056D05B /* LoginController.swift */,
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,

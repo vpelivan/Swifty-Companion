@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkService {
     static let shared = NetworkService()
@@ -26,5 +27,14 @@ class NetworkService {
         }
     }
     
-    
+    public func getImage(from url: URL, completion: @escaping (UIImage) -> ()) {
+        let session = URLSession.shared
+        session.dataTask(with: url) {(data, response, error) in
+        DispatchQueue.main.async {
+            if let data = data, let image = UIImage(data: data) {
+                completion(image)
+            }
+        }
+        }.resume()
+    }
 }
