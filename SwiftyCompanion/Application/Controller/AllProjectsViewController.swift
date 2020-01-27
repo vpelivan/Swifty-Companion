@@ -23,6 +23,7 @@ class AllProjectsViewController: UIViewController {
         getNeededProjects()
         projectsTableView.delegate = self
         projectsTableView.dataSource = self
+        projectsTableView.tableFooterView = UIView(frame: .zero)
     }
     
     func getNeededProjects() {
@@ -80,6 +81,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
                 vc.projectInfo = self.NeededProjects[indexPath.row]
                 vc.token = self.token!
                 vc.projectsInfo = self.ProjectsInfo
+                navigationController?.toolbar.tintColor = colorCyan
                 navigationController?.pushViewController(vc, animated: true)
             }
         }

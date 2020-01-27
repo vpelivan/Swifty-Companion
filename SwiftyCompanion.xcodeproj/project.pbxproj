@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571A5F1D237F41ED0014C1BC /* Projects.swift */; };
+		575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */; };
+		575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D923DE59E8009CC511 /* TeamsViewCell.swift */; };
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
 		A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29A237320E8009D3E12 /* UserProfile.swift */; };
 		A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29C237326C2009D3E12 /* AuthUser.swift */; };
@@ -47,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		571A5F1D237F41ED0014C1BC /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
+		575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionCell.swift; sourceTree = "<group>"; };
+		575A01D923DE59E8009CC511 /* TeamsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewCell.swift; sourceTree = "<group>"; };
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A326F29A237320E8009D3E12 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		A326F29C237326C2009D3E12 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
 				A374D862239950AA005AA0A2 /* LabelMacCell.swift */,
 				A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */,
+				575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */,
 				A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */,
 				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
 				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
@@ -130,6 +135,7 @@
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
 				A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
+				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
 				A38445E3237AEF7000E0C78A /* UserViewController.swift */,
 			);
@@ -296,6 +302,7 @@
 				A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */,
 				A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */,
 				A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */,
+				575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */,
 				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
 				A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
@@ -306,6 +313,7 @@
 				A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */,
 				A3A34BC423859E29009DAB75 /* ProjectTableViewCell.swift in Sources */,
 				A354918F237077F00056D05B /* LoginController.swift in Sources */,
+				575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */,
 				571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */,
 				A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,

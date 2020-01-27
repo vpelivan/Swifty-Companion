@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
         tableView.register(UINib(nibName: "SkillsViewCell", bundle: nil), forCellReuseIdentifier: "SomeSkillsCell")
+        tableView.tableFooterView = UIView(frame: .zero)
     }
 
     @objc func tapAllProjects(_ sender: Any?) {

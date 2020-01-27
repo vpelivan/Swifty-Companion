@@ -17,6 +17,7 @@ class EventsViewController: UIViewController {
         getExamInfo()
         eventsTableView.delegate = self
         eventsTableView.dataSource = self
+        eventsTableView.tableFooterView = UIView(frame: .zero)
     }
 }
 

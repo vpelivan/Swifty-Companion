@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SingleProjectViewController: UIViewController {
     
@@ -27,11 +28,11 @@ class SingleProjectViewController: UIViewController {
         navigationItem.title = projectInfo.project?.name
 //        print(projectInfo)
         getPoolDays()
-//        getProjectInfo()
+        getProjectInfo()
 //        getTeamsInfo()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        tableView.tableFooterView = UIView(frame: .zero)
     }
 
     
@@ -41,9 +42,31 @@ class SingleProjectViewController: UIViewController {
                     neededProjects.append(projectsInfo[i])
                 }
             }
-        if neededProjects.count == 0 {
-//            tableView.isHidden = true
+    }
+    
+    func fetchPoolDays(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PoolDaysCell", for: indexPath) as! PoolDayTableViewCell
+        cell.dayName.text = neededProjects[indexPath.row - 3].project?.name
+        cell.dayStatus.text = String(neededProjects[indexPath.row - 3].final_mark ?? 0)
+        if neededProjects[indexPath.row - 3].validated == 1 {
+            cell.dayStatus.textColor = colorGreen
+            cell.dayName.textColor = colorGreen
+        } else {
+            cell.dayStatus.textColor = colorRed
+            cell.dayName.textColor = colorRed
         }
+        return cell
+    }
+    
+    func fetchTeamInfo(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsCell", for: indexPath) as! TeamsViewCell
+        
+        return cell
+    }
+    
+    func fetchProjectDescription(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as! ProjectDescriptionCell
+        return cell
     }
     
     func fetchProjectInfo(for indexPath: IndexPath) -> UITableViewCell {
@@ -78,8 +101,9 @@ class SingleProjectViewController: UIViewController {
 }
 
 extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3 + neededProjects.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,30 +113,31 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
         case 0:
             let cell = fetchProjectInfo(for: indexPath)
             return cell
+        case 1:
+            let cell = fetchProjectDescription(for: indexPath)
+            return cell
+        case 2:
+            let cell = fetchTeamInfo(for: indexPath)
+            return cell
+        case 3...:
+            let cell = fetchPoolDays(for: indexPath)
+            return cell
         default:
             break
         }
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "PooldDaysCell", for: indexPath) as! PoolDayTableViewCell
-//        cell.dayName.text = neededProjects[indexPath.row].project?.name
-//        cell.dayStatus.text = String(neededProjects[indexPath.row].final_mark ?? 0)
-//        if neededProjects[indexPath.row].validated == 1 {
-//            cell.dayStatus.textColor = colorGreen
-//            cell.dayName.textColor = colorGreen
-//        } else {
-//            cell.dayStatus.textColor = colorRed
-//            cell.dayName.textColor = colorRed
-//        }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
-//            vc.projectInfo = self.neededProjects[indexPath.row]
-//            vc.token = self.token!
-//            vc.projectsInfo = self.projectsInfo
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
+        if indexPath.row >= 3 {
+            if let vc = storyboard?.instantiateViewController(withIdentifier:   "projectInfo") as? SingleProjectViewController {
+                vc.projectInfo = self.neededProjects[indexPath.row - 3]
+                vc.token = self.token!
+                vc.projectsInfo = self.projectsInfo
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }
 
@@ -152,25 +177,25 @@ extension SingleProjectViewController {
 //            }.resume()
 //    }
     
-//    func getProjectInfo() {
-//        let intraURL = AuthUser.shared.intraURL
-//        let project_id = projectInfo.project?.id
-//        let urlDescription = NSURL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(project_id ?? 0)&page[size]=100")
-//        print(project_id ?? 0)
-//        let request = NSMutableURLRequest(url: urlDescription! as URL)
-//        let sessionDescription = URLSession.shared
-//
-//        request.httpMethod = "GET"
-//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//
-//
-//        sessionDescription.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//            do
-//            {
-//                guard let data = data else { return }
-////                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
-////                print(json)
+    func getProjectInfo() {
+        let intraURL = AuthUser.shared.intraURL
+        let project_id = projectInfo.project?.id
+        let urlDescription = NSURL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(project_id ?? 0)&page[size]=100")
+        print(project_id ?? 0)
+        let request = NSMutableURLRequest(url: urlDescription! as URL)
+        let sessionDescription = URLSession.shared
+
+        request.httpMethod = "GET"
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+
+
+        sessionDescription.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            do
+            {
+                guard let data = data else { return }
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as?  [NSDictionary]
+                print(json)
 //                self.projectSessions = try JSONDecoder().decode([ProjectsUsers]?.self, from: data)
 //                DispatchQueue.main.async {
 //                    if let count = self.projectSessions?[0].project_sessions.count {
@@ -193,11 +218,11 @@ extension SingleProjectViewController {
 //                        }
 //                    }
 //                }
-//            }
-//            catch let error {
-//                return print(error)
-//            }
-//            }.resume()
-//    }
+            }
+            catch let error {
+                return print(error)
+            }
+            }.resume()
+    }
 }
 
