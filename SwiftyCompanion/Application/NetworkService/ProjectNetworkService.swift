@@ -40,6 +40,7 @@ class ProjectNetworkService {
     
     public func getTeamsInfo(url: URL, completion: @escaping (NSDictionary?) -> ()) {
             guard let token = AuthUser.shared.token else { return }
+//        var projectTeams: Teams
 
             let request = NSMutableURLRequest(url: url as URL)
             let sessionUserProject = URLSession.shared
@@ -50,6 +51,7 @@ class ProjectNetworkService {
                 do {
                     guard let data = data else { return }
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+//                    projectSessions = try JSONDecoder().decode([ProjectsUsers]?.self, from: data)
                     completion(json)
                 }
                 catch let error {
