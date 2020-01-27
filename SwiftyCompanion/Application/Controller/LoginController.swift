@@ -97,6 +97,7 @@ extension LoginController {
                 if json!["error"] == nil {
                     self.tokenJson = NSDictionary(dictionary: json!)
                     print(self.tokenJson ?? 0)
+                    AuthUser.shared.token = self.tokenJson!["access_token"] as? String
                     completion(self.tokenJson!)
                 } else {
                     print("Json error")

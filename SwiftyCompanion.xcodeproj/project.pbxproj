@@ -13,6 +13,7 @@
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
 		A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29A237320E8009D3E12 /* UserProfile.swift */; };
 		A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29C237326C2009D3E12 /* AuthUser.swift */; };
+		A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */; };
 		A354918D237072A40056D05B /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918C237072A40056D05B /* SearchTableView.swift */; };
 		A354918F237077F00056D05B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918E237077F00056D05B /* LoginController.swift */; };
 		A3577237237C1CCD009284CB /* Coalition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3577236237C1CCD009284CB /* Coalition.swift */; };
@@ -54,6 +55,7 @@
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A326F29A237320E8009D3E12 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		A326F29C237326C2009D3E12 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectNetworkService.swift; sourceTree = "<group>"; };
 		A354918C237072A40056D05B /* SearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableView.swift; sourceTree = "<group>"; };
 		A354918E237077F00056D05B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A3577236237C1CCD009284CB /* Coalition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coalition.swift; sourceTree = "<group>"; };
@@ -120,7 +122,6 @@
 				A3865D84238D59E5007540D0 /* EventTableViewCell.swift */,
 				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
 				A3865D8A238D808C007540D0 /* TableViewCell.swift */,
-				A354918E237077F00056D05B /* LoginController.swift */,
 				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
 				A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */,
 				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
@@ -145,6 +146,7 @@
 		A326F2882372FD6D009D3E12 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A354918E237077F00056D05B /* LoginController.swift */,
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				A326F2922373066D009D3E12 /* NetworkService.swift */,
+				A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */,
 				A3A9965823DE151D00688199 /* AllSkillsViewController.swift in Sources */,
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
+				A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */,
 				A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,

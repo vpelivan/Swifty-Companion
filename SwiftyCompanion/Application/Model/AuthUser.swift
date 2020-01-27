@@ -16,5 +16,6 @@ class AuthUser {
     let intraURL = "https://api.intra.42.fr/"
     let scope = "public+forum+projects+profile+elearning+tig"
     var tokenJson: NSDictionary?
+    var token: String?
     init() {}
 }

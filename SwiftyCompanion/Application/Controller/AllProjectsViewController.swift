@@ -9,7 +9,7 @@
 import UIKit
 
 class AllProjectsViewController: UIViewController {
-   
+    
     let colorCyan = UIColor(red: 82.0/255.0, green: 183.0/255.0, blue: 186.0/255.0, alpha: 1.0)
     let colorRed = UIColor(red: 223.0/255.0, green: 134.0/255.0, blue: 125.0/255.0, alpha: 1.0)
     let colorGreen = UIColor (red: 115.0/255.0, green: 182.0/255.0, blue: 102.0/255.0, alpha: 1.0)
@@ -36,7 +36,7 @@ class AllProjectsViewController: UIViewController {
 }
 
 extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return NeededProjects.count
     }
@@ -47,7 +47,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
         let name = NeededProjects[indexPath.row].project?.name
         let validated = NeededProjects[indexPath.row].validated
         if status == "in_progress" || status == "searching_a_group" ||
-        status == "creating_group" {
+            status == "creating_group" {
             cell.nameLabel.text = name
             cell.nameLabel.textColor = self.colorCyan
             cell.statusLabel.textColor = self.colorCyan
@@ -76,13 +76,21 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if tableView == self.projectsTableView {
-            if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
-                vc.projectInfo = self.NeededProjects[indexPath.row]
-                vc.token = self.token!
-                vc.projectsInfo = self.ProjectsInfo
-                navigationController?.toolbar.tintColor = colorCyan
-                navigationController?.pushViewController(vc, animated: true)
+        let intraURL = AuthUser.shared.intraURL
+        guard let projectId = self.NeededProjects[indexPath.row].project?.id else { return }
+        guard let projectInfoUrl = URL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(projectId)&page[size]=100") else { return }
+        guard let urlUserProject = URL(string: "\(intraURL)/v2/projects_users/\(self.NeededProjects[indexPath.row].id ?? 0)") else { return }
+        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
+            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { json in
+                print(json ?? "")
+                DispatchQueue.main.async {
+                    guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
+                    vc.projectSessions = projectSessions
+                    vc.projectInfo = self.NeededProjects[indexPath.row]
+                    vc.token = self.token!
+                    vc.projectsInfo = self.ProjectsInfo
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
         }
     }

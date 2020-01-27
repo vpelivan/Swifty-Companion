@@ -9,5 +9,5 @@
 import UIKit
 
 class ProjectDescriptionCell: UITableViewCell {
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var descriptionLabel: UILabel!
 }

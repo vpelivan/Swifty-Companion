@@ -34,12 +34,16 @@ struct ProjectSession: Decodable {
     var difficulty: Int?
     var estimate_time: Int?
     var solo: Bool?
-    var objectives: [String?]
+//    var objectives: [String?]
     var scales: [Scales?]
 }
 
 struct Scales: Decodable {
     var correction_number: Int?
+}
+
+struct Teams: Decodable {
+    
 }
 
 //struct UserProjectInfo: Decodable {
