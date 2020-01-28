@@ -42,10 +42,24 @@ struct Scales: Decodable {
     var correction_number: Int?
 }
 
-struct Teams: Decodable {
-    
+struct TeamsData: Decodable {
+    var teams: [Teams?]
 }
 
+struct Teams: Decodable {
+    var name: String?
+    var created_at: String?
+    var updated_at: String?
+    var users: [TeamUsers?]
+}
+
+struct TeamUsers: Decodable {
+    var id: Int?
+    var leader: Bool?
+    var login: String?
+    var url: String?
+    
+}
 //MARK: FDF TEAMS:
 
 //{
