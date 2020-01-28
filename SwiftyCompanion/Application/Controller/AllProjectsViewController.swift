@@ -33,8 +33,12 @@ class AllProjectsViewController: UIViewController {
             }
         }
     }
-}
+    
+//    func getNeededTeam(from json: NSDictionary?) -> Teams {
+//
+//    }
 
+}
 extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,14 +85,14 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
         guard let projectInfoUrl = URL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(projectId)&page[size]=100") else { return }
         guard let urlUserProject = URL(string: "\(intraURL)/v2/projects_users/\(self.NeededProjects[indexPath.row].id ?? 0)") else { return }
         ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
-            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { json in
-                print(json ?? "")
+            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams in
                 DispatchQueue.main.async {
                     guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
                     vc.projectSessions = projectSessions
                     vc.projectInfo = self.NeededProjects[indexPath.row]
                     vc.token = self.token!
                     vc.projectsInfo = self.ProjectsInfo
+                    vc.teams = teams
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }

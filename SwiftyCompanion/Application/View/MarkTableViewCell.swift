@@ -17,8 +17,6 @@ class MarkTableViewCell: UITableViewCell {
     @IBOutlet weak var imageStatus: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var projectType: UILabel!
-    @IBOutlet weak var registredLabel: UILabel!
-    @IBOutlet weak var finishedLabel: UILabel!
     @IBOutlet weak var correctionsLabel: UILabel!
     
     override func awakeFromNib() {

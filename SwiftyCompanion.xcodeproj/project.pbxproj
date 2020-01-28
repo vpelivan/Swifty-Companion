@@ -20,6 +20,9 @@
 		A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FCDA223883A0800535212 /* SingleProjectViewController.swift */; };
 		A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D6E2396F47300403959 /* CustomLayout.swift */; };
 		A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D702396F6B800403959 /* LoggedMacCell.swift */; };
+		A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85223E062400065F627 /* LoginNetworkService.swift */; };
+		A36AD85523E0942D0065F627 /* OtherMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85423E0942D0065F627 /* OtherMethods.swift */; };
+		A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */; };
 		A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D862239950AA005AA0A2 /* LabelMacCell.swift */; };
 		A374D865239953BB005AA0A2 /* ClusterUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D864239953BB005AA0A2 /* ClusterUsers.swift */; };
 		A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38445E3237AEF7000E0C78A /* UserViewController.swift */; };
@@ -62,6 +65,9 @@
 		A35FCDA223883A0800535212 /* SingleProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleProjectViewController.swift; sourceTree = "<group>"; };
 		A36A3D6E2396F47300403959 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		A36A3D702396F6B800403959 /* LoggedMacCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedMacCell.swift; sourceTree = "<group>"; };
+		A36AD85223E062400065F627 /* LoginNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNetworkService.swift; sourceTree = "<group>"; };
+		A36AD85423E0942D0065F627 /* OtherMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMethods.swift; sourceTree = "<group>"; };
+		A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeammateCollectionViewCell.swift; sourceTree = "<group>"; };
 		A374D862239950AA005AA0A2 /* LabelMacCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelMacCell.swift; sourceTree = "<group>"; };
 		A374D864239953BB005AA0A2 /* ClusterUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterUsers.swift; sourceTree = "<group>"; };
 		A38445E3237AEF7000E0C78A /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				A326F29C237326C2009D3E12 /* AuthUser.swift */,
+				A36AD85423E0942D0065F627 /* OtherMethods.swift */,
 				A326F29A237320E8009D3E12 /* UserProfile.swift */,
 				A3577236237C1CCD009284CB /* Coalition.swift */,
 				571A5F1D237F41ED0014C1BC /* Projects.swift */,
@@ -135,6 +142,7 @@
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
 				A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */,
+				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
 				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
@@ -184,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				A326F2922373066D009D3E12 /* NetworkService.swift */,
+				A36AD85223E062400065F627 /* LoginNetworkService.swift */,
 				A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */,
 			);
 			path = NetworkService;
@@ -312,14 +321,17 @@
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */,
 				A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */,
+				A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */,
 				A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */,
 				A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */,
 				A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */,
 				A3A34BC423859E29009DAB75 /* ProjectTableViewCell.swift in Sources */,
 				A354918F237077F00056D05B /* LoginController.swift in Sources */,
+				A36AD85523E0942D0065F627 /* OtherMethods.swift in Sources */,
 				575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */,
 				571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */,
 				A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */,
+				A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

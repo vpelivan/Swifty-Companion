@@ -10,6 +10,15 @@ import UIKit
 
 class TeamsViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var teamName: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var createdAt: UILabel!
+    @IBOutlet weak var closedAt: UILabel!
+    @IBOutlet weak var updatedAt: UILabel!
+    @IBOutlet weak var validated: UILabel!
+    @IBOutlet weak var finalMark: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +30,16 @@ class TeamsViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension TeamsViewCell {
+    func setCollectionViewDataSourceDelegate
+        <D: UICollectionViewDelegate & UICollectionViewDataSource>
+        (_ dataSourceDelegate: D, forRow row: Int)
+    {
+        collectionView.delegate = dataSourceDelegate
+        collectionView.dataSource = dataSourceDelegate
+        
+        collectionView.reloadData()
+    }
 }
