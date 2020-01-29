@@ -21,17 +21,13 @@ class ProjectNetworkService {
         let session = URLSession.shared
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
-            do
-            {
+            do {
                 guard let data = data else { return }
                 projectSessions = try JSONDecoder().decode([ProjectsUsers]?.self, from: data)
-                print(projectSessions)
                 completion(projectSessions)
-            }
-            catch let error {
+            } catch let error {
                 return print(error)
             }
         }.resume()
@@ -50,8 +46,7 @@ class ProjectNetworkService {
                     guard let data = data else { return }
                     let teams = try JSONDecoder().decode(projectTeams?.self, from: data)
                     completion(teams)
-                }
-                catch let error {
+                } catch let error {
                     print(error)
                 }
                 }.resume()

@@ -216,7 +216,7 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row >= teamsCount + 1 {
+        if indexPath.row >= teamsCount + 2 {
             let intraURL = AuthUser.shared.intraURL
             guard let projectId = self.neededProjects[indexPath.row - (teamsCount + 2)].project?.id else { return }
             guard let projectInfoUrl = URL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(projectId)&page[size]=100") else { return }

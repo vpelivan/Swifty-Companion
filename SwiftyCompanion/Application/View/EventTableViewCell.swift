@@ -20,8 +20,8 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var howLongLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     var eventType: String = ""
-    var colorCyan = UIColor(red: 82.0/255.0, green: 183.0/255.0, blue: 186.0/255.0, alpha: 1.0)
-    var colorRed = UIColor(red: 223.0/255.0, green: 134.0/255.0, blue: 125.0/255.0, alpha: 1.0)
+    var colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    var colorRed = #colorLiteral(red: 0.8473085761, green: 0.3895412087, blue: 0.4345907271, alpha: 1)
     
     override func awakeFromNib() {
         super.awakeFromNib()

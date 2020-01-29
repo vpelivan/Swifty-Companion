@@ -124,13 +124,18 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             
         else if clusterDict["\(location)"] != nil {
             let loggedMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoggedMacCell", for: indexPath) as! LoggedMacCell
-            loggedMacCell.imageView.image = UIImage()
             if let login = clusterDict["\(location)"]??.user?.login {
                 loggedMacCell.textLabel.text = login
+                loggedMacCell.activityIndicator.isHidden = false
+                loggedMacCell.activityIndicator.startAnimating()
+                loggedMacCell.imageView.isHidden = true
                 if self.pictureDict[location] == nil {
                     guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
                     NetworkService.shared.getImage(from: url) { image in
+                        loggedMacCell.activityIndicator.stopAnimating()
+                        loggedMacCell.activityIndicator.isHidden = true
                         loggedMacCell.imageView.image = image
+                        loggedMacCell.imageView.isHidden = false
                     }
                 } else {
                     loggedMacCell.imageView.image = pictureDict["\(location)"] as? UIImage
