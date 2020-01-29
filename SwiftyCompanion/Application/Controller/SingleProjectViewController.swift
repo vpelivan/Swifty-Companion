@@ -100,11 +100,50 @@ class SingleProjectViewController: UIViewController {
         return cell
     }
     
+    func getWeeksOrDays(from value: Int?) -> String {
+        if let value = value {
+            let dayMeasure: Int = value / 86400
+            let weekMeasure: Int = value / 604800
+            switch dayMeasure {
+            case 1:
+                return "one day"
+            case 2, 3, 4, 5, 6:
+                return "\(dayMeasure) days"
+            default:
+                break
+            }
+            switch weekMeasure {
+            case 1:
+                return "one week"
+            case 2...:
+                return "\(weekMeasure) weeks"
+            default:
+                break
+            }
+        }
+        return "no time"
+    }
     
     func fetchProjectInfo(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MarkCell", for: indexPath) as! MarkTableViewCell
-        guard let solo = projectSessions?[0].project_sessions[0]?.solo,
-            let difficulty = projectSessions?[0].project_sessions[0]?.difficulty else { return cell }
+        var solo: Bool = true
+        var difficulty: Int = 100
+        var time: Int = 0
+        guard let sessions = projectSessions?[0].project_sessions else { return cell }
+        
+        for i in 0..<sessions.count {
+            if sessions[i]?.campus_id == 8 && sessions[i]?.difficulty != nil {
+                solo = sessions[i]!.solo!
+                difficulty = sessions[i]!.difficulty!
+                time = sessions[i]!.estimate_time!
+                break
+            } else if sessions[i]?.difficulty != nil && sessions[i]?.estimate_time != nil && sessions[i]?.solo != nil {
+                solo = sessions[i]!.solo!
+                difficulty = sessions[i]!.difficulty!
+                time = sessions[i]!.estimate_time!
+            }
+            
+        }
         guard let correctionsArray = projectSessions?[0].project_sessions[0] else { return cell }
         for i in 0..<correctionsArray.scales.count {
             if let number = correctionsArray.scales[i]?.correction_number {
@@ -117,7 +156,8 @@ class SingleProjectViewController: UIViewController {
                 }
             }
         }
-        cell.projectType.text = "\(solo ? "solo" : "group") - 2 weeks - \(difficulty)xp"
+        
+        cell.projectType.text = "\(solo ? "solo" : "group") - \(getWeeksOrDays(from: time)) - \(difficulty)xp"
         
         
         if projectInfo.status == "in_progress" || projectInfo.status == "searching_a_group"
