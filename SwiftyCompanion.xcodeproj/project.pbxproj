@@ -13,6 +13,7 @@
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
 		A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29A237320E8009D3E12 /* UserProfile.swift */; };
 		A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29C237326C2009D3E12 /* AuthUser.swift */; };
+		A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E192923E75A1C00DEDA20 /* TokenModel.swift */; };
 		A34A565723E1BA37006BB676 /* EventsNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34A565623E1BA37006BB676 /* EventsNetworkService.swift */; };
 		A34A565923E1DB8D006BB676 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34A565823E1DB8D006BB676 /* Events.swift */; };
 		A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */; };
@@ -60,6 +61,7 @@
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A326F29A237320E8009D3E12 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		A326F29C237326C2009D3E12 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		A32E192923E75A1C00DEDA20 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		A34A565623E1BA37006BB676 /* EventsNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsNetworkService.swift; sourceTree = "<group>"; };
 		A34A565823E1DB8D006BB676 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectNetworkService.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				A3577236237C1CCD009284CB /* Coalition.swift */,
 				571A5F1D237F41ED0014C1BC /* Projects.swift */,
 				A374D864239953BB005AA0A2 /* ClusterUsers.swift */,
+				A32E192923E75A1C00DEDA20 /* TokenModel.swift */,
 				A34A565823E1DB8D006BB676 /* Events.swift */,
 			);
 			path = Model;
@@ -315,6 +318,7 @@
 				A3A9965823DE151D00688199 /* AllSkillsViewController.swift in Sources */,
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
 				A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */,
+				A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */,
 				A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,

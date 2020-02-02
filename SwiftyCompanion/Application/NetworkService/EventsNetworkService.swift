@@ -14,7 +14,7 @@ class EventsNeworkSevice {
     private init() {}
     
     public func getEvents(from url: URL, completion: @escaping ([Event?]) -> ()) {
-        guard let token = AuthUser.shared.token else { return }
+        guard let token = AuthUser.shared.token?.accessToken else { return }
         let request = NSMutableURLRequest(url: url)
         let session = URLSession.shared
         

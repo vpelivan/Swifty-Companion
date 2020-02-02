@@ -13,7 +13,7 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    //    public func getData(url: URL, completion: @escaping (Any) -> ()) {
+    //    public func getData(url: URL, completion: @escaping () -> ()) {
     //        let session = URLSession.shared
     //
     //        session.dataTask(with: url) { (data, response, error) in
@@ -27,7 +27,7 @@ class NetworkService {
     //        }
     //    }
     public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any) -> ()) {
-        guard let token = AuthUser.shared.token else { return }
+        guard let token = AuthUser.shared.token?.accessToken else { return }
         
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "GET"

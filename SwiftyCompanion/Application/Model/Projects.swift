@@ -58,7 +58,7 @@ struct projectTeams: Decodable {
     }
 }
 
-// MARK: - Single Team
+// MARK: - Single Team (Project Teams)
 struct Team: Decodable {
     let closed: Bool?
     let closedAt, createdAt: String?
@@ -94,7 +94,7 @@ struct Team: Decodable {
     }
 }
 
-// MARK: - UserElement
+// MARK: - UserElement (Project Teams)
 struct UserElement: Decodable {
     let id: Int?
     let leader: Bool?

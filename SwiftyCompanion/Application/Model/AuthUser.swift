@@ -15,7 +15,6 @@ class AuthUser {
     let secretKey = "41a3ab521d7b5f7d0d402c019f7d73f0b8d10b2e32b506b2d88a3771930bee07"
     let intraURL = "https://api.intra.42.fr/"
     let scope = "public+forum+projects+profile+elearning+tig"
-    var tokenJson: NSDictionary?
-    var token: String?
+    var token: Token?
     init() {}
 }

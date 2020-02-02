@@ -199,7 +199,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 extension ClusterViewController {
     func getClusterInfo(num: Int, completion: @escaping () -> ()) {
-        let token = AuthUser.shared.tokenJson?["access_token"] as! String
+        guard let token = AuthUser.shared.token?.accessToken else { return }
         let intraURL = AuthUser.shared.intraURL
         let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
         let request = NSMutableURLRequest(url: url! as URL)

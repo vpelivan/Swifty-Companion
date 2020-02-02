@@ -11,7 +11,7 @@ import UIKit
 class AllSkillsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var skills: [Skills]!
+    var skills: [Skill]!
     
     override func viewDidLoad() {
         super.viewDidLoad()

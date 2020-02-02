@@ -15,7 +15,7 @@ class ProjectNetworkService {
     
     public func getProjectInfo(from url: URL, completion: @escaping ([ProjectsUsers]?) -> ()) {
         var projectSessions: [ProjectsUsers]?
-        guard let token = AuthUser.shared.token else { return }
+        guard let token = AuthUser.shared.token?.accessToken else { return }
         
         let request = NSMutableURLRequest(url: url as URL)
         let session = URLSession.shared
@@ -34,7 +34,7 @@ class ProjectNetworkService {
     }
     
     public func getTeamsInfo(url: URL, completion: @escaping (projectTeams?) -> ()) {
-            guard let token = AuthUser.shared.token else { return }
+        guard let token = AuthUser.shared.token?.accessToken else { return }
 
             let request = NSMutableURLRequest(url: url as URL)
             let sessionUserProject = URLSession.shared
