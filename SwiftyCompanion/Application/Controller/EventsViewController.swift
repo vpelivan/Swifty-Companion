@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class EventsViewController: UIViewController {
 
@@ -34,13 +35,15 @@ class EventsViewController: UIViewController {
     }
     
     func getDateFormat(from date: String?) -> String {
-         let dateFormatter = DateFormatter()
-             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:000'Z'"
-             
-        guard let beginDate = dateFormatter.date(from: date!) else { return "-"}
-        guard let month = Calendar.current.dateComponents([.month], from: beginDate).month else {return "-"}
-        let duration = String(month) + "h"
-        return(duration)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm.SSS'Z'"
+        if var date = date {
+            if let formattedDate = dateFormatter.date(from: date) {
+                date = dateFormatter.string(from: formattedDate)
+                return date
+            }
+        }
+        return "-"
     }
 }
 

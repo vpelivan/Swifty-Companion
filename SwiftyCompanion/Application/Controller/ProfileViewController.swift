@@ -17,12 +17,20 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     var myInfo: UserInfo!
     var inProgressProjects: [Projects?] = []
     var projectsNum: Int = 0
+    var myInf: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
         tableView.delegate = self
         tableView.dataSource = self
+        guard let url = URL(string: "https://api.intra.42.fr/v2/me") else { return }
+        NetworkService.shared.getData(into: User.self, from: url) { (User) in
+            self.myInf = User as? User
+            print(self.myInf!)
+        }
+        
+        
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
         tableView.register(UINib(nibName: "SkillsViewCell", bundle: nil), forCellReuseIdentifier: "SomeSkillsCell")
         tableView.tableFooterView = UIView(frame: .zero)
