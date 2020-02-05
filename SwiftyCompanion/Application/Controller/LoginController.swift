@@ -12,40 +12,42 @@ import AuthenticationServices
 class LoginController: UIViewController, ASWebAuthenticationPresentationContextProviding {
     
     @IBOutlet weak var logInButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var myInfo: UserData!
+    var coalitionData: [Coalition?] = []
+    var examsInternships: [ProjectsUsers?] = []
     let intraURL = AuthUser.shared.intraURL
     let callbackURI = AuthUser.shared.callbackURI
     let UID = AuthUser.shared.UID
-    var userData: User?
-    var coalitionData: [Coalition?] = []
-    var examsPassed: Int = 0
-    var internshipsPassed: Int = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         logInButton.layer.cornerRadius = 5.0
+        activityIndicator.isHidden = true
     }
     
     @IBAction func tapLogIn(_ sender: UIButton) {
-        guard let url = URL(string: "https://api.intra.42.fr/v2/me") else { return }
+        guard let url = URL(string: "\(intraURL)/v2/me") else { return }
         authorizeUser(context: self, completion: {
             NetworkService.shared.getData(into: UserData.self, from: url) { User in
                 self.myInfo = User as? UserData
-                print(self.myInfo!)
+                guard let userId = self.myInfo.id else { return }
+                guard let url = URL(string: "\(self.intraURL)/v2/users/\(userId)/coalitions") else { return }
+                NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition in
+                    self.coalitionData = Coalition as! [Coalition?]
+                    guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                    NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships in
+                        self.examsInternships = examsInternships as! [ProjectsUsers?]
+                        DispatchQueue.main.async {
+                            self.activityIndicator.isHidden = true
+                            self.activityIndicator.stopAnimating()
+                            self.performSegue(withIdentifier: "goToProfile", sender: nil)
+                        }
+                    }
+                }
             }
         })
-//        authorizeUser(context: self, completion: { tokenJson in
-//            self.getUserInfo(completion: {userInfo, coalitionInfo, examsPassed, internPassed in
-//                self.myInfo.profileInfo = userInfo
-//                self.myInfo.coalitionInfo = coalitionInfo
-//                self.myInfo.examsPassed = examsPassed
-//                self.myInfo.internPassed = internPassed
-//                self.myInfo.tokenJson = tokenJson
-//                DispatchQueue.main.async {
-//                    self.performSegue(withIdentifier: "goToProfile", sender: nil)
-//                }
-//            })
-//        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,6 +55,8 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
             if let navi = tabBar.viewControllers?[0] as? UINavigationController {
                 if let vc = navi.viewControllers.first as? ProfileViewController {
                     vc.myInfo = self.myInfo
+                    vc.coalitionData = self.coalitionData
+                    vc.examsInternships = self.examsInternships
                 }
             }
         }
@@ -76,6 +80,8 @@ extension LoginController {
             callbackURLScheme: callbackURI, completionHandler: { (url, error) in
             guard error == nil else { return }
             guard let url = url else { return }
+                self.activityIndicator.isHidden = false
+                self.activityIndicator.startAnimating()
                 self.getUserToken(bearer: url.query!, completion: {
                     completion()
                 })

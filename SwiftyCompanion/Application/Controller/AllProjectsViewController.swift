@@ -10,14 +10,14 @@ import UIKit
 
 class AllProjectsViewController: UIViewController {
     
-    let colorCyan = UIColor(red: 82.0/255.0, green: 183.0/255.0, blue: 186.0/255.0, alpha: 1.0)
-    let colorRed = UIColor(red: 223.0/255.0, green: 134.0/255.0, blue: 125.0/255.0, alpha: 1.0)
-    let colorGreen = UIColor (red: 115.0/255.0, green: 182.0/255.0, blue: 102.0/255.0, alpha: 1.0)
+    let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    let colorRed = #colorLiteral(red: 0.8473085761, green: 0.3895412087, blue: 0.4345907271, alpha: 1)
+    let colorGreen = #colorLiteral(red: 0.3595471382, green: 0.7224514484, blue: 0.358512938, alpha: 1)
     
     @IBOutlet weak var projectsTableView: UITableView!
-    var ProjectsInfo: [Projects]!
+    var ProjectsInfo: [ProjectsUsers]!
     var token: String?
-    var NeededProjects: [Projects] = []
+    var NeededProjects: [ProjectsUsers] = []
     
     override func viewDidLoad() {
         getNeededProjects()
@@ -27,11 +27,11 @@ class AllProjectsViewController: UIViewController {
     }
     
     func getNeededProjects() {
-        for i in 0..<ProjectsInfo.count {
-            if ProjectsInfo[i].cursus_ids[0] == 1 && ProjectsInfo[i].project?.parent_id == nil {
-                NeededProjects.append(ProjectsInfo[i])
-            }
-        }
+//        for i in 0..<ProjectsInfo.count {
+//            if ProjectsInfo[i].cursus_ids[0] == 1 && ProjectsInfo[i].project?.parent_id == nil {
+//                NeededProjects.append(ProjectsInfo[i])
+//            }
+//        }
     }
     
 //    func getNeededTeam(from json: NSDictionary?) -> Teams {
@@ -65,7 +65,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
             cell.statusLabel.textColor = self.colorCyan
         } else if status == "finished" {
             cell.nameLabel.text = name
-            if validated == 1 {
+            if validated == true {
                 cell.statusLabel.text = status
                 cell.nameLabel.textColor = self.colorGreen
                 cell.statusLabel.textColor = self.colorGreen

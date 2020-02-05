@@ -10,12 +10,13 @@ import UIKit
 
 class ProfileViewController: UIViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var projectsMoreButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     var searchController: UISearchController?
     var myInfo: UserData!
-    var inProgressProjects: [Projects?] = []
+    var coalitionData: [Coalition?] = []
+    var examsInternships: [ProjectsUsers?] = []
+    var inProgressProjects: [ProjectsUsers?] = []
     var projectsNum: Int = 0
 
     
@@ -33,7 +34,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
 
     @objc func tapAllProjects(_ sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
-//            vc.ProjectsInfo = self.myInfo.profileInfo.projects_users as? [Projects]
+//            vc.ProjectsInfo = self.myInfo.projectsUsers
 //            vc.token = self.myInfo.tokenJson!["access_token"] as? String
             navigationController?.pushViewController(vc, animated: true)
         }

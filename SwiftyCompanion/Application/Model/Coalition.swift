@@ -9,7 +9,20 @@
 import Foundation
 
 struct Coalition: Decodable {
-    var name: String?
-    var cover_url: String?
-    var image_url: String?
+    let color: String?
+    let coverUrl: String?
+    let name: String?
+    let id: Int?
+    let score: Int?
+    let imageUrl: String?
+    let slug: String?
+    let userId: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case color, name, slug
+        case coverUrl = "cover_url"
+        case imageUrl = "image_url"
+        case userId = "user_id"
+        case id, score
+    }
 }

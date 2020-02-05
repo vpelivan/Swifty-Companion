@@ -13,8 +13,8 @@ class ProjectNetworkService {
     static let shared = ProjectNetworkService()
     private init() {}
     
-    public func getProjectInfo(from url: URL, completion: @escaping ([ProjectsUsers]?) -> ()) {
-        var projectSessions: [ProjectsUsers]?
+    public func getProjectInfo(from url: URL, completion: @escaping ([ProjectsSessions]?) -> ()) {
+        var projectSessions: [ProjectsSessions]?
         guard let token = AuthUser.shared.token?.accessToken else { return }
         
         let request = NSMutableURLRequest(url: url as URL)
@@ -25,7 +25,7 @@ class ProjectNetworkService {
             (data, response, error) in
             do {
                 guard let data = data else { return }
-                projectSessions = try JSONDecoder().decode([ProjectsUsers]?.self, from: data)
+                projectSessions = try JSONDecoder().decode([ProjectsSessions]?.self, from: data)
                 completion(projectSessions)
             } catch let error {
                 return print(error)

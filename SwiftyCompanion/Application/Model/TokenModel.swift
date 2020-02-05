@@ -19,7 +19,7 @@ struct Token: Codable {
         case createdAt = "created_at"
         case expiresIn = "expires_in"
         case refreshToken = "refresh_token"
-        case scope
         case tokenType = "token_type"
+        case scope
     }
 }

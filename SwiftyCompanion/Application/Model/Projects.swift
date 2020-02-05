@@ -8,24 +8,52 @@
 
 import Foundation
 
-struct Projects: Decodable {
-    var final_mark: Int?
-    var id: Int?
-    var status: String?
-    var cursus_ids: [Int?]
-    var project: Project?
-    var validated: Int?
+// MARK: - ProjectsUsers
+struct ProjectsUsers: Decodable {
+    let id, occurrence, finalMark: Int?
+    let status: String?
+    let validated: Bool?
+    let currentTeamID: Int?
+    let project: Project?
+    let cursusIDS: [Int]?
+    let markedAt: String?
+    let marked: Bool?
+    let retriableAt: String?
+    let teams: [Team]?
+
+    enum CodingKeys: String, CodingKey {
+        case id, occurrence
+        case finalMark = "final_mark"
+        case status
+        case validated = "validated?"
+        case currentTeamID = "current_team_id"
+        case project
+        case cursusIDS = "cursus_ids"
+        case markedAt = "marked_at"
+        case marked
+        case retriableAt = "retriable_at"
+        case teams
+    }
 }
 
 struct Project: Decodable {
     var id: Int?
     var name: String?
-    var parent_id: Int?
+    var parentID: Int?
     var slug: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, slug
+        case parentID = "parent_id"
+    }
 }
 
-struct ProjectsUsers: Decodable {
-    var project_sessions: [ProjectSession?]
+struct ProjectsSessions: Decodable {
+    var projectSessions: [ProjectSession?]
+    
+    enum CodingKeys: String, CodingKey {
+        case projectSessions = "project_sessions"
+    }
 }
 
 struct ProjectSession: Decodable {
@@ -43,7 +71,6 @@ struct Scales: Decodable {
 }
 
 // MARK: - Project Teams
-
 struct projectTeams: Decodable {
     let markedAt: String?
     let retriableAt: String?

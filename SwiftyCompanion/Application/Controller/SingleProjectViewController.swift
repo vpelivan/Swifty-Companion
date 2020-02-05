@@ -16,12 +16,12 @@ class SingleProjectViewController: UIViewController {
     var colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var colorRed = #colorLiteral(red: 0.8473085761, green: 0.3895412087, blue: 0.4345907271, alpha: 1)
     var colorGreen = #colorLiteral(red: 0.3595471382, green: 0.7224514484, blue: 0.358512938, alpha: 1)
-    var projectInfo: Projects!
+    var projectInfo: ProjectsUsers!
     var token: String!
-    var projectsInfo: [Projects]!
+    var projectsInfo: [ProjectsUsers]!
     var teams: projectTeams?
-    var projectSessions: [ProjectsUsers]?
-    var neededProjects: [Projects] = []
+    var projectSessions: [ProjectsSessions]?
+    var neededProjects: [ProjectsUsers] = []
     var personsInTeam: Int = 1
     var teamsCount: Int {
         return teams?.teams?.count ?? 0
@@ -41,18 +41,18 @@ class SingleProjectViewController: UIViewController {
     
     
     func getPoolDays() {
-        for i in 0..<projectsInfo.count {
-            if projectInfo.project?.id == projectsInfo[i].project?.parent_id {
-                neededProjects.append(projectsInfo[i])
-            }
-        }
+//        for i in 0..<projectsInfo.count {
+//            if projectInfo.project?.id == projectsInfo[i].project?.parent_id {
+//                neededProjects.append(projectsInfo[i])
+//            }
+//        }
     }
     
     func fetchPoolDays(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PoolDaysCell", for: indexPath) as! PoolDayTableViewCell
         cell.dayName.text = neededProjects[indexPath.row - 3].project?.name
-        cell.dayStatus.text = String(neededProjects[indexPath.row - 3].final_mark ?? 0)
-        if neededProjects[indexPath.row - 3].validated == 1 {
+        cell.dayStatus.text = String(neededProjects[indexPath.row - 3].finalMark ?? 0)
+        if neededProjects[indexPath.row - 3].validated == true {
             cell.dayStatus.textColor = colorGreen
             cell.dayName.textColor = colorGreen
         } else {
@@ -81,18 +81,18 @@ class SingleProjectViewController: UIViewController {
     
     func fetchProjectDescription(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as! ProjectDescriptionCell
-        if let count = self.projectSessions?[0].project_sessions.count {
+        if let count = self.projectSessions?[0].projectSessions.count {
             for i in 0..<count {
-                if self.projectSessions?[0].project_sessions[i]?.campus_id == 13
-                    && self.projectSessions?[0].project_sessions[i]?.description != nil
-                    && self.projectSessions?[0].project_sessions[i]?.description != "" {
-                    cell.descriptionLabel.text = self.projectSessions?[0].project_sessions[i]?.description
+                if self.projectSessions?[0].projectSessions[i]?.campus_id == 13
+                    && self.projectSessions?[0].projectSessions[i]?.description != nil
+                    && self.projectSessions?[0].projectSessions[i]?.description != "" {
+                    cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[i]?.description
                     return cell
                 }
             }
-            if self.projectSessions?[0].project_sessions[0]?.description != nil
-                && self.projectSessions?[0].project_sessions[0]?.description != "" {
-                cell.descriptionLabel.text = self.projectSessions?[0].project_sessions[0]?.description
+            if self.projectSessions?[0].projectSessions[0]?.description != nil
+                && self.projectSessions?[0].projectSessions[0]?.description != "" {
+                cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[0]?.description
                 return cell
             }
         }
@@ -129,7 +129,7 @@ class SingleProjectViewController: UIViewController {
         var solo: Bool = true
         var difficulty: Int = 100
         var time: Int = 0
-        guard let sessions = projectSessions?[0].project_sessions else { return cell }
+        guard let sessions = projectSessions?[0].projectSessions else { return cell }
         
         for i in 0..<sessions.count {
             if sessions[i]?.campus_id == 8 && sessions[i]?.difficulty != nil {
@@ -144,7 +144,7 @@ class SingleProjectViewController: UIViewController {
             }
             
         }
-        guard let correctionsArray = projectSessions?[0].project_sessions[0] else { return cell }
+        guard let correctionsArray = projectSessions?[0].projectSessions[0] else { return cell }
         for i in 0..<correctionsArray.scales.count {
             if let number = correctionsArray.scales[i]?.correction_number {
                 if number > 0 {
@@ -168,20 +168,20 @@ class SingleProjectViewController: UIViewController {
             cell.of100Label.isHidden = true
             cell.imageStatus.isHidden = false
         } else if projectInfo.status == "finished" {
-            if projectInfo.validated == 1 {
+            if projectInfo.validated == true {
                 cell.statusLabel.text = "success"
                 cell.markView.backgroundColor = colorGreen
                 cell.markLabel.isHidden = false
                 cell.of100Label.isHidden = false
                 cell.imageStatus.isHidden = true
-                cell.markLabel.text = String(projectInfo.final_mark ?? 0)
+                cell.markLabel.text = String(projectInfo.finalMark ?? 0)
             } else {
                 cell.statusLabel.text = "fail"
                 cell.markView.backgroundColor = colorRed
                 cell.markLabel.isHidden = false
                 cell.of100Label.isHidden = false
                 cell.imageStatus.isHidden = true
-                cell.markLabel.text = String(projectInfo.final_mark ?? 0)
+                cell.markLabel.text = String(projectInfo.finalMark ?? 0)
             }
         }
         return cell

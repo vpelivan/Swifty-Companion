@@ -13,19 +13,6 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    //    public func getData(url: URL, completion: @escaping () -> ()) {
-    //        let session = URLSession.shared
-    //
-    //        session.dataTask(with: url) { (data, response, error) in
-    //            guard let data = data else { return }
-    //            do {
-    //                let json = try JSONSerialization.jsonObject(with: data, options: [])
-    //                print(json)
-    //            } catch {
-    //                print(error)
-    //            }
-    //        }
-    //    }
     public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any) -> ()) {
         guard let token = AuthUser.shared.token?.accessToken else { return }
         
