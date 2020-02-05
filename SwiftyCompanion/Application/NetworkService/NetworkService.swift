@@ -13,7 +13,7 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any) -> ()) {
+    public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any, Result<String, Error>) -> ()) {
         guard let token = AuthUser.shared.token?.accessToken else { return }
         
         let request = NSMutableURLRequest(url: url as URL)
@@ -26,10 +26,13 @@ class NetworkService {
             {
                 guard let data = data else { return }
                 let Data = try JSONDecoder().decode(type.self, from: data)
-                completion(Data)
+//                let json: NSDictionary = try (JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary)!
+//                print(json)
+                completion(Data, .success("API Data successfuly transfered"))
             }
             catch let error {
-                return print(error)
+                OtherMethods.shared.alert(title: "Server Request Error", message: "For some reasons an application did not manage to get data from server. Try again later")
+                completion(error, .failure(error))
             }
         }.resume()
     }

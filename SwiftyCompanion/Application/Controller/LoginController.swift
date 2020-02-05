@@ -27,29 +27,54 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
         activityIndicator.isHidden = true
     }
     
+
+    private func stopIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func errorHandler(to handle: Result<String, Error>, completion: ()->()) {
+        switch handle {
+        case .success(let string):
+            print(string)
+            completion()
+        case .failure(let error):
+            print("Failed to load data: ", error)
+            self.stopIndicator()
+            return
+        }
+    }
+    
     @IBAction func tapLogIn(_ sender: UIButton) {
         guard let url = URL(string: "\(intraURL)/v2/me") else { return }
         authorizeUser(context: self, completion: {
-            NetworkService.shared.getData(into: UserData.self, from: url) { User in
-                self.myInfo = User as? UserData
-                guard let userId = self.myInfo.id else { return }
-                guard let url = URL(string: "\(self.intraURL)/v2/users/\(userId)/coalitions") else { return }
-                NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition in
-                    self.coalitionData = Coalition as! [Coalition?]
-                    guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
-                    NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships in
-                        self.examsInternships = examsInternships as! [ProjectsUsers?]
-                        DispatchQueue.main.async {
-                            self.activityIndicator.isHidden = true
-                            self.activityIndicator.stopAnimating()
-                            self.performSegue(withIdentifier: "goToProfile", sender: nil)
+            NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
+                self.errorHandler(to: result) {
+                    self.myInfo = User as? UserData
+                    guard let userId = self.myInfo.id else { return }
+                    guard let url = URL(string: "\(self.intraURL)/v2/users/\(userId)/coalitions") else { return }
+                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
+                        self.errorHandler(to: result) {
+                            self.coalitionData = Coalition as! [Coalition?]
+                            guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                            NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                                self.errorHandler(to: result) {
+                                    self.examsInternships = examsInternships as! [ProjectsUsers?]
+                                    self.stopIndicator()
+                                    DispatchQueue.main.async {
+                                        self.performSegue(withIdentifier: "goToProfile", sender: nil)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         })
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let tabBar = segue.destination as? UITabBarController {
             if let navi = tabBar.viewControllers?[0] as? UINavigationController {
@@ -69,6 +94,8 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window ?? ASPresentationAnchor()
     }
+    
+    
 }
 
 extension LoginController {
@@ -112,106 +139,4 @@ extension LoginController {
             }
         }.resume()
     }
-    
-//    public func getUserInfo(completion: @escaping (User, Coalition, Int, Int) -> ()) {
-//            let token = tokenJson!["access_token"] as! String
-//
-//            guard let url = NSURL(string: "\(self.intraURL)/v2/me") else { return }
-//            let request = NSMutableURLRequest(url: url as URL)
-//            request.httpMethod = "GET"
-//            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//            let session = URLSession.shared
-//            session.dataTask(with: request as URLRequest) {
-//                (data, response, error) in
-//                do
-//                {
-//                    guard let data = data else { return }
-//                    self.userData = try JSONDecoder().decode(User.self, from: data)
-//                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-//                    print(json!)
-//                    guard let projects = json!["projects_users"] as? [NSDictionary] else { return }
-//                    for i in 0..<projects.count
-//                    {
-//                        if projects[i]["validated?"] as? Int? == 1 {
-//                            self.userData?.projects_users[i]?.validated = 1
-//                        }
-//                    }
-//                    self.getCoalitionInfo(completion: { (coalition) in
-//                        self.getExamInfo(completion: { (exams, intern) in
-//                            print(self.userData)
-//                            completion(self.userData!, coalition, exams, intern)
-//                            })
-//                        })
-//                }
-//                catch let error {
-//                    return print(error)
-//                }
-//            }.resume()
-//        }
-    
-//Coaltions
-
-//    func getCoalitionInfo(completion: @escaping (Coalition) -> ()) {
-//        let token = tokenJson!["access_token"] as! String
-//        let url = NSURL(string: "\(self.intraURL)/v2/users/\(userData?.cursus_users[0]?.user?.id ?? 0)/coalitions")
-//        let request = NSMutableURLRequest(url: url! as URL)
-//        let session = URLSession.shared
-//
-//        request.httpMethod = "GET"
-//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//        session.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//            do
-//            {
-//                guard let data = data else { return }
-////                let json = try JSONSerialization.jsonObject(with: data)
-////                print(json)
-//                self.coalitionData = try JSONDecoder().decode([Coalition?].self, from: data)
-////                self.getSkillInfo()
-//                completion(self.coalitionData[0]!)
-//            }
-//            catch let error {
-//                return print(error)
-//            }
-//            }.resume()
-//    }
-
-//Exams, Internships
-//    func getExamInfo(completion: @escaping (Int, Int) -> ()) {
-//        let token = tokenJson!["access_token"] as! String
-//        let url = NSURL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userData?.cursus_users[0]?.user?.id ?? 0)")
-//        let request = NSMutableURLRequest(url: url! as URL)
-//        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-//        let session = URLSession.shared
-//        session.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//            guard let data = data else { return }
-//            do
-//            {
-//                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
-//                guard let teams = json![0]["teams"] as? [NSDictionary] else { return }
-//                for i in 0..<teams.count
-//                {
-//                    if teams[i]["validated?"] as? Int? == 1 {
-//                        self.examsPassed += 1
-//                    }
-//                }
-//                if json!.count > 0 {
-//                    if json!.count > 1 && json![1]["validated?"] as? Bool? == true {
-//                        self.internshipsPassed += 1
-//                    }
-//                    if json!.count > 2 {
-//                        if json![2]["validated?"] as? Bool? == true {
-//                            self.internshipsPassed += 1
-//                        }
-//                    }
-//                }
-//                completion(self.examsPassed, self.internshipsPassed)
-//            }
-//            catch {
-//                return print("This error:\(error)")
-//            }
-//        }.resume()
-//    }
 }
-

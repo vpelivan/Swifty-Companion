@@ -18,6 +18,7 @@ class ProfileViewCell: UITableViewCell {
     @IBOutlet weak var profileEmailLabel: UILabel!
     @IBOutlet weak var profilePhoneLabel: UILabel!
     @IBOutlet weak var someLabel: UILabel!
+    @IBOutlet weak var changeCursusButton: UIButton!
     @IBOutlet weak var profileLocationLabel: UILabel!
     @IBOutlet weak var profileLevelLabel: UILabel!
     @IBOutlet weak var profileProgressBar: UIProgressView!

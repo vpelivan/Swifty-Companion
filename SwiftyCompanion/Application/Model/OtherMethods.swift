@@ -6,6 +6,7 @@
 //  Copyright © 2020 Viktor PELIVAN. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 class OtherMethods {
@@ -22,5 +23,14 @@ class OtherMethods {
             return date
         }
         return "-"
+    }
+    
+    public func alert(title: String, message: String) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            alert.view.layoutIfNeeded()
+            UIApplication.topViewController()?.present(alert, animated: true)
+        }
     }
 }

@@ -8,6 +8,22 @@
 
 import Foundation
 
+
+struct UserPreview: Decodable {
+    let id: Int?
+    let lastName, login, firstName, displayname: String?
+    let imageURL: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case displayname
+        case firstName = "first_name"
+        case id
+        case imageURL = "image_url"
+        case lastName = "last_name"
+        case login
+    }
+}
+
 // MARK: - UserData
 struct UserData: Decodable {
     let achievements: [Achievement]?

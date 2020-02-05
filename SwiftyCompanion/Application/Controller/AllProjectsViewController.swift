@@ -15,9 +15,9 @@ class AllProjectsViewController: UIViewController {
     let colorGreen = #colorLiteral(red: 0.3595471382, green: 0.7224514484, blue: 0.358512938, alpha: 1)
     
     @IBOutlet weak var projectsTableView: UITableView!
-    var ProjectsInfo: [ProjectsUsers]!
+    var ProjectsInfo: [ProjectsUser]!
     var token: String?
-    var NeededProjects: [ProjectsUsers] = []
+    var NeededProjects: [ProjectsUser] = []
     
     override func viewDidLoad() {
         getNeededProjects()
@@ -27,11 +27,11 @@ class AllProjectsViewController: UIViewController {
     }
     
     func getNeededProjects() {
-//        for i in 0..<ProjectsInfo.count {
-//            if ProjectsInfo[i].cursus_ids[0] == 1 && ProjectsInfo[i].project?.parent_id == nil {
-//                NeededProjects.append(ProjectsInfo[i])
-//            }
-//        }
+        for project in ProjectsInfo {
+            if project.cursusIDS?[0] == 1 && project.project?.parentID == nil {
+                NeededProjects.append(project)
+            }
+        }
     }
     
 //    func getNeededTeam(from json: NSDictionary?) -> Teams {
@@ -89,9 +89,9 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
                 DispatchQueue.main.async {
                     guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
                     vc.projectSessions = projectSessions
-                    vc.projectInfo = self.NeededProjects[indexPath.row]
+//                    vc.projectInfo = self.NeededProjects[indexPath.row]
                     vc.token = self.token!
-                    vc.projectsInfo = self.ProjectsInfo
+//                    vc.projectsInfo = self.ProjectsInfo
                     vc.teams = teams
                     self.navigationController?.pushViewController(vc, animated: true)
                 }

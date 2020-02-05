@@ -16,25 +16,70 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     var myInfo: UserData!
     var coalitionData: [Coalition?] = []
     var examsInternships: [ProjectsUsers?] = []
-    var inProgressProjects: [ProjectsUsers?] = []
+    var inProgressProjects: [ProjectsUser?] = []
     var projectsNum: Int = 0
-
+    var defaultCursus: CursusUser!
+    var exams: Int = 0
+    var internships: Int = 0
+    var patronedBy: [UserPreview?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
-        tableView.delegate = self
-        tableView.dataSource = self
-
-        
+        setDefaultCursus()
+        getExamsInternships()
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
         tableView.register(UINib(nibName: "SkillsViewCell", bundle: nil), forCellReuseIdentifier: "SomeSkillsCell")
         tableView.tableFooterView = UIView(frame: .zero)
+        if let patrone = self.myInfo.patroned[0].
+        guard let PatroneUrl = URL(string: "\(AuthUser.shared.intraURL)/v2/users/\(self.myInfo.patroned[0]?.godfatherID)") else {return}
+        NetworkService.shared.getData(into: [UserPreview?].self, from: <#T##URL#>, completion: <#T##(Any, Result<String, Error>) -> ()#>)
+        tableView.delegate = self
+        tableView.dataSource = self
+
     }
 
+    func setDefaultCursus() {
+        guard let cursusUsers = myInfo.cursusUsers else { return }
+        
+        for cursus in cursusUsers {
+            guard let neededCursusName = cursus.cursus?.name else { break }
+            if neededCursusName == "42" {
+                defaultCursus = cursus
+                return
+            }
+        }
+        defaultCursus = cursusUsers[0]
+    }
+    
+    func getExamsInternships() {
+        for project in examsInternships {
+            if project?.project?.id == 11 {
+                guard let projectTeams = project?.teams else { break }
+                for team in projectTeams {
+                    if team.validated == true {
+                        exams += 1
+                    }
+                }
+            }
+            else if (project?.project?.id == 118 || project?.project?.id == 212) {
+                guard let projectTeams = project?.teams else { break }
+                for team in projectTeams {
+                    if team.validated == true {
+                        internships += 1
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func tapChangeCursus(_ sender: UIButton) {
+
+    }
+    
     @objc func tapAllProjects(_ sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
-//            vc.ProjectsInfo = self.myInfo.projectsUsers
+            vc.ProjectsInfo = self.myInfo.projectsUsers
 //            vc.token = self.myInfo.tokenJson!["access_token"] as? String
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -42,7 +87,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     @objc func tapAllSkills(_sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllSkills") as? AllSkillsViewController {
-//            vc.skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills as? [Skills]
+            vc.skills = defaultCursus.skills
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -67,23 +112,33 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
     }
     
-//    func getInProgressProjects() {
-//        let userInfo = self.myInfo.profileInfo!
-//
-//        for i in 0..<userInfo.projects_users.count {
-//            if userInfo.projects_users[i]?.status == "in_progress"
-//            || userInfo.projects_users[i]?.status == "searching_a_group" {
-//                self.inProgressProjects.append(userInfo.projects_users[i])
-//                self.projectsNum += 1
-//            }
-//        }
+    private func getInProgressProjects() {
+        guard let projects = self.myInfo.projectsUsers else { return }
+        for project in projects {
+            if project.status == "in_progress"
+            || project.status == "searching_a_group" {
+                self.inProgressProjects.append(project)
+                self.projectsNum += 1
+            }
+        }
+    }
+    
+//    private func switchSomeProjects(to cell: CurrentProjectsViewCell, condition: [Bool], skills: [Skill], etc: String) -> UITableViewCell {
+//        cell.projectNameOne.isHidden = condition[0]
+//        cell.projectNameTwo.isHidden = condition[1]
+//        cell.projectNameThree.isHidden = condition[2]
+//        cell.projectNameEtcDots.isHidden = condition[3]
+//        cell.projectNameOne.text = inProgressProjects[0]?.project?.name
+//        cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
+//        cell.projectNameThree.text = inProgressProjects[2]?.project?.name
+//        return cell
 //    }
     
     func fetchCurrentProjectsData() -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentProjectsCell") as! CurrentProjectsViewCell
         cell.setBorderdersToButton()
         cell.allProjectsButton.addTarget(self, action: #selector(ProfileViewController.tapAllProjects(_:)), for: .touchUpInside)
-//        getInProgressProjects()
+        getInProgressProjects()
         switch projectsNum {
         case 1:
             cell.projectNameOne.isHidden = false
@@ -112,63 +167,87 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
             cell.projectNameThree.isHidden = true
             cell.projectNameEtcDots.isHidden = false
             cell.projectNameEtcDots.text = "Not subscribed to any project"
-            cell.projectNameEtcDots.textColor = .black
         }
         return cell
     }
     
+    private func switchSomeSkills(to cell: SkillsViewCell, condition: [Bool], skills: [Skill], etc: String) -> UITableViewCell {
+        cell.skillNameOne.isHidden = condition[0]
+        cell.skillNameOne.text = skills[0].name
+        cell.levelOne.isHidden = condition[0]
+        cell.levelOne.text = String(skills[0].level ?? 0.0)
+        cell.skillNameTwo.isHidden = condition[1]
+        cell.skillNameTwo.text = skills[1].name
+        cell.levelTwo.isHidden = condition[1]
+        cell.levelTwo.text = String(skills[1].level ?? 0.0)
+        cell.skillNameThree.isHidden = condition[2]
+        cell.skillNameThree.text = skills[2].name
+        cell.levelThree.isHidden = condition[2]
+        cell.levelThree.text = String(skills[2].level ?? 0.0)
+        cell.skillEtc.text = etc
+        cell.levelOne.isHidden = condition[3]
+        return cell
+    }
+    
     func fetchSomeSkillsData()-> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SomeSkillsCell") as! SkillsViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "SomeSkillsCell") as! SkillsViewCell
+        guard let skills = defaultCursus.skills else { return cell }
+        switch skills.count {
+        case 0:
+            cell = switchSomeSkills(to: cell, condition: [true, true, true, false], skills: skills, etc: "No skills Avaliable") as! SkillsViewCell
+        case 1:
+            cell = switchSomeSkills(to: cell, condition: [false, true, true, true], skills: skills, etc: "") as! SkillsViewCell
+        case 2:
+            cell = switchSomeSkills(to: cell, condition: [false, false, true, true], skills: skills, etc: "") as! SkillsViewCell
+        case 3:
+            cell = switchSomeSkills(to: cell, condition: [false, false, false, true], skills: skills, etc: "") as! SkillsViewCell
+        case 4...:
+            cell = switchSomeSkills(to: cell, condition: [false, false, false, false], skills: skills, etc: "...") as! SkillsViewCell
+        default:
+            break
+        }
         cell.moreSkillsButton.addTarget(self, action: #selector(ProfileViewController.tapAllSkills(_sender:)), for: .touchUpInside)
         cell.setBordersToButton()
-//        guard let skills = self.myInfo?.profileInfo?.cursus_users[0]?.skills else { return cell }
-//        cell.skillNameOne.text = skills[0]?.name
-//        cell.levelOne.text = String(skills[0]?.level ?? 0.0)
-//        cell.skillNameTwo.text = skills[1]?.name
-//        cell.levelTwo.text = String(skills[1]?.level ?? 0.0)
-//        cell.skillNameThree.text = skills[2]?.name
-//        cell.levelThree.text = String(skills[2]?.level ?? 0.0)
         return cell
     }
     
     func fetchProfileData(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileViewCell", for: indexPath) as! ProfileViewCell
-//        let userData = myInfo.profileInfo
-//        let lvlFloat = userData?.cursus_users[0]?.level ?? 0.0
-//        let lvlProgressWhole = Int(lvlFloat)
-//        var lvlProgressRest = Float(0.0)
+        let lvlFloat = defaultCursus.level ?? 0.0
+        let lvlProgressWhole = Int(lvlFloat)
+        var lvlProgressRest = Float(0.0)
         
-//        if lvlProgressWhole > 0 {
-//            lvlProgressRest = lvlFloat - Float(lvlProgressWhole)
-//        } else {
-//            lvlProgressRest = lvlFloat
-//        }
-//        guard let imageUrl = URL(string: (userData?.image_url)!) else { return cell }
-//        guard let coverUrl = URL(string: (myInfo.coalitionInfo?.cover_url)!) else { return cell }
-//        NetworkService.shared.getImage(from: imageUrl) {image in
-//            cell.profileImageView.image = image
-//        }
-//        NetworkService.shared.getImage(from: coverUrl) { image in
-//            cell.backgroundImageView.image = image
-//        }
-//        cell.profileNameLabel.text = userData?.first_name
-//        cell.profileSurnameLabel.text = userData?.last_name
-//        cell.profileLoginLabel.text = userData?.login
-//        cell.profileLocationLabel.text = String("Location: \(userData?.location ?? "Unavaliable")")
-//        cell.profileLevelLabel.text = String(userData?.cursus_users[0]?.level ?? 0.0)
-//        cell.profileProgressBar.progress = lvlProgressRest
-//        cell.profileWalletLabel.text = String("Wallet: \(userData?.wallet ?? 0)₳")
-//        cell.profileCorrectionLabel.text = String("Evaluation Poins: \(userData?.correction_point ?? 0)")
-//        cell.profileGradeLabel.text = String("Grade: \(userData?.cursus_users[0]?.grade ?? "no grade")")
-//        cell.profileEmailLabel.text = userData?.email
-//        cell.profileCampusLabel.text = String("\(userData?.campus[0]?.city ?? "none"), \(userData?.campus[0]?.country ?? "none")")
-//        cell.profileCoalitionLabel.text = String("Coalition: \(myInfo.coalitionInfo?.name ?? "none")")
-//        cell.profileExamsLabel.text = String("Exams: \(String(self.myInfo.examsPassed)) of 5")
-//        cell.profileInternLabel.text = String("Internships: \(String(self.myInfo.internPassed)) of 2")
-//
+        if lvlProgressWhole > 0 {
+            lvlProgressRest = lvlFloat - Float(lvlProgressWhole)
+        } else {
+            lvlProgressRest = lvlFloat
+        }
+        guard let imageUrl = URL(string: myInfo.imageURL ?? "") else { return cell }
+        guard let coverUrl = URL(string: coalitionData[0]?.coverUrl ?? "") else { return cell }
+        NetworkService.shared.getImage(from: imageUrl) {image in
+            cell.profileImageView.image = image
+        }
+        NetworkService.shared.getImage(from: coverUrl) { image in
+            cell.backgroundImageView.image = image
+        }
+        cell.profileNameLabel.text = myInfo.displayname
+        cell.profileLoginLabel.text = myInfo.login
+        cell.profileCampusLabel.text = "\(myInfo.campus?[0].city ?? "none"), \(myInfo.campus?[0].country ?? "none")"
+        cell.profileEmailLabel.text = myInfo.email
+        cell.profilePhoneLabel.text = "Phone: \(myInfo.phone ?? "none")"
+        cell.someLabel.text = "Cursus: \(defaultCursus.cursus?.name ?? "none")"
+        cell.profileCoalitionLabel.text = "Coalition: \(coalitionData[0]?.name ?? "none")"
+        cell.profileLocationLabel.text = "Location: \(myInfo.location ?? "Unavaliable")"
+        cell.profileWalletLabel.text = "Wallet: \(myInfo.wallet ?? 0)₳"
+        cell.profileGradeLabel.text = "Grade: \(defaultCursus.grade ?? "no grade")"
+        cell.profileCorrectionLabel.text = "Corrections: \(myInfo.correctionPoint ?? 0)"
+        cell.profileLevelLabel.text = String(defaultCursus.level ?? 0.0)
+        cell.profileProgressBar.progress = lvlProgressRest
+        cell.profileExamsLabel.text = "Exams: \(exams) of 5"
+        cell.profileInternLabel.text = "Internships: \(internships) of 2"
+        cell.someLabel1.text = "Pool of: \(String(myInfo.poolMonth ?? "none").capitalized) \(myInfo.poolYear ?? "none")"
         return cell
     }
-
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -188,17 +267,4 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-//        if tableView == self.projectsTableView {
-//            if let vc = storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController {
-//                vc.projectInfo = self.inProgressProjects[indexPath.row]
-//                vc.token = self.myInfo.tokenJson!["access_token"] as? String
-//                vc.projectsInfo = self.myInfo.profileInfo?.projects_users as? [Projects]
-//                navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
-    }
-
 }
