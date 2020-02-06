@@ -247,13 +247,11 @@ extension SingleProjectViewController: UICollectionViewDelegate, UICollectionVie
         guard let mateData = teams?.teams?[collViewTeamIndex].users?[collViewUsersIndex] else { return  cell }
         guard let imageUrl = URL(string: "https://cdn.intra.42.fr/users/\(mateData.login ?? "").jpg") else { return  cell }
         guard let mateNumber = teams?.teams?[collViewTeamIndex].users?.count else { return cell }
-        NetworkService.shared.getImage(from: imageUrl, completion: { image in
-            cell.userPicture.image = image
+            cell.userPicture.kf.setImage(with: imageUrl)
             cell.loginLabel.text = mateData.login
             if mateData.leader == false {
                 cell.leaderStar.isHidden = true
             }
-        })
         if self.collViewUsersIndex < mateNumber - 1 {
             self.collViewUsersIndex += 1
         } else {

@@ -21,6 +21,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     var defaultCursus: CursusUser!
     var exams: Int = 0
     var internships: Int = 0
+    let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         tableView.tableFooterView = UIView(frame: .zero)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-    
+        navigationController?.navigationBar.tintColor = colorCyan
     }
 
     @IBAction func tapChange(_ sender: UIButton) {

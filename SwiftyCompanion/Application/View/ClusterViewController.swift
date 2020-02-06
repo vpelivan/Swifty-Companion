@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ClusterViewController: UIViewController {
 
@@ -21,11 +22,12 @@ class ClusterViewController: UIViewController {
     @IBOutlet weak var userViewButton: UIButton!
     @IBOutlet weak var userViewBeginSess: UILabel!
     @IBOutlet weak var userViewSessTime: UILabel!
+    let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.isScrollEnabled = true
-        
+        navigationController?.navigationBar.tintColor = colorCyan
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,17 +128,9 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             let loggedMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoggedMacCell", for: indexPath) as! LoggedMacCell
             if let login = clusterDict["\(location)"]??.user?.login {
                 loggedMacCell.textLabel.text = login
-                loggedMacCell.activityIndicator.isHidden = false
-                loggedMacCell.activityIndicator.startAnimating()
-                loggedMacCell.imageView.isHidden = true
                 if self.pictureDict[location] == nil {
                     guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
-                    NetworkService.shared.getImage(from: url) { image in
-                        loggedMacCell.activityIndicator.stopAnimating()
-                        loggedMacCell.activityIndicator.isHidden = true
-                        loggedMacCell.imageView.image = image
-                        loggedMacCell.imageView.isHidden = false
-                    }
+                    loggedMacCell.imageView.kf.setImage(with: url)
                 } else {
                     loggedMacCell.imageView.image = pictureDict["\(location)"] as? UIImage
                 }

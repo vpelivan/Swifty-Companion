@@ -8,6 +8,34 @@
 
 import Foundation
 
+//// MARK: - Token
+//struct ClusterUsers: Decodable {
+//    let endAt: String?
+//    let id: Int?
+//    let beginAt: String?
+//    let primary: Bool?
+//    let host: String?
+//    let campusID: Int?
+//    let user: ClusterUser?
+//
+//    enum CodingKeys: String, CodingKey {
+//        case endAt = "end_at"
+//        case id
+//        case beginAt = "begin_at"
+//        case primary, host
+//        case campusID = "campus_id"
+//        case user
+//    }
+//}
+//
+//// MARK: - User
+//struct ClusterUser: Decodable {
+//    let id: Int?
+//    let login: String?
+//    let url: String?
+//}
+
+
 struct ClusterUsers: Decodable {
     var begin_at: String? //"2019-12-05T14:45:57.180Z";
     var campus_id: Int?
