@@ -16,12 +16,12 @@ class SingleProjectViewController: UIViewController {
     var colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var colorRed = #colorLiteral(red: 0.8473085761, green: 0.3895412087, blue: 0.4345907271, alpha: 1)
     var colorGreen = #colorLiteral(red: 0.3595471382, green: 0.7224514484, blue: 0.358512938, alpha: 1)
-    var projectInfo: ProjectsUsers!
+    var projectInfo: ProjectsUser!
     var token: String!
-    var projectsInfo: [ProjectsUsers]!
+    var projectsInfo: [ProjectsUser]!
     var teams: projectTeams?
     var projectSessions: [ProjectsSessions]?
-    var neededProjects: [ProjectsUsers] = []
+    var neededProjects: [ProjectsUser] = []
     var personsInTeam: Int = 1
     var teamsCount: Int {
         return teams?.teams?.count ?? 0
@@ -32,7 +32,6 @@ class SingleProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = projectInfo.project?.name
-        navigationItem.leftBarButtonItem?.tintColor = colorCyan
         getPoolDays()
         tableView.delegate = self
         tableView.dataSource = self
@@ -41,11 +40,11 @@ class SingleProjectViewController: UIViewController {
     
     
     func getPoolDays() {
-//        for i in 0..<projectsInfo.count {
-//            if projectInfo.project?.id == projectsInfo[i].project?.parent_id {
-//                neededProjects.append(projectsInfo[i])
-//            }
-//        }
+        for i in 0..<projectsInfo.count {
+            if projectInfo.project?.id == projectsInfo[i].project?.parentID {
+                neededProjects.append(projectsInfo[i])
+            }
+        }
     }
     
     func fetchPoolDays(for indexPath: IndexPath) -> UITableViewCell {
@@ -227,7 +226,6 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
                         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
                         vc.projectSessions = projectSessions
                         vc.projectInfo = self.neededProjects[indexPath.row - (self.teamsCount + 2)]
-                        vc.token = self.token!
                         vc.projectsInfo = self.projectsInfo
                         vc.teams = teams
                         self.navigationController?.pushViewController(vc, animated: true)

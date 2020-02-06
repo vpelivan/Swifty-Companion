@@ -34,9 +34,6 @@ class AllProjectsViewController: UIViewController {
         }
     }
     
-//    func getNeededTeam(from json: NSDictionary?) -> Teams {
-//
-//    }
 
 }
 extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -89,9 +86,8 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
                 DispatchQueue.main.async {
                     guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
                     vc.projectSessions = projectSessions
-//                    vc.projectInfo = self.NeededProjects[indexPath.row]
-                    vc.token = self.token!
-//                    vc.projectsInfo = self.ProjectsInfo
+                    vc.projectInfo = self.NeededProjects[indexPath.row]
+                    vc.projectsInfo = self.ProjectsInfo
                     vc.teams = teams
                     self.navigationController?.pushViewController(vc, animated: true)
                 }

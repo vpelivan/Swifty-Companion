@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     var defaultCursus: CursusUser!
     var exams: Int = 0
     var internships: Int = 0
-    var patronedBy: [UserPreview?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +30,15 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
         tableView.register(UINib(nibName: "SkillsViewCell", bundle: nil), forCellReuseIdentifier: "SomeSkillsCell")
         tableView.tableFooterView = UIView(frame: .zero)
-        if let patrone = self.myInfo.patroned[0].
-        guard let PatroneUrl = URL(string: "\(AuthUser.shared.intraURL)/v2/users/\(self.myInfo.patroned[0]?.godfatherID)") else {return}
-        NetworkService.shared.getData(into: [UserPreview?].self, from: <#T##URL#>, completion: <#T##(Any, Result<String, Error>) -> ()#>)
-        tableView.delegate = self
-        tableView.dataSource = self
-
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+    
     }
 
+    @IBAction func tapChange(_ sender: UIButton) {
+        print("Change Cursus")
+    }
+    
     func setDefaultCursus() {
         guard let cursusUsers = myInfo.cursusUsers else { return }
         
@@ -80,7 +80,6 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     @objc func tapAllProjects(_ sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
             vc.ProjectsInfo = self.myInfo.projectsUsers
-//            vc.token = self.myInfo.tokenJson!["access_token"] as? String
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -122,17 +121,6 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
             }
         }
     }
-    
-//    private func switchSomeProjects(to cell: CurrentProjectsViewCell, condition: [Bool], skills: [Skill], etc: String) -> UITableViewCell {
-//        cell.projectNameOne.isHidden = condition[0]
-//        cell.projectNameTwo.isHidden = condition[1]
-//        cell.projectNameThree.isHidden = condition[2]
-//        cell.projectNameEtcDots.isHidden = condition[3]
-//        cell.projectNameOne.text = inProgressProjects[0]?.project?.name
-//        cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
-//        cell.projectNameThree.text = inProgressProjects[2]?.project?.name
-//        return cell
-//    }
     
     func fetchCurrentProjectsData() -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentProjectsCell") as! CurrentProjectsViewCell
@@ -235,7 +223,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         cell.profileCampusLabel.text = "\(myInfo.campus?[0].city ?? "none"), \(myInfo.campus?[0].country ?? "none")"
         cell.profileEmailLabel.text = myInfo.email
         cell.profilePhoneLabel.text = "Phone: \(myInfo.phone ?? "none")"
-        cell.someLabel.text = "Cursus: \(defaultCursus.cursus?.name ?? "none")"
+        cell.profileCursusLabel.text = "Cursus: \(defaultCursus.cursus?.name ?? "none")"
         cell.profileCoalitionLabel.text = "Coalition: \(coalitionData[0]?.name ?? "none")"
         cell.profileLocationLabel.text = "Location: \(myInfo.location ?? "Unavaliable")"
         cell.profileWalletLabel.text = "Wallet: \(myInfo.wallet ?? 0)₳"
@@ -245,7 +233,8 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
         cell.profileProgressBar.progress = lvlProgressRest
         cell.profileExamsLabel.text = "Exams: \(exams) of 5"
         cell.profileInternLabel.text = "Internships: \(internships) of 2"
-        cell.someLabel1.text = "Pool of: \(String(myInfo.poolMonth ?? "none").capitalized) \(myInfo.poolYear ?? "none")"
+        cell.profilePoolOfLablel.text = "Pool of: \(String(myInfo.poolMonth ?? "none").capitalized) \(myInfo.poolYear ?? "none")"
+        cell.getButtonBorder()
         return cell
     }
 }

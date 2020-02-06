@@ -35,7 +35,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
         }
     }
     
-    func errorHandler(to handle: Result<String, Error>, completion: ()->()) {
+    private func errorHandler(to handle: Result<String, Error>, completion: ()->()) {
         switch handle {
         case .success(let string):
             print(string)

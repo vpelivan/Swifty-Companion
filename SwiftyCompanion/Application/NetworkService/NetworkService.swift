@@ -47,4 +47,15 @@ class NetworkService {
             }
         }.resume()
     }
+    
+    public func errorHandler(to handle: Result<String, Error>, completion: ()->()) {
+        switch handle {
+        case .success(let string):
+            print(string)
+            completion()
+        case .failure(let error):
+            print("Failed to load data: ", error)
+            return
+        }
+    }
 }

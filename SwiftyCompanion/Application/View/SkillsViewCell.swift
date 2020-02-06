@@ -26,7 +26,7 @@ class SkillsViewCell: UITableViewCell {
         
     }
     
-    public func setBordersToButton() {
+    func setBordersToButton() {
         moreSkillsButton.layer.borderWidth = 1.0
         moreSkillsButton.layer.borderColor = (UIColor(red: 77.0/255.0, green: 173.0/255.0, blue: 176.0/255.0, alpha: 1.0)).cgColor
     }
