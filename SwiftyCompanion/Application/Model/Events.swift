@@ -48,6 +48,67 @@ struct Waitlist: Decodable {
     }
 }
 
+// MARK: - EventsUsers
+struct EventsUser: Decodable {
+    let id, eventID, userID: Int?
+    let user: UserOfEvent?
+    let event: SingleEventUser?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case eventID = "event_id"
+        case userID = "user_id"
+        case user, event
+    }
+}
+
+// MARK: - Event
+struct SingleEventUser: Decodable {
+    let id: Int?
+    let name, eventDescription, location, kind: String?
+    let maxPeople, nbrSubscribers: Int?
+    let beginAt, endAt: String?
+    let campusIDS, cursusIDS: [Int]?
+    let createdAt, updatedAt: String?
+    let waitlist: EventUserWaitlist?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case eventDescription = "description"
+        case location, kind
+        case maxPeople = "max_people"
+        case nbrSubscribers = "nbr_subscribers"
+        case beginAt = "begin_at"
+        case endAt = "end_at"
+        case campusIDS = "campus_ids"
+        case cursusIDS = "cursus_ids"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case waitlist
+    }
+}
+
+// MARK: - Waitlist
+struct EventUserWaitlist: Codable {
+    let id, waitlistableID: Int?
+    let waitlistableType, createdAt, updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case waitlistableID = "waitlistable_id"
+        case waitlistableType = "waitlistable_type"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+    }
+}
+
+// MARK: - User
+struct UserOfEvent: Codable {
+    let id: Int?
+    let login: String?
+    let url: String?
+}
+
 //[
 //    {
 //        "id": 4055,

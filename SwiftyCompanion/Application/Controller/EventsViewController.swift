@@ -15,7 +15,6 @@ class EventsViewController: UIViewController {
     @IBOutlet weak var eventsTableView: UITableView!
     var events: [Event?] = [] {
         didSet {
-            print(self)
             DispatchQueue.main.async {
                 self.eventsTableView.reloadData()
             }
@@ -26,20 +25,25 @@ class EventsViewController: UIViewController {
     var duration: String?
     var status: String?
     var when: String?
+    var eventsUsers: [EventsUser?] = []
+    let userId = AuthUser.shared.userID!
+    let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = colorCyan
         eventLoadIndicator.isHidden = false
         eventLoadIndicator.startAnimating()
-        let intraURL = AuthUser.shared.intraURL
-        guard let url = URL(string: "\(intraURL)v2/campus/8/events?filter[future]=true") else { return }
         eventsTableView.tableFooterView = UIView(frame: .zero)
-        EventsNeworkSevice.shared.getEvents(from: url) { events in
+        let intraURL = AuthUser.shared.intraURL
+        guard let eventsUrl = URL(string: "\(intraURL)v2/campus/8/events?filter[future]=true") else { return }
+        NetworkService.shared.getData(into: [Event?].self, from: eventsUrl) { (events, result) in
+            self.events = events as! [Event?]
+
+            
             DispatchQueue.main.async {
                 self.eventLoadIndicator.isHidden = true
                 self.eventLoadIndicator.stopAnimating()
-                self.events = events
-                print(self.events)
                 self.eventsTableView.dataSource = self
                 self.eventsTableView.delegate = self
             }
@@ -65,9 +69,9 @@ class EventsViewController: UIViewController {
         when = whenFormatter.string(from: startDate)
 
         let difference = Calendar.current.dateComponents([.hour, .minute], from: startDate, to: endDate)
-        let formattedString = String(format: "%02ld %02ld", difference.hour!, difference.minute!)
-        print(formattedString)
-
+        let formattedHourString = String(format: "%02ld hour(s)", difference.hour!)
+        let formattedMinuteString = String(format: "%02ld minute(s)", difference.minute!)
+        duration = (difference.minute == 0 ? "\(formattedHourString)" : "\(formattedHourString) & \(formattedMinuteString)")
     }
     
     func getDateFormat(from date: String?) -> String {
@@ -81,6 +85,7 @@ class EventsViewController: UIViewController {
         }
         return "-"
     }
+    
 }
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -95,7 +100,23 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.dateNumberLabel.text = startDay
         cell.dateMonthLabel.text = startMonth
         cell.whenLabel.text = "At: \(when ?? "--:--")"
-        cell.eventNameLabel.text = events[indexPath.row]?.kind?.capitalized
+        cell.howLongLabel.text = duration
+        cell.eventNameLabel.text = events[indexPath.row]?.kind?.replacingOccurrences(of: "_", with: " ").capitalized
+        guard let eventID = events[indexPath.row]?.id else { return cell }
+        guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users?filter[event_id]=\(eventID)") else { return cell }
+        NetworkService.shared.getData(into: [EventsUser?].self, from: url) { (data, result) in
+            guard let trueEventsUsers = data as? [EventsUser?] else { return }
+            self.eventsUsers = trueEventsUsers
+            for event in self.eventsUsers {
+                if event?.eventID == eventID {
+                    DispatchQueue.main.async {
+                        cell.eventStatusLabel.isHidden = false
+                        cell.eventStatusLabel.text = "REGISTERED"
+                    }
+                    break
+                }
+            }
+        }
         cell.descriptionLabel.text = self.events[indexPath.row]?.name
         cell.locationLabel.text = self.events[indexPath.row]?.location
         return cell

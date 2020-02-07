@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
             if project?.project?.id == 11 {
                 guard let projectTeams = project?.teams else { break }
                 for team in projectTeams {
-                    if team.validated == true {
+                    if team.validated == true && exams < 5 {
                         exams += 1
                     }
                 }
