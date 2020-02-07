@@ -11,6 +11,7 @@ import Foundation
 
 class EventsViewController: UIViewController {
 
+    @IBOutlet weak var eventLoadIndicator: UIActivityIndicatorView!
     @IBOutlet weak var eventsTableView: UITableView!
     var events: [Event?] = [] {
         didSet {
@@ -20,18 +21,46 @@ class EventsViewController: UIViewController {
             }
         }
     }
+    var startDay: String?
+    var startMonth: String?
+    var duration: String?
+    var status: String?
+    var when: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        eventLoadIndicator.isHidden = false
+        eventLoadIndicator.startAnimating()
         let intraURL = AuthUser.shared.intraURL
         guard let url = URL(string: "\(intraURL)v2/campus/8/events?filter[future]=true") else { return }
-        eventsTableView.dataSource = self
-        eventsTableView.delegate = self
         eventsTableView.tableFooterView = UIView(frame: .zero)
         EventsNeworkSevice.shared.getEvents(from: url) { events in
-            self.events = events
-            print(self.events)
+            DispatchQueue.main.async {
+                self.eventLoadIndicator.isHidden = true
+                self.eventLoadIndicator.stopAnimating()
+                self.events = events
+                print(self.events)
+                self.eventsTableView.dataSource = self
+                self.eventsTableView.delegate = self
+            }
         }
+    }
+    
+    func getDates(for row: Int) {
+        let startDate = OtherMethods.shared.getDateAndTime(from: events[row]?.beginAt)
+        let dateFormatter = DateFormatter()
+        let dayFormatter = DateFormatter()
+        let monthFormatter = DateFormatter()
+        let whenFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
+        dayFormatter.dateFormat = "dd"
+        monthFormatter.dateFormat = "MMMM"
+        whenFormatter.dateFormat = "h:mm a"
+        let date = dateFormatter.date(from: startDate)!
+        startDay = dayFormatter.string(from: date)
+        startMonth = monthFormatter.string(from: date)
+        when = whenFormatter.string(from: date)
     }
     
     func getDateFormat(from date: String?) -> String {
@@ -55,7 +84,10 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         cell.getColor()
-        print(getDateFormat(from: self.events[indexPath.row]?.beginAt))
+        self.getDates(for: indexPath.row)
+        cell.dateNumberLabel.text = startDay
+        cell.dateMonthLabel.text = startMonth
+        cell.whenLabel.text = "At: \(when ?? "--:--")"
         cell.eventNameLabel.text = events[indexPath.row]?.kind?.capitalized
         cell.descriptionLabel.text = self.events[indexPath.row]?.name
         cell.locationLabel.text = self.events[indexPath.row]?.location
