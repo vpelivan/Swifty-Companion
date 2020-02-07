@@ -47,7 +47,8 @@ class EventsViewController: UIViewController {
     }
     
     func getDates(for row: Int) {
-        let startDate = OtherMethods.shared.getDateAndTime(from: events[row]?.beginAt)
+        let startDateApi = OtherMethods.shared.getDateAndTime(from: events[row]?.beginAt)
+        let endDateApi = OtherMethods.shared.getDateAndTime(from: events[row]?.endAt)
         let dateFormatter = DateFormatter()
         let dayFormatter = DateFormatter()
         let monthFormatter = DateFormatter()
@@ -57,10 +58,16 @@ class EventsViewController: UIViewController {
         dayFormatter.dateFormat = "dd"
         monthFormatter.dateFormat = "MMMM"
         whenFormatter.dateFormat = "h:mm a"
-        let date = dateFormatter.date(from: startDate)!
-        startDay = dayFormatter.string(from: date)
-        startMonth = monthFormatter.string(from: date)
-        when = whenFormatter.string(from: date)
+        let startDate = dateFormatter.date(from: startDateApi)!
+        let endDate = dateFormatter.date(from: endDateApi)!
+        startDay = dayFormatter.string(from: startDate)
+        startMonth = monthFormatter.string(from: startDate)
+        when = whenFormatter.string(from: startDate)
+
+        let difference = Calendar.current.dateComponents([.hour, .minute], from: startDate, to: endDate)
+        let formattedString = String(format: "%02ld %02ld", difference.hour!, difference.minute!)
+        print(formattedString)
+
     }
     
     func getDateFormat(from date: String?) -> String {
