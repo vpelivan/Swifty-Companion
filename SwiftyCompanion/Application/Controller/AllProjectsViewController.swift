@@ -34,7 +34,6 @@ class AllProjectsViewController: UIViewController {
         }
     }
     
-
 }
 extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -52,13 +51,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
             cell.nameLabel.text = name
             cell.nameLabel.textColor = self.colorCyan
             cell.statusLabel.textColor = self.colorCyan
-            if status == "in_progress" {
-                cell.statusLabel.text = "in progress"
-            } else if status == "searching_a_group" {
-                cell.statusLabel.text = "searching a group"
-            } else if status == "creating_group" {
-                cell.statusLabel.text = "creating group"
-            }
+            cell.statusLabel.text = status?.replacingOccurrences(of: "_", with: " ")
             cell.statusLabel.textColor = self.colorCyan
         } else if status == "finished" {
             cell.nameLabel.text = name

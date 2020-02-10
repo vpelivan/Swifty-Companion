@@ -17,5 +17,6 @@ class AuthUser {
     let scope = "public+forum+projects+profile+elearning+tig"
     var token: Token?
     var userID: Int?
+    var campusID: Int?
     init() {}
 }

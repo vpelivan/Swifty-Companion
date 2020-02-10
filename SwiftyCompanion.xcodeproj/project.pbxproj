@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,6 +54,7 @@
 		A3F2D68C23DCA44E003FAB32 /* CurrentProjectsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */; };
 		A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */; };
 		A3F2D69023DCC64D003FAB32 /* SkillsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */; };
+		A3F678AD23F14C65009C59D2 /* SingleEventDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentProjectsViewCell.xib; sourceTree = "<group>"; };
 		A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsViewCell.swift; sourceTree = "<group>"; };
 		A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SkillsViewCell.xib; sourceTree = "<group>"; };
+		A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventDescriptionCell.swift; sourceTree = "<group>"; };
 		DCC128913098179E54E5062A /* Pods-SwiftyCompanion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyCompanion.release.xcconfig"; path = "Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */,
 				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
 				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
+				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
 				A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */,
@@ -248,7 +251,6 @@
 				53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */,
 				DCC128913098179E54E5062A /* Pods-SwiftyCompanion.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -385,6 +387,7 @@
 				57F2735423E8D99B009EDB1C /* ErrorHandling.swift in Sources */,
 				A3F2D68B23DCA44E003FAB32 /* CurrentProjectsViewCell.swift in Sources */,
 				A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */,
+				A3F678AD23F14C65009C59D2 /* SingleEventDescriptionCell.swift in Sources */,
 				A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */,
 				A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */,
 				A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */,

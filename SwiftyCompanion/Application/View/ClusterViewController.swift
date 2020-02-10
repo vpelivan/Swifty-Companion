@@ -28,9 +28,6 @@ class ClusterViewController: UIViewController {
         super.viewDidLoad()
         collectionView.isScrollEnabled = true
         navigationController?.navigationBar.tintColor = colorCyan
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         getClusterInfo(num: 1) {
             self.getClusterInfo(num: 2) {
                 self.getClusterInfo(num: 3) {
@@ -48,14 +45,17 @@ class ClusterViewController: UIViewController {
         userView.isHidden = true
     }
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
-//        for i in 1...3 {
-//            print("i = ", i)
-//            getClusterInfo(num: i) {
-//
-//                }
-//            }
-//            userView.isHidden = true
-//        }
+        getClusterInfo(num: 1) {
+            self.getClusterInfo(num: 2) {
+                self.getClusterInfo(num: 3) {
+                    DispatchQueue.main.async {
+                        self.collectionView.delegate = self
+                        self.collectionView.dataSource = self
+                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+                    }
+                }
+            }
+        }
     }
 }
 
