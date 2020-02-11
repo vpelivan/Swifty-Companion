@@ -40,6 +40,14 @@ class SingleEventViewController: UIViewController {
         tableView.dataSource = self
         fetchEventData()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent {
+            performSegue(withIdentifier: "unwindToEventsViewController", sender: nil)
+        }
+    }
+    
     @IBAction func tapSubscribe(_ sender: UIBarButtonItem) {
         if status == "REGISTERED" {
             guard let trueId = unsubscribeID else { return }

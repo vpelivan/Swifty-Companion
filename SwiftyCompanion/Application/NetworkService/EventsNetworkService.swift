@@ -61,25 +61,26 @@ class EventsNeworkSevice {
         {
             (data, response, error) in
             if let error = error {
-                print(error)
+                print("optional error binding: ", error)
                 return
             }
             do {
                 if let dictionary: NSDictionary = try JSONSerialization.jsonObject(with: data!) as? NSDictionary {
                     if (dictionary["error"] == nil) {
-                        print("Unsubscribtion Succeded")
+                        print("if in do: Unsubscribtion Succeded")
                         completion()
                     }
                     else {
-                        print(dictionary)
+                        print("else in do: ", dictionary)
                     }
                 }
                 else {
                     print("Unsubscribtion Failed")
                 }
             }
-            catch (let error) {
-                print(error)
+            catch {
+                completion()
+                print("Catch Block: ")
             }
         }.resume()
     }

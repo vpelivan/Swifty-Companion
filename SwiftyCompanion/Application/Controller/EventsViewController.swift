@@ -29,9 +29,6 @@ class EventsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = colorCyan
         eventsTableView.tableFooterView = UIView(frame: .zero)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         eventLoadIndicator.isHidden = false
         eventLoadIndicator.startAnimating()
         let intraURL = AuthUser.shared.intraURL
@@ -110,6 +107,16 @@ class EventsViewController: UIViewController {
         eventVC?.when = when[index]
         eventVC?.unsubscribeID = unsubscribeID[index]
     }
+    
+    var selectedIndexPath: IndexPath?
+    @IBAction func unwindToEventsViewController(_ unwindSegue: UIStoryboardSegue) {
+        guard let svc = unwindSegue.source as? SingleEventViewController,
+            let indexPath = selectedIndexPath else { return print("error to cast svc or selectedIndexPath = nil") }
+        
+        print("events; status -", svc.status)
+        status[indexPath.row] = svc.status
+        eventsTableView.reloadData()
+    }
 }
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -135,12 +142,15 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         cell.descriptionLabel.text = self.events[indexPath.row]?.name
-        cell.locationLabel.text = String("📍: \(self.events[indexPath.row]?.location ?? "")")
+        if let location = self.events[indexPath.row]?.location {
+            cell.locationLabel.text = String("📍: \(location)")
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        selectedIndexPath = indexPath
         performSegue(withIdentifier: "goToSingleEvent", sender: indexPath.row)
     }
 }

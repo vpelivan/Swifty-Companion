@@ -13,25 +13,22 @@ class ClusterViewController: UIViewController {
 
     var ClusterLoggedUsers: [ClusterUsers?] = []
     var clusterDict: [String : ClusterUsers?] = [:]
-    var pictureDict: [String : UIImage?] = [:]
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var userView: UIView!
-    @IBOutlet weak var userViewPicture: UIImageView!
-    @IBOutlet weak var userViewName: UILabel!
-    @IBOutlet weak var userViewLocation: UILabel!
-    @IBOutlet weak var userViewButton: UIButton!
-    @IBOutlet weak var userViewBeginSess: UILabel!
-    @IBOutlet weak var userViewSessTime: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         collectionView.isScrollEnabled = true
         navigationController?.navigationBar.tintColor = colorCyan
         getClusterInfo(num: 1) {
             self.getClusterInfo(num: 2) {
                 self.getClusterInfo(num: 3) {
                     DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         self.collectionView.delegate = self
                         self.collectionView.dataSource = self
                         self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
@@ -41,14 +38,18 @@ class ClusterViewController: UIViewController {
         }
     }
     
-    @IBAction func closeButton(_ sender: Any) {
-        userView.isHidden = true
-    }
+
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        collectionView.isScrollEnabled = true
+        navigationController?.navigationBar.tintColor = colorCyan
         getClusterInfo(num: 1) {
             self.getClusterInfo(num: 2) {
                 self.getClusterInfo(num: 3) {
                     DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
                         self.collectionView.delegate = self
                         self.collectionView.dataSource = self
                         self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
@@ -80,25 +81,22 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
         let location = getLocation(pos: pos, row: row)
         
         if clusterDict["\(location)"] != nil {
-            self.userView.isHidden = false
-            let login = clusterDict["\(location)"]??.user?.login
-            self.userViewName.text = login
-            self.userViewPicture.image = pictureDict["\(location)"] as? UIImage
-            self.userViewButton.setTitle("View Profile", for: .normal)
-            self.userViewLocation.text = location
-            print(self.clusterDict["\(location)"]??.begin_at ?? "")
-            var begin = String(self.clusterDict["\(location)"]??.begin_at ?? "")
+            guard let login = clusterDict["\(location)"]??.user?.login else { return }
+            guard let beginFromDict = self.clusterDict["\(location)"]??.begin_at else { return }
+            var begin = beginFromDict.prefix(16).replacingOccurrences(of: "T", with: " ")
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
-            begin = String(begin.prefix(16)).replacingOccurrences(of: "T", with: " ")
             let beginGMT = dateFormatter.date(from: begin)!
             begin = dateFormatter.string(from: beginGMT.addingTimeInterval(7200))
             let end = dateFormatter.string(from: Date())
             let beginDate = dateFormatter.date(from: begin)!
             let endDate = dateFormatter.date(from: end)!
-            let diffInHours = Calendar.current.dateComponents([.hour], from: beginDate, to: endDate).hour
-            self.userViewBeginSess.text = "Began At:\n\(begin)"
-            self.userViewSessTime.text = "Session Time:\n\(diffInHours ?? 0) hour(s)"
+            let difference = Calendar.current.dateComponents([.hour, .minute], from: beginDate, to: endDate)
+            let formattedHourString = String(format: "%2ld", difference.hour!)
+            let formattedMinuteString = String(format: "%02ld", difference.minute!)
+            let BeginSess = "Began At: \(begin)"
+            let SessTime = "Session Time: \(formattedHourString):\(formattedMinuteString) hour(s)"
+            performSegue(withIdentifier: "goToClusterUser", sender: (location, login, BeginSess, SessTime))
         }
         
     }
@@ -128,12 +126,8 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             let loggedMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LoggedMacCell", for: indexPath) as! LoggedMacCell
             if let login = clusterDict["\(location)"]??.user?.login {
                 loggedMacCell.textLabel.text = login
-                if self.pictureDict[location] == nil {
-                    guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
-                    loggedMacCell.imageView.kf.setImage(with: url)
-                } else {
-                    loggedMacCell.imageView.image = pictureDict["\(location)"] as? UIImage
-                }
+                guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return loggedMacCell }
+                loggedMacCell.imageView.kf.setImage(with: url)
             }
             return loggedMacCell
         }
@@ -188,6 +182,15 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
         }
         return ""
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let uvc = segue.destination as? ClusterUserViewController else { return }
+        guard let senderForSure = sender as? (String, String, String, String) else { return }
+        uvc.location = "Location: \(senderForSure.0)"
+        uvc.login = senderForSure.1
+        uvc.beginSess = senderForSure.2
+        uvc.sessTime = senderForSure.3
     }
 }
 

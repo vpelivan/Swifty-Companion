@@ -46,6 +46,7 @@
 		A3C076872362FE260098A25F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3C076862362FE260098A25F /* Assets.xcassets */; };
 		A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076882362FE260098A25F /* LaunchScreen.storyboard */; };
 		A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */; };
+		A3DB083123F2CE9B00301883 /* ClusterUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */; };
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
@@ -100,6 +101,7 @@
 		A3C076892362FE260098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3C0768B2362FE260098A25F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMacCellController.swift; sourceTree = "<group>"; };
+		A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterUserViewController.swift; sourceTree = "<group>"; };
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,
+				A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */,
 				A3C0767E2362FE220098A25F /* ProfileViewController.swift */,
 				A3A9965723DE151D00688199 /* AllSkillsViewController.swift */,
 				A3E47CE52386C2370022151C /* AllProjectsViewController.swift */,
@@ -412,6 +415,7 @@
 				A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */,
 				A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */,
 				A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */,
+				A3DB083123F2CE9B00301883 /* ClusterUserViewController.swift in Sources */,
 				A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */,
 				A3A34BC423859E29009DAB75 /* ProjectTableViewCell.swift in Sources */,
 				A354918F237077F00056D05B /* LoginController.swift in Sources */,

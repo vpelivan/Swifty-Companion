@@ -70,21 +70,17 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let intraURL = AuthUser.shared.intraURL
-        guard let projectId = self.NeededProjects[indexPath.row].project?.id else { return }
-        guard let projectInfoUrl = URL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(projectId)&page[size]=100") else { return }
-        guard let urlUserProject = URL(string: "\(intraURL)/v2/projects_users/\(self.NeededProjects[indexPath.row].id ?? 0)") else { return }
-        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
-            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams in
-                DispatchQueue.main.async {
-                    guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
-                    vc.projectSessions = projectSessions
-                    vc.projectInfo = self.NeededProjects[indexPath.row]
-                    vc.projectsInfo = self.ProjectsInfo
-                    vc.teams = teams
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            }
-        }
+        
+        
+            guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
+//            vc.projectSessions = projectSessions
+            vc.projectInfo = self.NeededProjects[indexPath.row]
+            vc.projectsInfo = self.ProjectsInfo
+//            vc.teams = teams
+            self.navigationController?.pushViewController(vc, animated: true)
+//        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
+//            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams in
+//            }
+//        }
     }
 }

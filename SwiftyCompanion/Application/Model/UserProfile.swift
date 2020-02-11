@@ -9,6 +9,10 @@
 import Foundation
 
 
+struct UserSearch: Decodable {
+    let login: String?
+}
+
 struct UserPreview: Decodable {
     let id: Int?
     let lastName, login, firstName, displayname: String?

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UISearchBarDelegate {
+class ProfileViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     var exams: Int = 0
     var internships: Int = 0
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    var searchNamesArray: [UserSearch] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,11 +104,11 @@ class ProfileViewController: UIViewController, UISearchBarDelegate {
     
     func setSearchBar() {
         let searchTableView = storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
+        searchTableView.searchNamesArray = searchNamesArray
         searchController = UISearchController(searchResultsController: searchTableView)
-        searchController?.searchBar.placeholder = "Search user"
+        searchController?.searchBar.placeholder = "Find a user"
         searchController?.searchBar.delegate = self
         searchController?.hidesNavigationBarDuringPresentation = true
-//        searchController?.dimsBackgroundDuringPresentation = true
         definesPresentationContext = true
         navigationItem.searchController = searchController
     }
@@ -255,6 +256,23 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return fetchSomeSkillsData()
         default:
             return UITableViewCell()
+        }
+    }
+}
+
+extension ProfileViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let intraURL = AuthUser.shared.intraURL
+        guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(searchText)&sort=login") else { return }
+        NetworkService.shared.getData(into: [UserSearch?].self, from: url) {(data, error) in
+            guard let data = data as? [UserSearch] else { return }
+            self.searchNamesArray = data
+//            print(data)
+            DispatchQueue.main.async {
+                let searchTableView = self.storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
+                searchTableView.searchNamesArray = self.searchNamesArray
+                searchTableView.tableView.reloadData()
+            }
         }
     }
 }
