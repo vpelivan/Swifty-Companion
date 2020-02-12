@@ -113,7 +113,7 @@ class EventsViewController: UIViewController {
         guard let svc = unwindSegue.source as? SingleEventViewController,
             let indexPath = selectedIndexPath else { return print("error to cast svc or selectedIndexPath = nil") }
         
-        print("events; status -", svc.status)
+//        print("events; status -", svc.status)
         status[indexPath.row] = svc.status
         eventsTableView.reloadData()
     }

@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController {
     var internships: Int = 0
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var searchNamesArray: [UserSearch] = []
+    let intraURL = AuthUser.shared.intraURL
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +38,6 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = colorCyan
     }
 
-    @IBAction func tapChange(_ sender: UIButton) {
-        print("Change Cursus")
-    }
     
     func setDefaultCursus() {
         guard let cursusUsers = myInfo.cursusUsers else { return }
@@ -94,21 +92,18 @@ class ProfileViewController: UIViewController {
     }
     
     
-    @IBAction func tapSearch(_ sender: UIBarButtonItem) {
-        searchController?.searchBar.becomeFirstResponder()
-    }
-    
     @IBAction func tapLogOut(_ sender: UIBarButtonItem) {
         
     }
     
     func setSearchBar() {
         let searchTableView = storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
-        searchTableView.searchNamesArray = searchNamesArray
+        
         searchController = UISearchController(searchResultsController: searchTableView)
+        searchController?.searchResultsUpdater = searchTableView
         searchController?.searchBar.placeholder = "Find a user"
-        searchController?.searchBar.delegate = self
-        searchController?.hidesNavigationBarDuringPresentation = true
+        searchController?.searchBar.tintColor = colorCyan
+        searchController?.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
         navigationItem.searchController = searchController
     }
@@ -213,7 +208,7 @@ class ProfileViewController: UIViewController {
             lvlProgressRest = lvlFloat
         }
         guard let imageUrl = URL(string: myInfo.imageURL ?? "") else { return cell }
-        guard let coverUrl = URL(string: coalitionData[0]?.coverUrl ?? "") else { return cell }
+         guard let coverUrl = URL(string: coalitionData[0]?.coverUrl ?? "") else { return cell }
         NetworkService.shared.getImage(from: imageUrl) {image in
             cell.profileImageView.image = image
         }
@@ -239,6 +234,34 @@ class ProfileViewController: UIViewController {
         cell.getButtonBorder()
         return cell
     }
+    
+    // MARK: - unwindToProfileViewController
+
+    @IBAction func unwindToProfileViewController(_ unwindSegue: UIStoryboardSegue) {
+        guard let svc = unwindSegue.source as? SearchTableView else { return }
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
+        guard let login = svc.searchedLogin else { return }
+        guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
+        NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
+            guard let userInfo = User as? UserData else { return }
+            vc.myInfo = userInfo
+            guard let userId = userInfo.id else { return }
+            guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
+            NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
+                guard let coalitionData = Coalition as? [Coalition] else { return }
+                vc.coalitionData = coalitionData
+                guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                    guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
+                    vc.examsInternships = examsInternships
+                    DispatchQueue.main.async {
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -260,19 +283,3 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ProfileViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let intraURL = AuthUser.shared.intraURL
-        guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(searchText)&sort=login") else { return }
-        NetworkService.shared.getData(into: [UserSearch?].self, from: url) {(data, error) in
-            guard let data = data as? [UserSearch] else { return }
-            self.searchNamesArray = data
-//            print(data)
-            DispatchQueue.main.async {
-                let searchTableView = self.storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
-                searchTableView.searchNamesArray = self.searchNamesArray
-                searchTableView.tableView.reloadData()
-            }
-        }
-    }
-}

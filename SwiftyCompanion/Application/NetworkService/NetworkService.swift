@@ -37,6 +37,28 @@ class NetworkService {
         }.resume()
     }
     
+    public func getDataWithoutAlarm<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any, Result<String, Error>) -> ()) {
+            guard let token = AuthUser.shared.token?.accessToken else { return }
+            
+            let request = NSMutableURLRequest(url: url as URL)
+            request.httpMethod = "GET"
+            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+            let session = URLSession.shared
+            session.dataTask(with: request as URLRequest) {
+                (data, response, error) in
+                do
+                {
+                    guard let data = data else { return }
+                    let Data = try JSONDecoder().decode(type.self, from: data)
+
+                    completion(Data, .success("API Data successfuly transfered"))
+                }
+                catch let error {
+                    completion(error, .failure(error))
+                }
+            }.resume()
+        }
+    
     public func getImage(from url: URL, completion: @escaping (UIImage) -> ()) {
         let session = URLSession.shared
         session.dataTask(with: url) {(data, response, error) in
