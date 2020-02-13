@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
     var searchController: UISearchController?
@@ -27,7 +28,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setSearchBar()
+        navigationController?.navigationBar.tintColor = colorCyan
+        activityIndicator.isHidden = true
         setDefaultCursus()
         getExamsInternships()
         tableView.register(UINib(nibName: "CurrentProjectsViewCell", bundle: nil), forCellReuseIdentifier: "CurrentProjectsCell")
@@ -35,21 +37,27 @@ class ProfileViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: .zero)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        navigationController?.navigationBar.tintColor = colorCyan
+        setSearchBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
     }
 
     
     func setDefaultCursus() {
         guard let cursusUsers = myInfo.cursusUsers else { return }
         
-        for cursus in cursusUsers {
-            guard let neededCursusName = cursus.cursus?.name else { break }
-            if neededCursusName == "42" {
-                defaultCursus = cursus
-                return
+        if cursusUsers.isEmpty == false {
+            for cursus in cursusUsers {
+                guard let neededCursusName = cursus.cursus?.name else { break }
+                if neededCursusName == "42" {
+                    defaultCursus = cursus
+                    return
+                }
             }
+            defaultCursus = cursusUsers[0]
         }
-        defaultCursus = cursusUsers[0]
     }
     
     func getExamsInternships() {
@@ -103,7 +111,7 @@ class ProfileViewController: UIViewController {
         searchController?.searchResultsUpdater = searchTableView
         searchController?.searchBar.placeholder = "Find a user"
         searchController?.searchBar.tintColor = colorCyan
-        searchController?.hidesNavigationBarDuringPresentation = false
+        searchController?.hidesNavigationBarDuringPresentation = true
         definesPresentationContext = true
         navigationItem.searchController = searchController
     }
@@ -208,7 +216,8 @@ class ProfileViewController: UIViewController {
             lvlProgressRest = lvlFloat
         }
         guard let imageUrl = URL(string: myInfo.imageURL ?? "") else { return cell }
-         guard let coverUrl = URL(string: coalitionData[0]?.coverUrl ?? "") else { return cell }
+        
+        guard let coverUrl = URL(string: coalitionData[0]?.coverUrl ?? "") else { return cell }
         NetworkService.shared.getImage(from: imageUrl) {image in
             cell.profileImageView.image = image
         }
@@ -237,35 +246,47 @@ class ProfileViewController: UIViewController {
     
     // MARK: - unwindToProfileViewController
 
+    
     @IBAction func unwindToProfileViewController(_ unwindSegue: UIStoryboardSegue) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.reloadData()
         guard let svc = unwindSegue.source as? SearchTableView else { return }
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
-        guard let login = svc.searchedLogin else { return }
+        guard let login = svc.login else { return }
         guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
-        NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
-            guard let userInfo = User as? UserData else { return }
-            vc.myInfo = userInfo
-            guard let userId = userInfo.id else { return }
-            guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
-            NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
-                guard let coalitionData = Coalition as? [Coalition] else { return }
-                vc.coalitionData = coalitionData
-                guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
-                NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
-                    guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
-                    vc.examsInternships = examsInternships
-                    DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(vc, animated: true)
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
+            NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
+                guard let userInfo = User as? UserData else { return }
+                vc.myInfo = userInfo
+                guard let userId = userInfo.id else { return }
+                guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
+                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
+                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
+                        guard let coalitionData = Coalition as? [Coalition] else { return }
+                        vc.coalitionData = coalitionData
+                        guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                        NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                            guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
+                            vc.examsInternships = examsInternships
+                            DispatchQueue.main.async {
+                                self.navigationController?.pushViewController(vc, animated: true)
+                                self.activityIndicator.isHidden = true
+                                self.activityIndicator.stopAnimating()
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.activityIndicator.isHidden == false {
+            return 0
+        }
         return 3
     }
     

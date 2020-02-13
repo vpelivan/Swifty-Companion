@@ -11,7 +11,7 @@ import UIKit
 class SearchTableView: UITableViewController {
     
     var searchNamesArray: [UserSearch] = []
-    var searchedLogin: String?
+    var login: String?
     
     override func viewDidLoad() {
         tableView.tableFooterView = UIView(frame: .zero)
@@ -25,16 +25,20 @@ class SearchTableView: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell")!
-        cell.textLabel?.text = searchNamesArray[indexPath.row].login
-        print(searchNamesArray[indexPath.row].login ?? "no value")
+        if indexPath.row < searchNamesArray.count {
+            cell.textLabel?.text = searchNamesArray[indexPath.row].login
+            print(searchNamesArray[indexPath.row].login ?? "no value")
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        searchedLogin = searchNamesArray[indexPath.row].login
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "unwindToProfileViewController", sender: nil)
+        if indexPath.row < searchNamesArray.count {
+            login = searchNamesArray[indexPath.row].login
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "unwindToProfileViewController", sender: nil)
+            }
         }
     }
 }
@@ -42,14 +46,19 @@ class SearchTableView: UITableViewController {
 extension SearchTableView: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let intraURL = AuthUser.shared.intraURL
-        guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(searchController.searchBar.text ?? "")&sort=login") else { return }
-        NetworkService.shared.getDataWithoutAlarm(into: [UserSearch?].self, from: url) {(data, error) in
-            guard let data = data as? [UserSearch] else { return }
-            self.searchNamesArray = data
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        if searchController.searchBar.text != "" {
+            guard let text = searchController.searchBar.text else { return }
+            guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(text)&sort=login") else { return }
+            SearchNetworkService.shared.getSearchData(from: url) { data in
+                guard let data = data as? [UserSearch] else { return }
+                if data.isEmpty == false {
+                    self.searchNamesArray = data
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
-        
     }
 }
+

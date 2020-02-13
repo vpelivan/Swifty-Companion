@@ -20,6 +20,9 @@ class NetworkService {
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         let session = URLSession.shared
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 30
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in
             do
@@ -44,6 +47,9 @@ class NetworkService {
             request.httpMethod = "GET"
             request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
             let session = URLSession.shared
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 2
+            configuration.timeoutIntervalForResource = 2
             session.dataTask(with: request as URLRequest) {
                 (data, response, error) in
                 do

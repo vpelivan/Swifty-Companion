@@ -47,6 +47,7 @@
 		A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076882362FE260098A25F /* LaunchScreen.storyboard */; };
 		A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */; };
 		A3DB083123F2CE9B00301883 /* ClusterUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */; };
+		A3E04AF323F5AEF100E84090 /* SearchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E04AF223F5AEF100E84090 /* SearchNetworkService.swift */; };
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
@@ -102,6 +103,7 @@
 		A3C0768B2362FE260098A25F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMacCellController.swift; sourceTree = "<group>"; };
 		A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterUserViewController.swift; sourceTree = "<group>"; };
+		A3E04AF223F5AEF100E84090 /* SearchNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNetworkService.swift; sourceTree = "<group>"; };
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				A326F2922373066D009D3E12 /* NetworkService.swift */,
 				A36AD85223E062400065F627 /* LoginNetworkService.swift */,
+				A3E04AF223F5AEF100E84090 /* SearchNetworkService.swift */,
 				A35119C023DF4D1F00E295C7 /* ProjectNetworkService.swift */,
 				A34A565623E1BA37006BB676 /* EventsNetworkService.swift */,
 			);
@@ -392,6 +395,7 @@
 				A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */,
 				A3F678AD23F14C65009C59D2 /* SingleEventDescriptionCell.swift in Sources */,
 				A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */,
+				A3E04AF323F5AEF100E84090 /* SearchNetworkService.swift in Sources */,
 				A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */,
 				A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */,
 				A3A9965823DE151D00688199 /* AllSkillsViewController.swift in Sources */,

@@ -23,46 +23,54 @@ class ClusterViewController: UIViewController {
         activityIndicator.startAnimating()
         collectionView.isScrollEnabled = true
         navigationController?.navigationBar.tintColor = colorCyan
-        getClusterInfo(num: 1) {
-            self.getClusterInfo(num: 2) {
-                self.getClusterInfo(num: 3) {
-                    DispatchQueue.main.async {
-                        self.activityIndicator.isHidden = true
-                        self.activityIndicator.stopAnimating()
-                        self.collectionView.delegate = self
-                        self.collectionView.dataSource = self
-                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+        getClusterData()
+        
+    }
+    
+    
+    func getClusterData() {
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+            self.getClusterInfo(num: 1) {
+                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+                    self.getClusterInfo(num: 2) {
+                        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+                            self.getClusterInfo(num: 3) {
+                                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+                                    self.getClusterInfo(num: 4) {
+                                        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+                                            self.getClusterInfo(num: 5) {
+                                                DispatchQueue.main.async {
+                                                    self.activityIndicator.isHidden = true
+                                                    self.activityIndicator.stopAnimating()
+                                                    self.collectionView.delegate = self
+                                                    self.collectionView.dataSource = self
+                                                    self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-    
 
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        collectionView.isScrollEnabled = true
-        navigationController?.navigationBar.tintColor = colorCyan
-        getClusterInfo(num: 1) {
-            self.getClusterInfo(num: 2) {
-                self.getClusterInfo(num: 3) {
-                    DispatchQueue.main.async {
-                        self.activityIndicator.isHidden = true
-                        self.activityIndicator.stopAnimating()
-                        self.collectionView.delegate = self
-                        self.collectionView.dataSource = self
-                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
-                    }
-                }
-            }
-        }
+        getClusterData()
     }
 }
 
 extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if self.activityIndicator.isHidden == false {
+            return 0
+        }
         return 12
     }
     
@@ -202,6 +210,8 @@ extension ClusterViewController {
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 1
         let session = URLSession.shared
         session.dataTask(with: request as URLRequest) {
             (data, response, error) in

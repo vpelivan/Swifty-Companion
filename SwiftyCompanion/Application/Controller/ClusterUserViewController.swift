@@ -35,7 +35,9 @@ class ClusterUserViewController: UITableViewController {
     }
 
     @IBAction func tapViewProfile(_ sender: UIBarButtonItem) {
-    
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "toProfileViewController", sender: nil)
+        }
     }
     
     
