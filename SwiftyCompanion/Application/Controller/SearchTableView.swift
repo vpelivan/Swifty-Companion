@@ -37,7 +37,7 @@ class SearchTableView: UITableViewController {
         if indexPath.row < searchNamesArray.count {
             login = searchNamesArray[indexPath.row].login
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "unwindToProfileViewController", sender: nil)
+                self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
             }
         }
     }

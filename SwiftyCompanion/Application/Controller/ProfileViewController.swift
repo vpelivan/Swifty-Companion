@@ -247,38 +247,51 @@ class ProfileViewController: UIViewController {
     // MARK: - unwindToProfileViewController
 
     
-    @IBAction func unwindToProfileViewController(_ unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindToProfileFromCluster(_ unwindSegue: UIStoryboardSegue) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.reloadData()
+        guard let svc = unwindSegue.source as? ClusterUserViewController else { return }
+        guard let login = svc.login else { return }
+        fetchFoundUserData(from: svc, login: login)
+    }
+    
+    @IBAction func unwindToProfileFromSearch(_ unwindSegue: UIStoryboardSegue) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         tableView.reloadData()
         guard let svc = unwindSegue.source as? SearchTableView else { return }
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
         guard let login = svc.login else { return }
-        guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
-            NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
-                guard let userInfo = User as? UserData else { return }
-                vc.myInfo = userInfo
-                guard let userId = userInfo.id else { return }
-                guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
-                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
-                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
-                        guard let coalitionData = Coalition as? [Coalition] else { return }
-                        vc.coalitionData = coalitionData
-                        guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
-                        NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
-                            guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
-                            vc.examsInternships = examsInternships
-                            DispatchQueue.main.async {
-                                self.navigationController?.pushViewController(vc, animated: true)
-                                self.activityIndicator.isHidden = true
-                                self.activityIndicator.stopAnimating()
-                            }
+        fetchFoundUserData(from: svc, login: login)
+    }
+    
+    func fetchFoundUserData(from controller: UIViewController, login: String) {
+    guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
+    guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
+    DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
+        NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
+            guard let userInfo = User as? UserData else { return }
+            vc.myInfo = userInfo
+            guard let userId = userInfo.id else { return }
+            guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
+            DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
+                NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
+                    guard let coalitionData = Coalition as? [Coalition] else { return }
+                    vc.coalitionData = coalitionData
+                    guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                    NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                        guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
+                        vc.examsInternships = examsInternships
+                        DispatchQueue.main.async {
+                            self.navigationController?.pushViewController(vc, animated: true)
+                            self.activityIndicator.isHidden = true
+                            self.activityIndicator.stopAnimating()
                         }
                     }
                 }
             }
         }
+    }
     }
 }
 

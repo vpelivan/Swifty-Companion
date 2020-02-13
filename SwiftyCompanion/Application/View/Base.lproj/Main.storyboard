@@ -1282,7 +1282,7 @@
                         <outlet property="userViewLogin" destination="Czk-HH-P2E" id="Eai-Wc-G28"/>
                         <outlet property="userViewPicture" destination="f9Z-ga-Z4S" id="JCG-Sg-Nn0"/>
                         <outlet property="userViewSessTime" destination="8Hn-85-Qar" id="rwZ-9L-s6L"/>
-                        <segue destination="flc-p1-dnX" kind="unwind" identifier="toProfileViewController" unwindAction="unwindToProfileViewController:" id="GOd-rj-QaO"/>
+                        <segue destination="flc-p1-dnX" kind="unwind" identifier="toProfile" unwindAction="unwindToProfileFromCluster:" id="rZ5-VG-7gb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfT-pV-6Wb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1506,7 +1506,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="Cjj-Zm-AEr" kind="unwind" identifier="unwindToProfileViewController" unwindAction="unwindToProfileViewController:" id="Dpf-I7-X9S"/>
+                        <segue destination="Cjj-Zm-AEr" kind="unwind" identifier="unwindToProfile" unwindAction="unwindToProfileFromSearch:" id="ZDQ-w2-ecX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugr-2j-CZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
