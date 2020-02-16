@@ -29,25 +29,19 @@ class ClusterViewController: UIViewController {
     
     
     func getClusterData() {
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-            self.getClusterInfo(num: 1) {
-                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                    self.getClusterInfo(num: 2) {
+        self.getClusterInfo(num: 1) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.getClusterInfo(num: 2) {
+                    self.getClusterInfo(num: 3) {
                         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                            self.getClusterInfo(num: 3) {
-                                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                                    self.getClusterInfo(num: 4) {
-                                        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                                            self.getClusterInfo(num: 5) {
-                                                DispatchQueue.main.async {
-                                                    self.activityIndicator.isHidden = true
-                                                    self.activityIndicator.stopAnimating()
-                                                    self.collectionView.delegate = self
-                                                    self.collectionView.dataSource = self
-                                                    self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
-                                                }
-                                            }
-                                        }
+                            self.getClusterInfo(num: 4) {
+                                self.getClusterInfo(num: 5) {
+                                    DispatchQueue.main.async {
+                                        self.activityIndicator.isHidden = true
+                                        self.activityIndicator.stopAnimating()
+                                        self.collectionView.delegate = self
+                                        self.collectionView.dataSource = self
+                                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
                                     }
                                 }
                             }

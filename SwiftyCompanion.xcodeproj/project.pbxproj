@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571A5F1D237F41ED0014C1BC /* Projects.swift */; };
+		572469BC23F6E3820096A775 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BB23F6E3820096A775 /* NewViewController.swift */; };
+		572469BE23F6E4070096A775 /* NewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BD23F6E4070096A775 /* NewCellController.swift */; };
 		575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */; };
 		575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D923DE59E8009CC511 /* TeamsViewCell.swift */; };
+		57E809D523F9F0E700EB150D /* NewCursusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E809D423F9F0E700EB150D /* NewCursusCell.swift */; };
 		57F2735423E8D99B009EDB1C /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F2735323E8D99B009EDB1C /* ErrorHandling.swift */; };
 		846C10DCB94DEF2775D57DF6 /* Pods_SwiftyCompanion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */; };
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
@@ -62,8 +65,11 @@
 /* Begin PBXFileReference section */
 		53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyCompanion.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion.debug.xcconfig"; sourceTree = "<group>"; };
 		571A5F1D237F41ED0014C1BC /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
+		572469BB23F6E3820096A775 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
+		572469BD23F6E4070096A775 /* NewCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellController.swift; sourceTree = "<group>"; };
 		575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionCell.swift; sourceTree = "<group>"; };
 		575A01D923DE59E8009CC511 /* TeamsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewCell.swift; sourceTree = "<group>"; };
+		57E809D423F9F0E700EB150D /* NewCursusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCursusCell.swift; sourceTree = "<group>"; };
 		57F2735323E8D99B009EDB1C /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyCompanion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -178,6 +184,9 @@
 			isa = PBXGroup;
 			children = (
 				A354918E237077F00056D05B /* LoginController.swift */,
+				572469BB23F6E3820096A775 /* NewViewController.swift */,
+				572469BD23F6E4070096A775 /* NewCellController.swift */,
+				57E809D423F9F0E700EB150D /* NewCursusCell.swift */,
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,
@@ -415,6 +424,7 @@
 				A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */,
+				572469BE23F6E4070096A775 /* NewCellController.swift in Sources */,
 				A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */,
 				A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */,
 				A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */,
@@ -427,8 +437,10 @@
 				575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */,
 				571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */,
 				A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */,
+				572469BC23F6E3820096A775 /* NewViewController.swift in Sources */,
 				A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,
+				57E809D523F9F0E700EB150D /* NewCursusCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
