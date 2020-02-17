@@ -12,7 +12,6 @@
 		572469BE23F6E4070096A775 /* NewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BD23F6E4070096A775 /* NewCellController.swift */; };
 		575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */; };
 		575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D923DE59E8009CC511 /* TeamsViewCell.swift */; };
-		57E809D523F9F0E700EB150D /* NewCursusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E809D423F9F0E700EB150D /* NewCursusCell.swift */; };
 		57F2735423E8D99B009EDB1C /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F2735323E8D99B009EDB1C /* ErrorHandling.swift */; };
 		846C10DCB94DEF2775D57DF6 /* Pods_SwiftyCompanion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */; };
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
@@ -39,6 +38,8 @@
 		A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */; };
 		A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D8A238D808C007540D0 /* TableViewCell.swift */; };
 		A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39943532390308E00F1569E /* PoolDayTableViewCell.swift */; };
+		A3A30A2E23FAFBF9005403C1 /* CurrentLevelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A30A2D23FAFBF9005403C1 /* CurrentLevelViewCell.swift */; };
+		A3A30A3023FAFE56005403C1 /* CurrentCursusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */; };
 		A3A34BC423859E29009DAB75 /* ProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */; };
 		A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */; };
 		A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */; };
@@ -69,7 +70,6 @@
 		572469BD23F6E4070096A775 /* NewCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellController.swift; sourceTree = "<group>"; };
 		575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionCell.swift; sourceTree = "<group>"; };
 		575A01D923DE59E8009CC511 /* TeamsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewCell.swift; sourceTree = "<group>"; };
-		57E809D423F9F0E700EB150D /* NewCursusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCursusCell.swift; sourceTree = "<group>"; };
 		57F2735323E8D99B009EDB1C /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyCompanion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -96,6 +96,8 @@
 		A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventViewController.swift; sourceTree = "<group>"; };
 		A3865D8A238D808C007540D0 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		A39943532390308E00F1569E /* PoolDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolDayTableViewCell.swift; sourceTree = "<group>"; };
+		A3A30A2D23FAFBF9005403C1 /* CurrentLevelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLevelViewCell.swift; sourceTree = "<group>"; };
+		A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCursusViewCell.swift; sourceTree = "<group>"; };
 		A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTableViewCell.swift; sourceTree = "<group>"; };
 		A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsTableViewCell.swift; sourceTree = "<group>"; };
 		A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkTableViewCell.swift; sourceTree = "<group>"; };
@@ -166,6 +168,8 @@
 				575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */,
 				A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */,
 				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
+				A3A30A2D23FAFBF9005403C1 /* CurrentLevelViewCell.swift */,
+				A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */,
 				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
 				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
@@ -186,7 +190,6 @@
 				A354918E237077F00056D05B /* LoginController.swift */,
 				572469BB23F6E3820096A775 /* NewViewController.swift */,
 				572469BD23F6E4070096A775 /* NewCellController.swift */,
-				57E809D423F9F0E700EB150D /* NewCursusCell.swift */,
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,
@@ -421,6 +424,7 @@
 				A34A565723E1BA37006BB676 /* EventsNetworkService.swift in Sources */,
 				575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */,
 				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
+				A3A30A2E23FAFBF9005403C1 /* CurrentLevelViewCell.swift in Sources */,
 				A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */,
@@ -431,6 +435,7 @@
 				A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */,
 				A3DB083123F2CE9B00301883 /* ClusterUserViewController.swift in Sources */,
 				A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */,
+				A3A30A3023FAFE56005403C1 /* CurrentCursusViewCell.swift in Sources */,
 				A3A34BC423859E29009DAB75 /* ProjectTableViewCell.swift in Sources */,
 				A354918F237077F00056D05B /* LoginController.swift in Sources */,
 				A36AD85523E0942D0065F627 /* OtherMethods.swift in Sources */,
@@ -440,7 +445,6 @@
 				572469BC23F6E3820096A775 /* NewViewController.swift in Sources */,
 				A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,
-				57E809D523F9F0E700EB150D /* NewCursusCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,10 +14,13 @@ class CurrentProjectsViewCell: UITableViewCell {
     @IBOutlet weak var projectNameTwo: UILabel!
     @IBOutlet weak var projectNameThree: UILabel!
     @IBOutlet weak var projectNameEtcDots: UILabel!
+    @IBOutlet weak var subView: UIView!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setBorderdersToButton()
+        subView.layer.cornerRadius = 5.0
     }
     
     @IBAction func tapAllProjects(_ sender: UIButton) {

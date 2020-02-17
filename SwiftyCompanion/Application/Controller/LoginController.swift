@@ -61,7 +61,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
                     NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
                         self.errorHandler(to: result) {
                             self.coalitionData = Coalition as! [Coalition?]
-                            guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                            guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212,1650&user_id=\(userId)") else { return }
                             NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
                                 self.errorHandler(to: result) {
                                     self.examsInternships = examsInternships as! [ProjectsUsers?]
@@ -81,7 +81,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let tabBar = segue.destination as? UITabBarController {
             if let navi = tabBar.viewControllers?[0] as? UINavigationController {
-                if let vc = navi.viewControllers.first as? ProfileViewController {
+                if let vc = navi.viewControllers.first as? NewViewController {
                     vc.myInfo = self.myInfo
                     vc.coalitionData = self.coalitionData
                     vc.examsInternships = self.examsInternships

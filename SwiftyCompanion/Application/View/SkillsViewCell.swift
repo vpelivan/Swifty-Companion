@@ -17,10 +17,13 @@ class SkillsViewCell: UITableViewCell {
     @IBOutlet weak var levelTwo: UILabel!
     @IBOutlet weak var levelThree: UILabel!
     @IBOutlet weak var skillEtc: UILabel!
+    @IBOutlet weak var subView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setBordersToButton()
         // Initialization code
+        subView.layer.cornerRadius = 5.0
     }
     @IBAction func tapAllSkills(_ sender: Any) {
         

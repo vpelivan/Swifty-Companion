@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     var defaultCursus: CursusUser!
     var exams: Int = 0
     var internships: Int = 0
+    var partTime: Int = 0
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var searchNamesArray: [UserSearch] = []
     let intraURL = AuthUser.shared.intraURL
@@ -47,7 +48,7 @@ class ProfileViewController: UIViewController {
     
     func setDefaultCursus() {
         guard let cursusUsers = myInfo.cursusUsers else { return }
-        
+
         if cursusUsers.isEmpty == false {
             for cursus in cursusUsers {
                 guard let neededCursusName = cursus.cursus?.name else { break }
@@ -61,21 +62,26 @@ class ProfileViewController: UIViewController {
     }
     
     func getExamsInternships() {
-        for project in examsInternships {
-            if project?.project?.id == 11 {
-                guard let projectTeams = project?.teams else { break }
-                for team in projectTeams {
-                    if team.validated == true && exams < 5 {
-                        exams += 1
+        if examsInternships.isEmpty == false {
+            for project in examsInternships {
+                if project?.project?.id == 11 {
+                    guard let projectTeams = project?.teams else { break }
+                    for team in projectTeams {
+                        if team.validated == true && exams < 5 {
+                            exams += 1
+                        }
                     }
                 }
-            }
-            else if (project?.project?.id == 118 || project?.project?.id == 212) {
-                guard let projectTeams = project?.teams else { break }
-                for team in projectTeams {
-                    if team.validated == true {
-                        internships += 1
+                else if (project?.project?.id == 118 || project?.project?.id == 212) {
+                    guard let projectTeams = project?.teams else { break }
+                    for team in projectTeams {
+                        if team.validated == true {
+                            internships += 1
+                        }
                     }
+                }
+                else if (project?.project?.id == 1650 && project?.teams?[0].validated == true) {
+                    partTime += 1
                 }
             }
         }
