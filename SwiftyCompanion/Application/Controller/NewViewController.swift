@@ -116,7 +116,9 @@ class NewViewController: UIViewController {
             cell.userImage.image = UIImage(named: "noImage")
         }
         if myInfo.campus?.isEmpty == false {
-            cell.userLocation.text = "\(myInfo.campus?[0].city ?? ""), \(myInfo.campus?[0].country ?? "")"
+            if let city = myInfo.campus?[0].city, let country = myInfo.campus?[0].country {
+                cell.userLocation.text = "\(city), \(country)"
+            }
         }
         cell.userName.text = myInfo.displayname ?? "No Name"
         cell.userLogin.text = myInfo.login ?? "No Login"
