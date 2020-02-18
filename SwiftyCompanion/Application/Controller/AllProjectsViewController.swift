@@ -15,7 +15,7 @@ class AllProjectsViewController: UIViewController {
     let colorGreen = #colorLiteral(red: 0.3595471382, green: 0.7224514484, blue: 0.358512938, alpha: 1)
     
     @IBOutlet weak var projectsTableView: UITableView!
-    var ProjectsInfo: [ProjectsUser]!
+    var ProjectsInfo: [ProjectsUser]?
     var token: String?
     var NeededProjects: [ProjectsUser] = []
     
@@ -27,9 +27,13 @@ class AllProjectsViewController: UIViewController {
     }
     
     func getNeededProjects() {
-        for project in ProjectsInfo {
-            if project.cursusIDS?[0] == 1 && project.project?.parentID == nil {
-                NeededProjects.append(project)
+        if let projectsInfo = ProjectsInfo {
+            for project in projectsInfo {
+                if project.cursusIDS?.isEmpty == false {
+                    if project.cursusIDS?[0] == 1 && project.project?.parentID == nil {
+                        NeededProjects.append(project)
+                    }
+                }
             }
         }
     }

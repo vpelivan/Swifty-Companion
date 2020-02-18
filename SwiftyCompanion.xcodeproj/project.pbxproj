@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571A5F1D237F41ED0014C1BC /* Projects.swift */; };
-		572469BC23F6E3820096A775 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BB23F6E3820096A775 /* NewViewController.swift */; };
-		572469BE23F6E4070096A775 /* NewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BD23F6E4070096A775 /* NewCellController.swift */; };
+		572469BC23F6E3820096A775 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BB23F6E3820096A775 /* ProfileViewController.swift */; };
+		572469BE23F6E4070096A775 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BD23F6E4070096A775 /* ProfileViewCell.swift */; };
 		575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */; };
 		575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D923DE59E8009CC511 /* TeamsViewCell.swift */; };
 		57F2735423E8D99B009EDB1C /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F2735323E8D99B009EDB1C /* ErrorHandling.swift */; };
@@ -25,6 +25,7 @@
 		A354918F237077F00056D05B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354918E237077F00056D05B /* LoginController.swift */; };
 		A3577237237C1CCD009284CB /* Coalition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3577236237C1CCD009284CB /* Coalition.swift */; };
 		A35FCDA323883A0800535212 /* SingleProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FCDA223883A0800535212 /* SingleProjectViewController.swift */; };
+		A368998623FC28E90056A74B /* CursusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A368998523FC28E90056A74B /* CursusTableViewController.swift */; };
 		A36A3D6F2396F47300403959 /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D6E2396F47300403959 /* CustomLayout.swift */; };
 		A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36A3D702396F6B800403959 /* LoggedMacCell.swift */; };
 		A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85223E062400065F627 /* LoginNetworkService.swift */; };
@@ -45,7 +46,7 @@
 		A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */; };
 		A3A9965823DE151D00688199 /* AllSkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A9965723DE151D00688199 /* AllSkillsViewController.swift */; };
 		A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767C2362FE220098A25F /* AppDelegate.swift */; };
-		A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767E2362FE220098A25F /* ProfileViewController.swift */; };
+		A3C0767F2362FE220098A25F /* ProfileViewController(old).swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0767E2362FE220098A25F /* ProfileViewController(old).swift */; };
 		A3C076822362FE220098A25F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076802362FE220098A25F /* Main.storyboard */; };
 		A3C076872362FE260098A25F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3C076862362FE260098A25F /* Assets.xcassets */; };
 		A3C0768A2362FE260098A25F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3C076882362FE260098A25F /* LaunchScreen.storyboard */; };
@@ -55,7 +56,7 @@
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
-		A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */; };
+		A3F2D68823DC8469003FAB32 /* ProfileViewCell(old).swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68723DC8469003FAB32 /* ProfileViewCell(old).swift */; };
 		A3F2D68B23DCA44E003FAB32 /* CurrentProjectsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */; };
 		A3F2D68C23DCA44E003FAB32 /* CurrentProjectsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */; };
 		A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */; };
@@ -66,8 +67,8 @@
 /* Begin PBXFileReference section */
 		53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyCompanion.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion.debug.xcconfig"; sourceTree = "<group>"; };
 		571A5F1D237F41ED0014C1BC /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
-		572469BB23F6E3820096A775 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
-		572469BD23F6E4070096A775 /* NewCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellController.swift; sourceTree = "<group>"; };
+		572469BB23F6E3820096A775 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		572469BD23F6E4070096A775 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
 		575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionCell.swift; sourceTree = "<group>"; };
 		575A01D923DE59E8009CC511 /* TeamsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewCell.swift; sourceTree = "<group>"; };
 		57F2735323E8D99B009EDB1C /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		A354918E237077F00056D05B /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A3577236237C1CCD009284CB /* Coalition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coalition.swift; sourceTree = "<group>"; };
 		A35FCDA223883A0800535212 /* SingleProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleProjectViewController.swift; sourceTree = "<group>"; };
+		A368998523FC28E90056A74B /* CursusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursusTableViewController.swift; sourceTree = "<group>"; };
 		A36A3D6E2396F47300403959 /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		A36A3D702396F6B800403959 /* LoggedMacCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedMacCell.swift; sourceTree = "<group>"; };
 		A36AD85223E062400065F627 /* LoginNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNetworkService.swift; sourceTree = "<group>"; };
@@ -104,7 +106,7 @@
 		A3A9965723DE151D00688199 /* AllSkillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSkillsViewController.swift; sourceTree = "<group>"; };
 		A3C076792362FE220098A25F /* Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Companion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C0767C2362FE220098A25F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A3C0767E2362FE220098A25F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A3C0767E2362FE220098A25F /* ProfileViewController(old).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewController(old).swift"; sourceTree = "<group>"; };
 		A3C076812362FE220098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A3C076862362FE260098A25F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3C076892362FE260098A25F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -115,7 +117,7 @@
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
-		A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
+		A3F2D68723DC8469003FAB32 /* ProfileViewCell(old).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewCell(old).swift"; sourceTree = "<group>"; };
 		A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentProjectsViewCell.swift; sourceTree = "<group>"; };
 		A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentProjectsViewCell.xib; sourceTree = "<group>"; };
 		A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsViewCell.swift; sourceTree = "<group>"; };
@@ -172,9 +174,10 @@
 				A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */,
 				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
 				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
+				572469BD23F6E4070096A775 /* ProfileViewCell.swift */,
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
-				A3F2D68723DC8469003FAB32 /* ProfileViewCell.swift */,
+				A3F2D68723DC8469003FAB32 /* ProfileViewCell(old).swift */,
 				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
 				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
@@ -188,13 +191,13 @@
 			isa = PBXGroup;
 			children = (
 				A354918E237077F00056D05B /* LoginController.swift */,
-				572469BB23F6E3820096A775 /* NewViewController.swift */,
-				572469BD23F6E4070096A775 /* NewCellController.swift */,
+				572469BB23F6E3820096A775 /* ProfileViewController.swift */,
+				A368998523FC28E90056A74B /* CursusTableViewController.swift */,
 				A3E47CE7238717B70022151C /* ClusterViewController.swift */,
 				A3865D86238D6DDB007540D0 /* EventsViewController.swift */,
 				A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */,
 				A3DB083023F2CE9B00301883 /* ClusterUserViewController.swift */,
-				A3C0767E2362FE220098A25F /* ProfileViewController.swift */,
+				A3C0767E2362FE220098A25F /* ProfileViewController(old).swift */,
 				A3A9965723DE151D00688199 /* AllSkillsViewController.swift */,
 				A3E47CE52386C2370022151C /* AllProjectsViewController.swift */,
 				A35FCDA223883A0800535212 /* SingleProjectViewController.swift */,
@@ -414,8 +417,9 @@
 				A3865D8B238D808C007540D0 /* TableViewCell.swift in Sources */,
 				A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */,
 				A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */,
-				A3F2D68823DC8469003FAB32 /* ProfileViewCell.swift in Sources */,
+				A3F2D68823DC8469003FAB32 /* ProfileViewCell(old).swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
+				A368998623FC28E90056A74B /* CursusTableViewController.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
 				A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */,
 				A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */,
@@ -423,12 +427,12 @@
 				A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */,
 				A34A565723E1BA37006BB676 /* EventsNetworkService.swift in Sources */,
 				575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */,
-				A3C0767F2362FE220098A25F /* ProfileViewController.swift in Sources */,
+				A3C0767F2362FE220098A25F /* ProfileViewController(old).swift in Sources */,
 				A3A30A2E23FAFBF9005403C1 /* CurrentLevelViewCell.swift in Sources */,
 				A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */,
 				A3C0767D2362FE220098A25F /* AppDelegate.swift in Sources */,
 				A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */,
-				572469BE23F6E4070096A775 /* NewCellController.swift in Sources */,
+				572469BE23F6E4070096A775 /* ProfileViewCell.swift in Sources */,
 				A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */,
 				A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */,
 				A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */,
@@ -442,7 +446,7 @@
 				575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */,
 				571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */,
 				A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */,
-				572469BC23F6E3820096A775 /* NewViewController.swift in Sources */,
+				572469BC23F6E3820096A775 /* ProfileViewController.swift in Sources */,
 				A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,
 			);
