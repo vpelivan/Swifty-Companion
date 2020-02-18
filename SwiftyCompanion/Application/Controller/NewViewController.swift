@@ -108,10 +108,24 @@ class NewViewController: UIViewController {
 
     fileprivate func fetchProfileCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! NewCellController
-//        guard let imageUrl = URL(string: myInfo.imageURL ?? "") else { return cell }
-        
-//        cell.userImage =
-        
+        if let imageUrl = URL(string: myInfo.imageURL ?? ""){
+            NetworkService.shared.getImage(from: imageUrl) {image in
+                cell.userImage.image = image
+            }
+        } else {
+            cell.userImage.image = UIImage(named: "noImage")
+        }
+        if myInfo.campus?.isEmpty == false {
+            cell.userLocation.text = "\(myInfo.campus?[0].city ?? ""), \(myInfo.campus?[0].country ?? "")"
+        }
+        cell.userName.text = myInfo.displayname ?? "No Name"
+        cell.userLogin.text = myInfo.login ?? "No Login"
+        cell.userEmail.text = myInfo.email ?? "No Email"
+        cell.userPhone.text = "phone: \(myInfo.phone ?? "No Info")"
+        cell.userPoints.text = "correction points: \(myInfo.correctionPoint ?? 0)"
+        cell.userWallet.text = "wallet: \(myInfo.wallet ?? 0)₳"
+        cell.userLocation.text = "location: \(myInfo.location ?? "Unavailable")"
+        cell.userPool.text = "pool of: \(myInfo.poolMonth ?? "") \(myInfo.poolYear ?? "")"
         return cell
     }
     
