@@ -21,6 +21,7 @@ class ProfileViewController: UIViewController {
     var projectsNum: Int = 0
     var exams: Int = 0
     var internships: Int = 0
+    var partTime: Int = 0
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var searchNamesArray: [UserSearch] = []
     let intraURL = AuthUser.shared.intraURL
@@ -31,12 +32,32 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.tintColor = colorCyan
         activityIndicator.isHidden = true
         setCellQuantity()
-        setTableView()
         setSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setTableView()
         tableView.reloadData()
+    }
+    
+    @IBAction func tapLogOut(_ sender: Any) {
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            for cookie in cookies { // where cookie.name == "_intra_42_session_production" {
+                HTTPCookieStorage.shared.deleteCookie(cookie)
+            }
+        }
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
+        }
+        //goToLogin
+        
+//            if let cookieStore = WebViewController?.webView.configuration.websiteDataStore.httpCookieStore {
+//                cookieStore.getAllCookies { cookies in
+//                    for cookie in cookies { // where cookie.name == "_intra_42_session_production" {
+//                        cookieStore.delete(cookie)
+//                    }
+//                }
+//            }
     }
     
     @objc func tapChangeCursus(_ sender: Any?) {
@@ -92,11 +113,19 @@ class ProfileViewController: UIViewController {
                     }
                 }
             }
-            else if (project?.project?.id == 118 || project?.project?.id == 212 || project?.project?.id == 1650) {
+            else if (project?.project?.id == 118 || project?.project?.id == 212) {
                 guard let projectTeams = project?.teams else { break }
                 for team in projectTeams {
-                    if team.validated == true {
+                    if team.validated == true && internships < 2 {
                         internships += 1
+                    }
+                }
+            }
+            else if ( project?.project?.id == 1650 || project?.project?.id == 1656) {
+                guard let projectTeams = project?.teams else { break }
+                for team in projectTeams {
+                    if team.validated == true && partTime < 1 {
+                        partTime += 1
                     }
                 }
             }
@@ -200,6 +229,9 @@ class ProfileViewController: UIViewController {
         }
         if let internImage = UIImage(named: "icons8-case-white") {
             cell.internship = fetchImages(with: internships, for: cell.internship, with: internImage)
+            if partTime > 0 {
+                cell.partTime.image = internImage
+            }
         }
         return cell
     }
@@ -230,7 +262,7 @@ class ProfileViewController: UIViewController {
                     NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
                         guard let coalitionData = Coalition as? [Coalition] else { return }
                         vc.coalitionData = coalitionData
-                        guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212&user_id=\(userId)") else { return }
+                        guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(userId)") else { return }
                         NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
                             guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
                             vc.examsInternships = examsInternships
@@ -269,10 +301,13 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.activityIndicator.isHidden == false {
+            self.tableView.backgroundView = nil
+//            self.tableView.backgroundView?.contentMode = .scaleAspectFill
             return 0
         }
         return cellDict.count
     }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let keys = (cellDict as NSDictionary).allKeys(for: indexPath.row) as! [Int]

@@ -14,6 +14,7 @@ class CurrentLevelViewCell: UITableViewCell {
     @IBOutlet weak var levelProgress: UIProgressView!
     @IBOutlet var checkmark: [UIImageView]!
     @IBOutlet var internship: [UIImageView]!
+    @IBOutlet weak var partTime: UIImageView!
     @IBOutlet weak var subView: UIView!
     
     override func awakeFromNib() {

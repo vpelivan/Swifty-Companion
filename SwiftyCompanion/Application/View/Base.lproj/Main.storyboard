@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,7 +11,7 @@
         <!--Login Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="goToLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="LoginController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1531,6 +1531,7 @@
                                         <connections>
                                             <outlet property="level" destination="2wy-qV-FP9" id="syY-Ib-03I"/>
                                             <outlet property="levelProgress" destination="pe3-95-8Gd" id="bQv-9M-PDR"/>
+                                            <outlet property="partTime" destination="tOW-7j-xji" id="oXy-tA-BG9"/>
                                             <outlet property="subView" destination="feU-aR-hZS" id="Tpp-Gg-983"/>
                                             <outletCollection property="checkmark" destination="0oH-Yh-cpj" collectionClass="NSMutableArray" id="U07-vk-fKm"/>
                                             <outletCollection property="internship" destination="xwM-0V-ha7" collectionClass="NSMutableArray" id="qrX-Gw-F5B"/>
@@ -1539,7 +1540,6 @@
                                             <outletCollection property="checkmark" destination="Vca-nL-4WO" collectionClass="NSMutableArray" id="PBa-WK-jRN"/>
                                             <outletCollection property="checkmark" destination="lB1-aV-fy3" collectionClass="NSMutableArray" id="WAb-em-ruc"/>
                                             <outletCollection property="internship" destination="lJ1-bn-dS1" collectionClass="NSMutableArray" id="q0i-4U-ba0"/>
-                                            <outletCollection property="internship" destination="tOW-7j-xji" collectionClass="NSMutableArray" id="OZN-ak-Ppi"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CursusCell" rowHeight="145" id="1X2-sS-uMh" customClass="CurrentCursusViewCell" customModule="Companion" customModuleProvider="target">
@@ -1670,14 +1670,19 @@
                     <navigationItem key="navigationItem" title="Swifty Companion" id="dOL-Ih-Xbq">
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="69n-vL-b0p">
                             <color key="tintColor" red="0.042876340450000001" green="0.71358960869999999" blue="0.72157961130000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <connections>
+                                <action selector="tapLogOut:" destination="8bf-dC-a2D" id="yjQ-xp-4zV"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="65J-J1-SPj" id="c52-2u-xqg"/>
                         <outlet property="tableView" destination="G4Z-bM-KsH" id="zJm-tD-Wwg"/>
+                        <segue destination="IGL-zz-mJ2" kind="unwind" identifier="unwindToLogin" unwindAction="unwindToLogin:" id="hkD-0w-Jkd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g0E-s5-62S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="IGL-zz-mJ2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2126" y="881"/>
         </scene>

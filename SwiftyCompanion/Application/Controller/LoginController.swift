@@ -61,7 +61,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
                     NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
                         self.errorHandler(to: result) {
                             self.coalitionData = Coalition as! [Coalition?]
-                            guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212,1650&user_id=\(userId)") else { return }
+                            guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(userId)") else { return }
                             DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
                                 NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
                                     self.errorHandler(to: result) {
@@ -92,14 +92,13 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
         }
     }
     
-    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
-    
-    }
-    
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return self.view.window ?? ASPresentationAnchor()
     }
     
+    @IBAction func unwindToLogin(_ unwindSegue: UIStoryboardSegue) {
+        
+    }
     
 }
 
