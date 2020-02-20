@@ -12,6 +12,7 @@ class CursusTableViewController: UITableViewController {
 
     var cursusUsers: [CursusUser]?
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    var chosenCursus: CursusUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,14 @@ class CursusTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        if cursusUsers?.isEmpty == false {
+            guard let cursus = cursusUsers?[indexPath.row] else { return }
+            self.chosenCursus = cursus
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "unwindToProfileFromCursus", sender: nil)
+            }
+        }
     }
 
 }
+

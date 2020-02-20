@@ -101,19 +101,21 @@ class SingleProjectViewController: UIViewController {
     
     func fetchProjectDescription(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as! ProjectDescriptionCell
-        if let count = self.projectSessions?[0].projectSessions.count {
-            for i in 0..<count {
-                if self.projectSessions?[0].projectSessions[i]?.campus_id == 13
-                    && self.projectSessions?[0].projectSessions[i]?.description != nil
-                    && self.projectSessions?[0].projectSessions[i]?.description != "" {
-                    cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[i]?.description
+        if projectSessions?.isEmpty == false {
+            if let count = self.projectSessions?[0].projectSessions.count {
+                for i in 0..<count {
+                    if self.projectSessions?[0].projectSessions[i]?.campus_id == 13
+                        && self.projectSessions?[0].projectSessions[i]?.description != nil
+                        && self.projectSessions?[0].projectSessions[i]?.description != "" {
+                        cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[i]?.description
+                        return cell
+                    }
+                }
+                if self.projectSessions?[0].projectSessions[0]?.description != nil
+                    && self.projectSessions?[0].projectSessions[0]?.description != "" {
+                    cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[0]?.description
                     return cell
                 }
-            }
-            if self.projectSessions?[0].projectSessions[0]?.description != nil
-                && self.projectSessions?[0].projectSessions[0]?.description != "" {
-                cell.descriptionLabel.text = self.projectSessions?[0].projectSessions[0]?.description
-                return cell
             }
         }
         cell.descriptionLabel.text = "No Description"
@@ -149,30 +151,33 @@ class SingleProjectViewController: UIViewController {
         var solo: Bool = true
         var difficulty: Int = 100
         var time: Int = 0
-        guard let sessions = projectSessions?[0].projectSessions else { return cell }
-        
-        for i in 0..<sessions.count {
-            if sessions[i]?.campus_id == 8 && sessions[i]?.difficulty != nil {
-                solo = sessions[i]!.solo!
-                difficulty = sessions[i]!.difficulty!
-                time = sessions[i]!.estimate_time!
-                break
-            } else if sessions[i]?.difficulty != nil && sessions[i]?.estimate_time != nil && sessions[i]?.solo != nil {
-                solo = sessions[i]!.solo!
-                difficulty = sessions[i]!.difficulty!
-                time = sessions[i]!.estimate_time!
+        if projectSessions?.isEmpty == false {
+            guard let sessions = projectSessions?[0].projectSessions else { return cell }
+            
+            for i in 0..<sessions.count {
+                if sessions[i]?.campus_id == 8 && sessions[i]?.difficulty != nil {
+                    guard let soloJ = sessions[i]?.solo, let difficultyJ = sessions[i]?.difficulty, let timeJ = sessions[i]?.estimate_time else { break }
+                    solo = soloJ
+                    difficulty = difficultyJ
+                    time = timeJ
+                    break
+                } else if sessions[i]?.difficulty != nil && sessions[i]?.estimate_time != nil && sessions[i]?.solo != nil {
+                    solo = sessions[i]!.solo!
+                    difficulty = sessions[i]!.difficulty!
+                    time = sessions[i]!.estimate_time!
+                }
             }
             
-        }
-        guard let correctionsArray = projectSessions?[0].projectSessions[0] else { return cell }
-        for i in 0..<correctionsArray.scales.count {
-            if let number = correctionsArray.scales[i]?.correction_number {
-                if number > 0 {
-                    if correctionsArray.campus_id == 8  {
+            guard let correctionsArray = projectSessions?[0].projectSessions[0] else { return cell }
+            for i in 0..<correctionsArray.scales.count {
+                if let number = correctionsArray.scales[i]?.correction_number {
+                    if number > 0 {
+                        if correctionsArray.campus_id == 8  {
+                            cell.correctionsLabel.text = "Corrections needed: \(number)"
+                            break
+                        }
                         cell.correctionsLabel.text = "Corrections needed: \(number)"
-                        break
                     }
-                    cell.correctionsLabel.text = "Corrections needed: \(number)"
                 }
             }
         }

@@ -18,6 +18,7 @@ class AllProjectsViewController: UIViewController {
     var ProjectsInfo: [ProjectsUser]?
     var token: String?
     var NeededProjects: [ProjectsUser] = []
+    var defaultCursus: CursusUser?
     
     override func viewDidLoad() {
         getNeededProjects()
@@ -30,7 +31,7 @@ class AllProjectsViewController: UIViewController {
         if let projectsInfo = ProjectsInfo {
             for project in projectsInfo {
                 if project.cursusIDS?.isEmpty == false {
-                    if project.cursusIDS?[0] == 1 && project.project?.parentID == nil {
+                    if project.cursusIDS?[0] == defaultCursus?.cursusID && project.project?.parentID == nil {
                         NeededProjects.append(project)
                     }
                 }

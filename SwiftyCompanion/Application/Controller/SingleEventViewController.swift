@@ -103,7 +103,7 @@ class SingleEventViewController: UIViewController {
         eventWhenLabel.text = when
         eventDurationLabel.text = duration
         eventLocationLabel.text = event?.location
-        eventPeopleCounterLabel.text = "👤: \(event?.nbrSubscribers ?? 0)/\(event?.maxPeople ?? 0)"
+        eventPeopleCounterLabel.text = "\(event?.nbrSubscribers ?? 0)/\(event?.maxPeople ?? 0)"
     }
 }
 

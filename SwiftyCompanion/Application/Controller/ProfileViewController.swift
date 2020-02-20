@@ -31,11 +31,15 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = colorCyan
         activityIndicator.isHidden = true
+        if myInfo.cursusUsers?.isEmpty == false {
+            setDefaultCursus()
+        }
         setCellQuantity()
         setSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         setTableView()
         tableView.reloadData()
     }
@@ -62,6 +66,7 @@ class ProfileViewController: UIViewController {
     @objc func tapAllProjects(_ sender: Any?) {
            if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
                vc.ProjectsInfo = self.myInfo.projectsUsers
+               vc.defaultCursus = self.defaultCursus
                navigationController?.pushViewController(vc, animated: true)
            }
        }
@@ -77,7 +82,6 @@ class ProfileViewController: UIViewController {
         guard let cursusUsers = myInfo.cursusUsers else { return }
         var index: Int = 2
         if cursusUsers.isEmpty == false {
-            setDefaultCursus()
             cellDict[2] = index
             index += 1
         }
@@ -287,13 +291,17 @@ class ProfileViewController: UIViewController {
         fetchFoundUserData(from: svc, login: login)
     }
     
+    @IBAction func unwindToProfileFromCursus(_ unwindSegue: UIStoryboardSegue) {
+        guard let svc = unwindSegue.source as? CursusTableViewController else { return }
+        self.defaultCursus = svc.chosenCursus
+    }
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.activityIndicator.isHidden == false {
             self.tableView.backgroundView = nil
-//            self.tableView.backgroundView?.contentMode = .scaleAspectFill
             return 0
         }
         return cellDict.count
@@ -324,3 +332,4 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+

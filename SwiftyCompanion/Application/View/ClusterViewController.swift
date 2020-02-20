@@ -39,6 +39,7 @@ class ClusterViewController: UIViewController {
                                     DispatchQueue.main.async {
                                         self.activityIndicator.isHidden = true
                                         self.activityIndicator.stopAnimating()
+                                        self.collectionView.reloadData()
                                         self.collectionView.delegate = self
                                         self.collectionView.dataSource = self
                                         self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
@@ -55,6 +56,7 @@ class ClusterViewController: UIViewController {
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+//        collectionView.reloadData()
         getClusterData()
     }
 }
@@ -69,6 +71,9 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if self.activityIndicator.isHidden == false {
+            return 0
+        }
         return 22
     }
 

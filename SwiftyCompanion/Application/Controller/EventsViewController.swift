@@ -35,6 +35,7 @@ class EventsViewController: UIViewController {
     }
     
     func performRequest() {
+        
         let intraURL = AuthUser.shared.intraURL
         guard let eventsUrl = URL(string: "\(intraURL)v2/campus/\(campusId)/events?filter[future]=true") else { return }
         guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users") else { return }
@@ -58,6 +59,8 @@ class EventsViewController: UIViewController {
                     self.eventsTableView.reloadData()
                     self.eventsTableView.dataSource = self
                     self.eventsTableView.delegate = self
+                    self.eventLoadIndicator.isHidden = true
+                    self.eventLoadIndicator.stopAnimating()
                 }
             }
         }
@@ -84,7 +87,7 @@ class EventsViewController: UIViewController {
         let difference = Calendar.current.dateComponents([.hour, .minute], from: startDate, to: endDate)
         let formattedHourString = String(format: "%2ld", difference.hour!)
         let formattedMinuteString = String(format: "%02ld", difference.minute!)
-        duration[row] = (difference.minute == 0 ? "⏳: \(formattedHourString)h" : "⏳: \(formattedHourString):\(formattedMinuteString)h")
+        duration[row] = (difference.minute == 0 ? "\(formattedHourString)h" : "\(formattedHourString):\(formattedMinuteString)h")
     }
     
     func getDateFormat(from date: String?) -> String {
@@ -117,14 +120,18 @@ class EventsViewController: UIViewController {
         
         guard let svc = unwindSegue.source as? SingleEventViewController,
             let indexPath = selectedIndexPath else { return print("error to cast svc or selectedIndexPath = nil") }
-        print(indexPath.row)
         status[indexPath.row] = svc.status
-        
+        eventLoadIndicator.isHidden = false
+        eventLoadIndicator.startAnimating()
         eventsTableView.reloadData()
+        performRequest()
     }
 }
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if eventLoadIndicator.isHidden == false {
+            return 0
+        }
         return events.count
     }
     
@@ -134,7 +141,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         self.getDates(for: indexPath.row)
         cell.dateNumberLabel.text = startDay[indexPath.row]
         cell.dateMonthLabel.text = startMonth[indexPath.row]
-        cell.whenLabel.text = "🕓: \(when[indexPath.row] ?? "--:--")"
+        cell.whenLabel.text = "\(when[indexPath.row] ?? "--:--")"
         cell.howLongLabel.text = duration[indexPath.row]
         cell.eventNameLabel.text = events[indexPath.row]?.kind?.replacingOccurrences(of: "_", with: " ").capitalized
         for event in self.eventsUsers {
@@ -149,7 +156,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.eventStatusLabel.text = self.status[indexPath.row]
         cell.descriptionLabel.text = self.events[indexPath.row]?.name
         if let location = self.events[indexPath.row]?.location {
-            cell.locationLabel.text = String("📍: \(location)")
+            cell.locationLabel.text = String("\(location)")
         }
         return cell
     }
