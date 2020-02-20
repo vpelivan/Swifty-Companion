@@ -31,8 +31,13 @@ class EventsViewController: UIViewController {
         eventsTableView.tableFooterView = UIView(frame: .zero)
         eventLoadIndicator.isHidden = false
         eventLoadIndicator.startAnimating()
+        performRequest()
+    }
+    
+    func performRequest() {
         let intraURL = AuthUser.shared.intraURL
         guard let eventsUrl = URL(string: "\(intraURL)v2/campus/\(campusId)/events?filter[future]=true") else { return }
+        guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users") else { return }
         NetworkService.shared.getData(into: [Event?].self, from: eventsUrl) { (events, result) in
             guard let eventsForSure = events as? [Event?] else { return }
             self.events = eventsForSure
@@ -44,7 +49,6 @@ class EventsViewController: UIViewController {
                 self.when.append("")
                 self.unsubscribeID.append(0)
             }
-            guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users") else { return }
             NetworkService.shared.getData(into: [EventsUser?].self, from: url) { (data, result) in
                 guard let trueEventUsers = data as? [EventsUser?] else { return }
                 self.eventsUsers = trueEventUsers
@@ -110,11 +114,12 @@ class EventsViewController: UIViewController {
     
     var selectedIndexPath: IndexPath?
     @IBAction func unwindToEventsViewController(_ unwindSegue: UIStoryboardSegue) {
+        
         guard let svc = unwindSegue.source as? SingleEventViewController,
             let indexPath = selectedIndexPath else { return print("error to cast svc or selectedIndexPath = nil") }
-        
-//        print("events; status -", svc.status)
+        print(indexPath.row)
         status[indexPath.row] = svc.status
+        
         eventsTableView.reloadData()
     }
 }
@@ -141,6 +146,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         }
+        cell.eventStatusLabel.text = self.status[indexPath.row]
         cell.descriptionLabel.text = self.events[indexPath.row]?.name
         if let location = self.events[indexPath.row]?.location {
             cell.locationLabel.text = String("📍: \(location)")

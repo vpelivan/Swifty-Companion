@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
             endingLineNumber = "104"
-            landmarkName = "getWeeksOrDays(from:)"
+            landmarkName = "fetchProjectDescription(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

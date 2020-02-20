@@ -42,22 +42,13 @@ class ProfileViewController: UIViewController {
     
     @IBAction func tapLogOut(_ sender: Any) {
         if let cookies = HTTPCookieStorage.shared.cookies {
-            for cookie in cookies { // where cookie.name == "_intra_42_session_production" {
+            for cookie in cookies {
                 HTTPCookieStorage.shared.deleteCookie(cookie)
             }
         }
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
         }
-        //goToLogin
-        
-//            if let cookieStore = WebViewController?.webView.configuration.websiteDataStore.httpCookieStore {
-//                cookieStore.getAllCookies { cookies in
-//                    for cookie in cookies { // where cookie.name == "_intra_42_session_production" {
-//                        cookieStore.delete(cookie)
-//                    }
-//                }
-//            }
     }
     
     @objc func tapChangeCursus(_ sender: Any?) {
