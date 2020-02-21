@@ -244,6 +244,109 @@ class ProfileViewController: UIViewController {
         return cell
     }
     
+    fileprivate func getInProgressProjects() {
+           guard let projects = self.myInfo.projectsUsers else { return }
+           for project in projects {
+               if (project.status == "in_progress"
+            || project.status == "searching_a_group" || project.status == "waiting_for_correction" || project.status == "parent" || project.status == "creating_group") && (project.project?.parentID == nil) {
+                   self.inProgressProjects.append(project)
+                   self.projectsNum += 1
+               }
+           }
+       }
+    
+    fileprivate func fetchProjectsCell(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "currentProjectsCell", for: indexPath) as! CurrentProjectsViewCell
+        cell.allProjectsButton.addTarget(self, action: #selector(ProfileViewController.tapAllProjects(_:)), for: .touchUpInside)
+        getInProgressProjects()
+        switch projectsNum {
+        case 0:
+            cell.projectNameOne.isHidden = true
+            cell.projectNameTwo.isHidden = true
+            cell.projectNameThree.isHidden = true
+            cell.projectNameEtcDots.isHidden = false
+            cell.projectNameEtcDots.text = "Not subscribed to any project"
+        case 1:
+            cell.projectNameOne.isHidden = false
+            cell.projectNameTwo.isHidden = true
+            cell.projectNameThree.isHidden = true
+            cell.projectNameEtcDots.isHidden = true
+            cell.projectNameOne.text = inProgressProjects[0]?.project?.name
+        case 2:
+            cell.projectNameOne.isHidden = false
+            cell.projectNameTwo.isHidden = false
+            cell.projectNameThree.isHidden = true
+            cell.projectNameEtcDots.isHidden = true
+            cell.projectNameOne.text = inProgressProjects[0]?.project?.name
+            cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
+        case 3:
+            cell.projectNameOne.isHidden = false
+            cell.projectNameTwo.isHidden = false
+            cell.projectNameThree.isHidden = false
+            cell.projectNameEtcDots.isHidden = true
+            cell.projectNameOne.text = inProgressProjects[0]?.project?.name
+            cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
+            cell.projectNameThree.text = inProgressProjects[2]?.project?.name
+        case 4...:
+            cell.projectNameOne.isHidden = false
+            cell.projectNameTwo.isHidden = false
+            cell.projectNameThree.isHidden = false
+            cell.projectNameEtcDots.isHidden = false
+            cell.projectNameOne.text = inProgressProjects[0]?.project?.name
+            cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
+            cell.projectNameThree.text = inProgressProjects[2]?.project?.name
+        default:
+            cell.projectNameOne.isHidden = true
+            cell.projectNameTwo.isHidden = true
+            cell.projectNameThree.isHidden = true
+            cell.projectNameEtcDots.isHidden = false
+        }
+        return cell
+    }
+    
+    fileprivate func switchSomeSkills(to cell: SkillsViewCell, condition: [Bool], skills: [Skill], etc: String) -> UITableViewCell {
+        
+        cell.skillNameOne.isHidden = condition[0]
+        cell.skillNameOne.text = skills[0].name
+        cell.levelOne.isHidden = condition[0]
+        cell.levelOne.text = String(skills[0].level ?? 0.0)
+        cell.skillNameTwo.isHidden = condition[1]
+        cell.skillNameTwo.text = skills[1].name
+        cell.levelTwo.isHidden = condition[1]
+        cell.levelTwo.text = String(skills[1].level ?? 0.0)
+        cell.skillNameThree.isHidden = condition[2]
+        cell.skillNameThree.text = skills[2].name
+        cell.levelThree.isHidden = condition[2]
+        cell.levelThree.text = String(skills[2].level ?? 0.0)
+        cell.skillEtc.text = etc
+        cell.skillEtc.isHidden = condition[3]
+        return cell
+    }
+    
+    fileprivate func fetchSomeSkillsData(for indexPath: IndexPath)-> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "someSkillsCell", for: indexPath) as! SkillsViewCell
+        cell.moreSkillsButton.addTarget(self, action: #selector(ProfileViewController.tapAllSkills(_sender:)), for: .touchUpInside)
+        guard let skills = defaultCursus?.skills else { return cell }
+        if skills.isEmpty == false {
+            switch skills.count {
+            case 0:
+                cell = switchSomeSkills(to: cell, condition: [true, true, true, false], skills: skills, etc: "No skills Avaliable") as! SkillsViewCell
+            case 1:
+                cell = switchSomeSkills(to: cell, condition: [false, true, true, true], skills: skills, etc: "") as! SkillsViewCell
+            case 2:
+                cell = switchSomeSkills(to: cell, condition: [false, false, true, true], skills: skills, etc: "") as! SkillsViewCell
+            case 3:
+                cell = switchSomeSkills(to: cell, condition: [false, false, false, true], skills: skills, etc: "") as! SkillsViewCell
+            case 4...:
+                cell = switchSomeSkills(to: cell, condition: [false, false, false, false], skills: skills, etc: "...") as! SkillsViewCell
+            default:
+                break
+            }
+        }
+        return cell
+    }
+        
+    
     func fetchFoundUserData(from controller: UIViewController, login: String) {
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
         guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
@@ -320,13 +423,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             return fetchCursusCell(for: indexPath)
         case 3:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "currentProjectsCell", for: indexPath) as! CurrentProjectsViewCell
-            cell.allProjectsButton.addTarget(self, action: #selector(ProfileViewController.tapAllProjects(_:)), for: .touchUpInside)
-            return cell
+            return fetchProjectsCell(for: indexPath)
         case 4:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "someSkillsCell", for: indexPath) as! SkillsViewCell
-            cell.moreSkillsButton.addTarget(self, action: #selector(ProfileViewController.tapAllSkills(_sender:)), for: .touchUpInside)
-            return cell
+            return fetchSomeSkillsData(for: indexPath)
         default:
             return UITableViewCell()
         }

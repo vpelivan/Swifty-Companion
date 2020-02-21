@@ -182,14 +182,8 @@ class SingleProjectViewController: UIViewController {
             }
         }
         cell.projectType.text = "\(solo ? "solo" : "group") - \(getWeeksOrDays(from: time)) - \(difficulty)xp"
-        if projectInfo.status == "in_progress" || projectInfo.status == "searching_a_group"
-            || projectInfo.status == "creating_group" {
-            cell.statusLabel.text = "subscribed"
-            cell.markView.backgroundColor = colorCyan
-            cell.markLabel.isHidden = true
-            cell.of100Label.isHidden = true
-            cell.imageStatus.isHidden = false
-        } else if projectInfo.status == "finished" {
+        
+        if projectInfo.status == "finished" {
             if projectInfo.validated == true {
                 cell.statusLabel.text = "success"
                 cell.markView.backgroundColor = colorGreen
@@ -205,6 +199,12 @@ class SingleProjectViewController: UIViewController {
                 cell.imageStatus.isHidden = true
                 cell.markLabel.text = String(projectInfo.finalMark ?? 0)
             }
+        } else {
+            cell.statusLabel.text = "subscribed"
+            cell.markView.backgroundColor = colorCyan
+            cell.markLabel.isHidden = true
+            cell.of100Label.isHidden = true
+            cell.imageStatus.isHidden = false
         }
         return cell
     }

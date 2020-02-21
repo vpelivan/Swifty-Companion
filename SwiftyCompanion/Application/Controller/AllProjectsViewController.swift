@@ -51,14 +51,7 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
         let status = NeededProjects[indexPath.row].status
         let name = NeededProjects[indexPath.row].project?.name
         let validated = NeededProjects[indexPath.row].validated
-        if status == "in_progress" || status == "searching_a_group" ||
-            status == "creating_group" {
-            cell.nameLabel.text = name
-            cell.nameLabel.textColor = self.colorCyan
-            cell.statusLabel.textColor = self.colorCyan
-            cell.statusLabel.text = status?.replacingOccurrences(of: "_", with: " ")
-            cell.statusLabel.textColor = self.colorCyan
-        } else if status == "finished" {
+        if status == "finished" {
             cell.nameLabel.text = name
             if validated == true {
                 cell.statusLabel.text = status
@@ -69,23 +62,22 @@ extension AllProjectsViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.nameLabel.textColor = self.colorRed
                 cell.statusLabel.textColor = self.colorRed
             }
+        } else {
+            cell.nameLabel.text = name
+            cell.nameLabel.textColor = self.colorCyan
+            cell.statusLabel.textColor = self.colorCyan
+            cell.statusLabel.text = status?.replacingOccurrences(of: "_", with: " ")
+            cell.statusLabel.textColor = self.colorCyan
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
+                
             guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "projectInfo") as? SingleProjectViewController else { return }
-//            vc.projectSessions = projectSessions
             vc.projectInfo = self.NeededProjects[indexPath.row]
             vc.projectsInfo = self.ProjectsInfo
-//            vc.teams = teams
             self.navigationController?.pushViewController(vc, animated: true)
-//        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
-//            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams in
-//            }
-//        }
     }
 }
