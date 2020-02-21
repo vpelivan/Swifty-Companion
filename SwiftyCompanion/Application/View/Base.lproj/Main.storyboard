@@ -922,29 +922,29 @@
                         <sections>
                             <tableViewSection id="Yoy-79-xe9">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="360" id="8iN-sH-xgQ">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="360"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="430" id="8iN-sH-xgQ">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="430"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8iN-sH-xgQ" id="Eih-f4-sQb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="360"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="430"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_login" translatesAutoresizingMaskIntoConstraints="NO" id="f9Z-ga-Z4S">
-                                                    <rect key="frame" x="56.5" y="17" width="262.5" height="326"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noImage" translatesAutoresizingMaskIntoConstraints="NO" id="f9Z-ga-Z4S">
+                                                    <rect key="frame" x="19" y="14.5" width="337.5" height="401"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="262.5" id="Ft5-ep-YHR"/>
-                                                        <constraint firstAttribute="height" constant="326" id="GTN-3g-iFt"/>
+                                                        <constraint firstAttribute="width" secondItem="f9Z-ga-Z4S" secondAttribute="height" multiplier="343:408" priority="999" id="7dq-UM-mBq"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="f9Z-ga-Z4S" firstAttribute="centerX" secondItem="Eih-f4-sQb" secondAttribute="centerX" id="0KK-Fc-Yed"/>
-                                                <constraint firstItem="f9Z-ga-Z4S" firstAttribute="centerY" secondItem="Eih-f4-sQb" secondAttribute="centerY" id="zOX-pU-o3b"/>
+                                                <constraint firstItem="f9Z-ga-Z4S" firstAttribute="centerX" secondItem="Eih-f4-sQb" secondAttribute="centerX" id="0Hu-61-aNb"/>
+                                                <constraint firstItem="f9Z-ga-Z4S" firstAttribute="centerY" secondItem="Eih-f4-sQb" secondAttribute="centerY" id="R1s-Zh-qxq"/>
+                                                <constraint firstItem="f9Z-ga-Z4S" firstAttribute="width" secondItem="Eih-f4-sQb" secondAttribute="width" multiplier="0.9" id="pHC-a0-cOy"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="133" id="qaY-lS-JuM">
-                                        <rect key="frame" x="0.0" y="388" width="375" height="133"/>
+                                        <rect key="frame" x="0.0" y="458" width="375" height="133"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qaY-lS-JuM" id="gMq-qT-cT4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="133"/>
@@ -1017,7 +1017,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfT-pV-6Wb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="flc-p1-dnX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-287" y="2489"/>
+            <point key="canvasLocation" x="-287.19999999999999" y="2488.6056971514245"/>
         </scene>
         <!--Event-->
         <scene sceneID="1lM-iI-b4o">
@@ -1387,55 +1387,49 @@
                                                             <rect key="frame" x="172" y="8" width="175" height="195"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfC-cD-KuF">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="175" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfE-CP-zgi">
-                                                                    <rect key="frame" x="0.0" y="22" width="175" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="24.5" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.74252170319999999" blue="0.74488407369999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Campus Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mko-jw-gr8">
-                                                                    <rect key="frame" x="0.0" y="43.5" width="175" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="49" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6w-cy-z7O">
-                                                                    <rect key="frame" x="0.0" y="65.5" width="175" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hku-VH-v0g">
-                                                                    <rect key="frame" x="0.0" y="87" width="175" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="73.5" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pool of: No Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Eh-E8-uyx">
-                                                                    <rect key="frame" x="0.0" y="109" width="175" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="98" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="correction points: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXc-YS-RYx">
-                                                                    <rect key="frame" x="0.0" y="130.5" width="175" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="122.5" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wallet: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TVY-60-Ejf">
-                                                                    <rect key="frame" x="0.0" y="152.5" width="175" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="147" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location: Unavailable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iT-W6-GHo">
-                                                                    <rect key="frame" x="0.0" y="174" width="175" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="171.5" width="175" height="23.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.74252170319999999" blue="0.74488407369999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -1473,7 +1467,6 @@
                                             <outlet property="userLocation" destination="2iT-W6-GHo" id="fG6-yy-qQL"/>
                                             <outlet property="userLogin" destination="dfE-CP-zgi" id="6ZY-6j-4L4"/>
                                             <outlet property="userName" destination="hfC-cD-KuF" id="2uy-qQ-hzV"/>
-                                            <outlet property="userPhone" destination="hku-VH-v0g" id="UnQ-Ow-hzp"/>
                                             <outlet property="userPoints" destination="EXc-YS-RYx" id="Yjd-0w-fZ9"/>
                                             <outlet property="userPool" destination="5Eh-E8-uyx" id="78M-0H-y49"/>
                                             <outlet property="userWallet" destination="TVY-60-Ejf" id="eur-Az-xLy"/>

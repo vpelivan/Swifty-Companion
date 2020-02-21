@@ -32,7 +32,7 @@
                                     <action selector="tapAllProjects:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gvU-4P-lrW"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="lov-be-hqf">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="lov-be-hqf">
                                 <rect key="frame" x="8" y="37" width="441" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JNF-vD-xMD">
@@ -100,7 +100,7 @@
                 <outlet property="projectNameTwo" destination="yNn-H9-rlz" id="Swz-ek-LpA"/>
                 <outlet property="subView" destination="kkt-aE-oJM" id="skd-gf-xlB"/>
             </connections>
-            <point key="canvasLocation" x="55.797101449275367" y="29.799107142857142"/>
+            <point key="canvasLocation" x="101" y="6"/>
         </tableViewCell>
     </objects>
 </document>

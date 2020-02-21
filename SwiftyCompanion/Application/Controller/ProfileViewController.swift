@@ -18,7 +18,6 @@ class ProfileViewController: UIViewController {
     var coalitionData: [Coalition?] = []
     var examsInternships: [ProjectsUsers?] = []
     var inProgressProjects: [ProjectsUser?] = []
-    var projectsNum: Int = 0
     var exams: Int = 0
     var internships: Int = 0
     var partTime: Int = 0
@@ -189,7 +188,6 @@ class ProfileViewController: UIViewController {
         cell.userName.text = myInfo.displayname ?? "No Name"
         cell.userLogin.text = myInfo.login ?? "No Login"
         cell.userEmail.text = myInfo.email ?? "No Email"
-        cell.userPhone.text = "phone: \(myInfo.phone ?? "No Info")"
         cell.userPoints.text = "correction points: \(myInfo.correctionPoint ?? 0)"
         cell.userWallet.text = "wallet: \(myInfo.wallet ?? 0)₳"
         cell.userLocation.text = "location: \(myInfo.location ?? "Unavailable")"
@@ -245,21 +243,26 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func getInProgressProjects() {
-           guard let projects = self.myInfo.projectsUsers else { return }
-           for project in projects {
-               if (project.status == "in_progress"
-            || project.status == "searching_a_group" || project.status == "waiting_for_correction" || project.status == "parent" || project.status == "creating_group") && (project.project?.parentID == nil) {
-                   self.inProgressProjects.append(project)
-                   self.projectsNum += 1
-               }
-           }
-       }
+        guard let projects = myInfo.projectsUsers, let defaultCursusID = defaultCursus?.cursusID else { return }
+        if projects.isEmpty == false {
+            inProgressProjects = []
+            for project in projects {
+                if project.cursusIDS?.isEmpty == false {
+                    let cursusId = project.cursusIDS?[0]
+                    if (project.status == "in_progress"
+                        || project.status == "searching_a_group" || project.status == "waiting_for_correction" || project.status == "creating_group") && (project.project?.parentID == nil) && (cursusId == defaultCursusID) {
+                        inProgressProjects.append(project)
+                    }
+                }
+            }
+        }
+    }
     
     fileprivate func fetchProjectsCell(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "currentProjectsCell", for: indexPath) as! CurrentProjectsViewCell
         cell.allProjectsButton.addTarget(self, action: #selector(ProfileViewController.tapAllProjects(_:)), for: .touchUpInside)
         getInProgressProjects()
-        switch projectsNum {
+        switch inProgressProjects.count {
         case 0:
             cell.projectNameOne.isHidden = true
             cell.projectNameTwo.isHidden = true
@@ -292,6 +295,7 @@ class ProfileViewController: UIViewController {
             cell.projectNameTwo.isHidden = false
             cell.projectNameThree.isHidden = false
             cell.projectNameEtcDots.isHidden = false
+            cell.projectNameEtcDots.text = "..."
             cell.projectNameOne.text = inProgressProjects[0]?.project?.name
             cell.projectNameTwo.text = inProgressProjects[1]?.project?.name
             cell.projectNameThree.text = inProgressProjects[2]?.project?.name
@@ -300,6 +304,7 @@ class ProfileViewController: UIViewController {
             cell.projectNameTwo.isHidden = true
             cell.projectNameThree.isHidden = true
             cell.projectNameEtcDots.isHidden = false
+            cell.projectNameEtcDots.text = "..."
         }
         return cell
     }

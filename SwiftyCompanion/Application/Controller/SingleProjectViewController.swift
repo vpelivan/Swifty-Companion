@@ -29,6 +29,7 @@ class SingleProjectViewController: UIViewController {
     }
     var collViewTeamIndex: Int = 0
     var collViewUsersIndex: Int = 0
+    var cellDict: [Int : Int] = [0:0, 1:1]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,23 @@ class SingleProjectViewController: UIViewController {
         activityIndicator.startAnimating()
         fetchData()
         tableView.tableFooterView = UIView(frame: .zero)
+    }
+
+    fileprivate func setCellQuantity() {
+        guard let teams = teams?.teams else { return }
+        var index: Int = 2
+        if teams.isEmpty == false {
+            for i in 0..<teamsCount {
+                cellDict[i + 2] = index
+                index += 1
+            }
+        }
+        if neededProjects.isEmpty == false {
+            for i in 0..<neededProjects.count {
+                cellDict[i + 2 + teams.count] = index
+                index += 1
+            }
+        }
     }
     
     func fetchData() {
@@ -52,6 +70,7 @@ class SingleProjectViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.activityIndicator.isHidden = true
                     self.activityIndicator.stopAnimating()
+                    self.setCellQuantity()
                     self.tableView.delegate = self
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
@@ -70,9 +89,9 @@ class SingleProjectViewController: UIViewController {
     
     func fetchPoolDays(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PoolDaysCell", for: indexPath) as! PoolDayTableViewCell
-        cell.dayName.text = neededProjects[indexPath.row - 3].project?.name
-        cell.dayStatus.text = String(neededProjects[indexPath.row - 3].finalMark ?? 0)
-        if neededProjects[indexPath.row - 3].validated == true {
+        cell.dayName.text = neededProjects[indexPath.row - 2 - teamsCount].project?.name
+        cell.dayStatus.text = String(neededProjects[indexPath.row - 2 - teamsCount].finalMark ?? 0)
+        if neededProjects[indexPath.row - 2 - teamsCount].validated == true {
             cell.dayStatus.textColor = colorGreen
             cell.dayName.textColor = colorGreen
         } else {
@@ -162,9 +181,10 @@ class SingleProjectViewController: UIViewController {
                     time = timeJ
                     break
                 } else if sessions[i]?.difficulty != nil && sessions[i]?.estimate_time != nil && sessions[i]?.solo != nil {
-                    solo = sessions[i]!.solo!
-                    difficulty = sessions[i]!.difficulty!
-                    time = sessions[i]!.estimate_time!
+                    guard let soloJ = sessions[i]?.solo, let difficultyJ = sessions[i]?.difficulty, let timeJ = sessions[i]?.estimate_time else { break }
+                    solo = soloJ
+                    difficulty = difficultyJ
+                    time = timeJ
                 }
             }
             
@@ -213,27 +233,26 @@ class SingleProjectViewController: UIViewController {
 extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 2 + teamsCount + neededProjects.count
+        return cellDict.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
+        let keys = (cellDict as NSDictionary).allKeys(for: indexPath.row) as! [Int]
+
+        let teamsCount = self.teamsCount + 2
+        guard let key = keys.first else { return UITableViewCell() }
+        switch key {
         case 0:
-            let cell = fetchProjectInfo(for: indexPath)
-            return cell
+            return fetchProjectInfo(for: indexPath)
         case 1:
-            let cell = fetchProjectDescription(for: indexPath)
-            return cell
-        case 2...(teamsCount + 1):
-            let cell = fetchTeamInfo(for: indexPath)
-            return cell
-        case (teamsCount + 1)...:
-            let cell = fetchPoolDays(for: indexPath)
-            return cell
+            return fetchProjectDescription(for: indexPath)
+        case 2..<teamsCount:
+            return fetchTeamInfo(for: indexPath)
+        case (teamsCount)..<(teamsCount + self.neededProjects.count):
+            return fetchPoolDays(for: indexPath)
         default:
-            break
+            return UITableViewCell()
         }
-        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -247,7 +266,6 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
                 vc.teams = self.teams
                 self.navigationController?.pushViewController(vc, animated: true)
             }
-            
         }
     }
 }
