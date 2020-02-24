@@ -14,6 +14,7 @@ class MarkTableViewCell: UITableViewCell {
     @IBOutlet weak var markLabel: UILabel!
     @IBOutlet weak var markView: UIView!
     @IBOutlet weak var of100Label: UILabel!
+    @IBOutlet weak var checkboxImage: UIImageView!
     @IBOutlet weak var imageStatus: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var projectType: UILabel!
@@ -21,13 +22,6 @@ class MarkTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        checkboxImage.isHidden = true
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

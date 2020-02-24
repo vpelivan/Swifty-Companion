@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
             endingLineNumber = "104"
-            landmarkName = "fetchProjectDescription(for:)"
+            landmarkName = "fetchTeamInfo(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

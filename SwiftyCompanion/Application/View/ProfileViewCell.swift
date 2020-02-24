@@ -15,6 +15,7 @@ class ProfileViewCell: UITableViewCell {
     @IBOutlet weak var userLogin: UILabel!
     @IBOutlet weak var userCampus: UILabel!
     @IBOutlet weak var userEmail: UILabel!
+    @IBOutlet weak var cursusCoalition: UILabel!
     @IBOutlet weak var userPool: UILabel!
     @IBOutlet weak var userPoints: UILabel!
     @IBOutlet weak var userWallet: UILabel!

@@ -20,15 +20,8 @@ class SingleEventViewController: UIViewController {
     @IBOutlet weak var eventLocationLabel: UILabel!
     @IBOutlet weak var eventPeopleCounterLabel: UILabel!
     @IBOutlet weak var subscribeButton: UIBarButtonItem!
-    
-    
-    var event: Event?
-    var startDay: String?
-    var startMonth: String?
-    var duration: String?
-    var status: String?
-    var when: String?
-    var unsubscribeID: Int?
+
+    var eventData: EventsData?
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     let colorRed = #colorLiteral(red: 0.8473085761, green: 0.3895412087, blue: 0.4345907271, alpha: 1)
     
@@ -49,8 +42,8 @@ class SingleEventViewController: UIViewController {
     }
     
     @IBAction func tapSubscribe(_ sender: UIBarButtonItem) {
-        if status == "REGISTERED" {
-            guard let trueId = unsubscribeID else { return }
+        if eventData?.status == "REGISTERED" {
+            guard let trueId = eventData?.unsubscribeID else { return }
             let alert = UIAlertController(title: "Unsubscribe from event", message: nil, preferredStyle: .actionSheet)
             let unsubscribe = UIAlertAction(title: "Unsubscribe", style: .default, handler: { _ in
                 EventsNeworkSevice.shared.unsubscribeFromEvent(with: trueId, completion: {
@@ -58,7 +51,7 @@ class SingleEventViewController: UIViewController {
                         self.eventStatusLabel.isHidden = true
                         self.subscribeButton.title = "Subscribe"
                         self.subscribeButton.tintColor = self.colorCyan
-                        self.status = ""
+                        self.eventData?.status = ""
                     }
                 })
             })
@@ -70,7 +63,7 @@ class SingleEventViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             
         } else {
-            guard let id = event?.id, let userID = AuthUser.shared.userID else { return }
+            guard let id = eventData?.event?.id, let userID = AuthUser.shared.userID else { return }
             let alert = UIAlertController(title: "Subscribe to event", message: nil, preferredStyle: .actionSheet)
             let subscribe = UIAlertAction(title: "Subscribe", style: .default, handler: { _ in
                 EventsNeworkSevice.shared.subscribeToEvent(eventID: id, userID: userID, completion: {
@@ -78,7 +71,7 @@ class SingleEventViewController: UIViewController {
                         self.eventStatusLabel.isHidden = false
                         self.subscribeButton.title = "Unsubscribe"
                         self.subscribeButton.tintColor = self.colorRed
-                        self.status = "REGISTERED"
+                        self.eventData?.status = "REGISTERED"
                     }
                 })
             })
@@ -92,18 +85,18 @@ class SingleEventViewController: UIViewController {
     }
     
     func fetchEventData() {
-        if status == "REGISTERED" {
+        if eventData?.status == "REGISTERED" {
             eventStatusLabel.isHidden = false
             subscribeButton.title = "Unsubscribe"
             subscribeButton.tintColor = colorRed
         }
-        eventTypeLabel.text = event?.kind?.capitalized.replacingOccurrences(of: "_", with: " ")
-        eventNameLabel.text = event?.name
-        eventDatelabel.text = OtherMethods.shared.getDateAndTime(from: event?.beginAt)
-        eventWhenLabel.text = when
-        eventDurationLabel.text = duration
-        eventLocationLabel.text = event?.location
-        eventPeopleCounterLabel.text = "\(event?.nbrSubscribers ?? 0)/\(event?.maxPeople ?? 0)"
+        eventTypeLabel.text = eventData?.event?.kind?.capitalized.replacingOccurrences(of: "_", with: " ")
+        eventNameLabel.text = eventData?.event?.name
+        eventDatelabel.text = OtherMethods.shared.getDateAndTime(from: eventData?.event?.beginAt)
+        eventWhenLabel.text = eventData?.when
+        eventDurationLabel.text = eventData?.duration
+        eventLocationLabel.text = eventData?.event?.location
+        eventPeopleCounterLabel.text = "\(eventData?.event?.nbrSubscribers ?? 0)/\(eventData?.event?.maxPeople ?? 0)"
     }
 }
 
@@ -114,7 +107,7 @@ extension SingleEventViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as! SingleEventDescriptionCell
-        cell.descriptionLabel.text = event?.eventDescription
+        cell.descriptionLabel.text = eventData?.event?.eventDescription
         return cell
     }
     

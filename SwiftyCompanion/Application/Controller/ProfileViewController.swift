@@ -44,10 +44,9 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func tapLogOut(_ sender: Any) {
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            for cookie in cookies {
-                HTTPCookieStorage.shared.deleteCookie(cookie)
-            }
+       let cookieJar = HTTPCookieStorage.shared
+        for cookie in cookieJar.cookies! {
+            cookieJar.deleteCookie(cookie)
         }
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "unwindToLogin", sender: nil)
@@ -63,12 +62,12 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func tapAllProjects(_ sender: Any?) {
-           if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
-               vc.ProjectsInfo = self.myInfo.projectsUsers
-               vc.defaultCursus = self.defaultCursus
-               navigationController?.pushViewController(vc, animated: true)
-           }
-       }
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "AllProjects") as? AllProjectsViewController {
+            vc.ProjectsInfo = self.myInfo.projectsUsers
+            vc.defaultCursus = self.defaultCursus
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
        
     @objc func tapAllSkills(_sender: Any?) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "AllSkills") as? AllSkillsViewController {
@@ -188,6 +187,9 @@ class ProfileViewController: UIViewController {
         cell.userName.text = myInfo.displayname ?? "No Name"
         cell.userLogin.text = myInfo.login ?? "No Login"
         cell.userEmail.text = myInfo.email ?? "No Email"
+        if defaultCursus?.hasCoalition == true && coalitionData.isEmpty == false {
+            cell.cursusCoalition.text = "coalition: \(coalitionData[0]?.name ?? "No Info")"
+        }
         cell.userPoints.text = "correction points: \(myInfo.correctionPoint ?? 0)"
         cell.userWallet.text = "wallet: \(myInfo.wallet ?? 0)₳"
         cell.userLocation.text = "location: \(myInfo.location ?? "Unavailable")"
@@ -234,9 +236,6 @@ class ProfileViewController: UIViewController {
         cell.changeCursusButton.addTarget(self, action: #selector(ProfileViewController.tapChangeCursus(_:)), for: .touchUpInside)
         cell.cursusName.text = "name: \(defaultCursus?.cursus?.name ?? "No Name")"
         cell.cursusGrade.text = "grade: \(defaultCursus?.grade ?? "No Grade")"
-        if defaultCursus?.hasCoalition == true && coalitionData.isEmpty == false {
-            cell.cursusCoalition.text = "coalition: \(coalitionData[0]?.name ?? "No Info")"
-        }
         let begin = OtherMethods.shared.getDateAndTime(from: defaultCursus?.beginAt)
         cell.cursusStarted.text = "begin date: \(begin)"
         return cell
@@ -395,6 +394,15 @@ class ProfileViewController: UIViewController {
         activityIndicator.startAnimating()
         tableView.reloadData()
         guard let svc = unwindSegue.source as? SearchTableView else { return }
+        guard let login = svc.login else { return }
+        fetchFoundUserData(from: svc, login: login)
+    }
+    
+    @IBAction func unwindToProfileFromEvaluations(_ unwindSegue: UIStoryboardSegue, sender: Any?) {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.reloadData()
+        guard let svc = unwindSegue.source as? EvaluationsViewController else { return }
         guard let login = svc.login else { return }
         fetchFoundUserData(from: svc, login: login)
     }

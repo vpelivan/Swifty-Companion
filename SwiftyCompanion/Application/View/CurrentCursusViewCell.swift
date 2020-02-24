@@ -13,7 +13,6 @@ class CurrentCursusViewCell: UITableViewCell {
     @IBOutlet weak var changeCursusButton: UIButton!
     @IBOutlet weak var cursusName: UILabel!
     @IBOutlet weak var cursusGrade: UILabel!
-    @IBOutlet weak var cursusCoalition: UILabel!
     @IBOutlet weak var cursusStarted: UILabel!
     @IBOutlet weak var subView: UIView!
     

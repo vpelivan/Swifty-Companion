@@ -39,6 +39,4 @@ class ClusterUserViewController: UITableViewController {
             self.performSegue(withIdentifier: "toProfile", sender: nil)
         }
     }
-    
-    
 }

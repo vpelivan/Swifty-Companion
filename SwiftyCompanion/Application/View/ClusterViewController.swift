@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 
 class ClusterViewController: UIViewController {
-
+    
     var ClusterLoggedUsers: [ClusterUsers?] = []
     var clusterDict: [String : ClusterUsers?] = [:]
     @IBOutlet weak var collectionView: UICollectionView!
@@ -30,21 +30,17 @@ class ClusterViewController: UIViewController {
     
     func getClusterData() {
         self.getClusterInfo(num: 1) {
-            DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                self.getClusterInfo(num: 2) {
-                    self.getClusterInfo(num: 3) {
-                        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                            self.getClusterInfo(num: 4) {
-                                self.getClusterInfo(num: 5) {
-                                    DispatchQueue.main.async {
-                                        self.activityIndicator.isHidden = true
-                                        self.activityIndicator.stopAnimating()
-                                        self.collectionView.reloadData()
-                                        self.collectionView.delegate = self
-                                        self.collectionView.dataSource = self
-                                        self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count ) users logged in Cluster"
-                                    }
-                                }
+            self.getClusterInfo(num: 2) {
+                self.getClusterInfo(num: 3) {
+                    self.getClusterInfo(num: 4) {
+                        self.getClusterInfo(num: 5) {
+                            DispatchQueue.main.async {
+                                self.activityIndicator.isHidden = true
+                                self.activityIndicator.stopAnimating()
+                                self.collectionView.reloadData()
+                                self.collectionView.delegate = self
+                                self.collectionView.dataSource = self
+                                self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
                             }
                         }
                     }
@@ -52,11 +48,13 @@ class ClusterViewController: UIViewController {
             }
         }
     }
-
+    
+    
+    
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-//        collectionView.reloadData()
+        //        collectionView.reloadData()
         getClusterData()
     }
 }
@@ -76,7 +74,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         return 22
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         return CreateCluster(indexPath: indexPath)
@@ -117,13 +115,13 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             labelCell.label.text = "r\(row)"
             return labelCell
         }
-        
+            
         else if (pos == 6 || pos == 17) || (row == 12 && (pos >= 3 && pos <= 18)
-        || ((row == 11 || row == 10) && (pos >= 5 && pos <= 13))) {
+            || ((row == 11 || row == 10) && (pos >= 5 && pos <= 13))) {
             let pathCell = collectionView.dequeueReusableCell(withReuseIdentifier: "pathCell", for: indexPath)
             return pathCell
         }
-        
+            
         else if (row != 12 && row % 3 == 0 && (pos == 6 || pos == 10 || pos == 16)) {
             let wallsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "wallsCell", for: indexPath)
             return wallsCell
@@ -138,7 +136,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
             return loggedMacCell
         }
-        
+            
         else {
             let emptyMacCell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyMacCell", for: indexPath) as! EmptyMacCellController
             emptyMacCell.locationLabel.text = location
@@ -203,34 +201,35 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 extension ClusterViewController {
     func getClusterInfo(num: Int, completion: @escaping () -> ()) {
-        guard let token = AuthUser.shared.token?.accessToken else { return }
-        let intraURL = AuthUser.shared.intraURL
-        let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
-        let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "GET"
-        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 1
-        let session = URLSession.shared
-        session.dataTask(with: request as URLRequest) {
-            (data, response, error) in
-            print(num)
-            do
-            {
-                guard let data = data else { return }
-                self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
-                for i in 0..<self.ClusterLoggedUsers.count {
-                    if self.ClusterLoggedUsers[i]?.end_at == nil {
-                        self.clusterDict.updateValue(self.ClusterLoggedUsers[i], forKey: self.ClusterLoggedUsers[i]?.host ?? "empty")
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
+            guard let token = AuthUser.shared.token?.accessToken else { return }
+            let intraURL = AuthUser.shared.intraURL
+            let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
+            let request = NSMutableURLRequest(url: url! as URL)
+            request.httpMethod = "GET"
+            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 1
+            let session = URLSession.shared
+            session.dataTask(with: request as URLRequest) {
+                (data, response, error) in
+                print(num)
+                do
+                {
+                    guard let data = data else { return }
+                    self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
+                    for i in 0..<self.ClusterLoggedUsers.count {
+                        if self.ClusterLoggedUsers[i]?.end_at == nil {
+                            self.clusterDict.updateValue(self.ClusterLoggedUsers[i], forKey: self.ClusterLoggedUsers[i]?.host ?? "empty")
+                        }
                     }
+                    completion()
                 }
-                completion()
-            }
-            catch let error {
-                completion()
-                return print("Another error:\(error)")
-            }
-        }.resume()
+                catch let error {
+                    completion()
+                    return print("Another error:\(error)")
+                }
+            }.resume()
+        }
     }
-
 }

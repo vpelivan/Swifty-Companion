@@ -107,6 +107,7 @@ extension LoginController {
         var webAuthSession: ASWebAuthenticationSession?
         let scope = AuthUser.shared.scope
         guard let url = URL(string: intraURL+"oauth/authorize?client_id=\(UID)&redirect_uri=\(callbackURI)&response_type=code&scope=\(scope)") else { return }
+        webAuthSession?.prefersEphemeralWebBrowserSession = true
         webAuthSession = ASWebAuthenticationSession(url: url,
             callbackURLScheme: callbackURI, completionHandler: { (url, error) in
             guard error == nil else { return }
@@ -118,6 +119,7 @@ extension LoginController {
                 })
         })
         webAuthSession?.presentationContextProvider = context
+        
         webAuthSession?.start()
     }
     

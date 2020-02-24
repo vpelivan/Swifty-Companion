@@ -109,33 +109,13 @@ struct UserOfEvent: Codable {
     let url: String?
 }
 
-//[
-//    {
-//        "id": 4055,
-//        "name": "Основные принципы функционионального программирования и преимущества в современном мире",
-//        "description": "На встрече поговорим об:\r\n- принципах функционального программирования;\r\n- преимущества функционального программирования в современном мире;\r\n- карьерных возможностях в этом направлении в компании Intetics.\r\n\r\nСпикер: Александр Капляр – Software engineer в компании Intetics и выпускник UNIT Factory.",
-//        "location": "Multiverse",
-//        "kind": "event",
-//        "max_people": 50,
-//        "nbr_subscribers": 23,
-//        "begin_at": "2020-01-31T16:00:00.000Z",
-//        "end_at": "2020-01-31T17:30:00.000Z",
-//        "campus_ids": [
-//            8
-//        ],
-//        "cursus_ids": [
-//            1
-//        ],
-//        "created_at": "2020-01-23T15:28:28.256Z",
-//        "updated_at": "2020-01-28T15:09:01.676Z",
-//        "prohibition_of_cancellation": null,
-//        "waitlist": {
-//            "id": 1263,
-//            "waitlistable_id": 4055,
-//            "waitlistable_type": "Event",
-//            "created_at": "2020-01-23T15:28:28.289Z",
-//            "updated_at": "2020-01-23T15:28:28.289Z"
-//        },
-//        "themes": []
-//    }
-//]
+//MARK: - A Structure to pass between controllers
+struct EventsData{
+    var event: Event?
+    var startDay: String?
+    var startMonth: String?
+    var duration: String?
+    var status: String?
+    var when: String?
+    var unsubscribeID: Int?
+}

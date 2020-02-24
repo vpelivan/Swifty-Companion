@@ -206,6 +206,8 @@ class SingleProjectViewController: UIViewController {
         if projectInfo.status == "finished" {
             if projectInfo.validated == true {
                 cell.statusLabel.text = "success"
+                cell.checkboxImage.isHidden = false
+                cell.checkboxImage.image = UIImage(named: "icon-checkmark")
                 cell.markView.backgroundColor = colorGreen
                 cell.markLabel.isHidden = false
                 cell.of100Label.isHidden = false
@@ -214,6 +216,7 @@ class SingleProjectViewController: UIViewController {
             } else {
                 cell.statusLabel.text = "fail"
                 cell.markView.backgroundColor = colorRed
+                cell.checkboxImage.isHidden = false
                 cell.markLabel.isHidden = false
                 cell.of100Label.isHidden = false
                 cell.imageStatus.isHidden = true
