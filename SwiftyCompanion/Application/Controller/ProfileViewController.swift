@@ -168,6 +168,7 @@ class ProfileViewController: UIViewController {
             searchController?.searchBar.placeholder = "Find a user"
             searchController?.searchBar.tintColor = colorCyan
             searchController?.hidesNavigationBarDuringPresentation = true
+            searchController?.searchBar.delegate = searchTableView
             definesPresentationContext = true
             navigationItem.searchController = searchController
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 class EvaluationsViewController: UIViewController {
-
+    
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
@@ -22,8 +22,6 @@ class EvaluationsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = colorCyan
         tableView.tableFooterView = UIView(frame: .zero)
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,58 +30,52 @@ class EvaluationsViewController: UIViewController {
         self.tableView.reloadData()
         fetchData()
     }
-
-    fileprivate func getProjectNames() {
-        let maxIndex = self.evaluations.count
-        var i = 0
-        for each in self.evaluations {
-            guard let projectID = each?.team?.projectID else { return }
-            guard let projectUrl = URL(string: "\(self.intraURL)/v2/projects/\(projectID)") else { return }
-            DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(2500)) {
-                NetworkService.shared.getData(into: ProjectName?.self, from: projectUrl) { (project, result) in
-                    guard let trueProject = project as? ProjectName else { return }
-                    self.evaluations[i]?.projectName = trueProject.name
-                    i += 1
-                    if i == maxIndex {
-                        DispatchQueue.main.async {
-                            self.activityIndicator.isHidden = true
-                            self.activityIndicator.stopAnimating()
-                            self.tableView.dataSource = self
-                            self.tableView.delegate = self
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+        
     fileprivate func fetchData() {
         guard let correctorUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrector") else { return }
         guard let correctedUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrected") else { return }
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
+        
+        DispatchQueue.global().async {
+            let group = DispatchGroup()
+            group.enter()
             NetworkService.shared.getData(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 self.evaluations = trueEval
                 print("corrector")
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2500)) {
-                    NetworkService.shared.getData(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
-                        guard let trueEval = evaluations as? [Evaluation?] else { return }
-                        for eval in trueEval {
-                            self.evaluations.append(eval)
-                        }
-                        print("corrected")
-                            self.getProjectNames()
-//                            DispatchQueue.main.async {
-//                                self.activityIndicator.isHidden = true
-//                                self.activityIndicator.stopAnimating()
-//                                self.tableView.dataSource = self
-//                                self.tableView.delegate = self
-//                                self.tableView.reloadData()
-//
-//                        }
-                    }
+                group.leave()
+            }
+            group.wait()
+            group.enter()
+            NetworkService.shared.getData(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
+                guard let trueEval = evaluations as? [Evaluation?] else { return }
+                for eval in trueEval {
+                    self.evaluations.append(eval)
                 }
+                print("corrected")
+                group.leave()
+            }
+            group.wait()
+            
+            for i in 0 ..< self.evaluations.count {
+                group.enter()
+                sleep(1)
+                guard let projectID = self.evaluations[i]?.team?.projectID else { return }
+                guard let projectUrl = URL(string: "\(self.intraURL)/v2/projects/\(projectID)") else { return }
+                NetworkService.shared.getData(into: ProjectName?.self, from: projectUrl) { (project, result) in
+                    guard let trueProject = project as? ProjectName else { return }
+                    self.evaluations[i]?.projectName = trueProject.name
+                    group.leave()
+                }
+                group.wait()
+            }
+            group.enter()
+            DispatchQueue.main.async {
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                self.tableView.dataSource = self
+                self.tableView.delegate = self
+                self.tableView.reloadData()
+                group.leave()
             }
         }
     }
@@ -135,7 +127,8 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "evalCell", for: indexPath) as! EvaluationViewCell
         let tuple = fetchTime(from: evaluations[indexPath.row]?.beginAt)
-        if evaluations[indexPath.row]?.corrector?.id == AuthUser.shared.userID {
+        cell.loginButton.isHidden = false
+        if evaluations[indexPath.row]?.corrector?.visible?.id == AuthUser.shared.userID {
             if let corrected = evaluations[indexPath.row]?.correcteds {
                 if corrected.isEmpty == false {
                     if tuple.1 == true {
@@ -144,11 +137,10 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
                         cell.willEvaluate.text = "You're supposed to evaluate: "
                     }
                     cell.loginButton.setTitle(corrected[0].login, for: .normal)
-                    
                 }
             } else {
-                    cell.willEvaluate.text = "You will evaluate someone"
-                    cell.loginButton.isHidden = true
+                cell.willEvaluate.text = "You will evaluate someone"
+                cell.loginButton.isHidden = true
             }
         } else {
             if tuple.1 == true {
@@ -156,7 +148,7 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
             } else {
                 cell.willEvaluate.text = "You're supposed to be evaluated by: "
             }
-            if let corrector = evaluations[indexPath.row]?.corrector?.login {
+            if let corrector = evaluations[indexPath.row]?.corrector?.visible?.login {
                 cell.loginButton.setTitle(corrector, for: .normal)
                 cell.loginButton.addTarget(self, action: #selector(EvaluationsViewController.viewProfile(_:)), for: .touchUpInside)
             } else {
@@ -164,21 +156,23 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.loginButton.isHidden = true
             }
             cell.timeLabel.text = tuple.0
-            cell.projectLabel.text = "on project: \"\(evaluations[indexPath.row]?.projectName ?? "-")\""
+            cell.projectLabel.text = "on \(evaluations[indexPath.row]?.projectName ?? "-")"
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let scaleTeamsID = evaluations[indexPath.row]?.team?.id else { return UISwipeActionsConfiguration() }
+        guard let scaleTeamsID = evaluations[indexPath.row]?.id else { return UISwipeActionsConfiguration() }
         let deleteAction = UIContextualAction(style: .destructive, title: "Skip Evaluation") {  (contextualAction, view, boolValue) in
             let alert = UIAlertController(title: "Skip Evaluation", message: nil, preferredStyle: .actionSheet)
             let skip = UIAlertAction(title: "Skip", style: .default, handler: { _ in
-            EvalNetworkSevice.shared.skipEvaluation(with: scaleTeamsID) {
-                self.evaluations.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                print("Skipped evaluation")
+                EvalNetworkSevice.shared.skipEvaluation(with: scaleTeamsID) {
+                    DispatchQueue.main.async {
+                        self.evaluations.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                        print("Skipped evaluation")
+                    }
                 }
             })
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in

@@ -20,9 +20,9 @@ class SearchTableView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return  searchNamesArray.count
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell")!
         if indexPath.row < searchNamesArray.count {
@@ -62,3 +62,9 @@ extension SearchTableView: UISearchResultsUpdating {
     }
 }
 
+extension SearchTableView: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        login = searchBar.text?.lowercased()
+        self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
+    }
+}

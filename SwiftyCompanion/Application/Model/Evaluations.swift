@@ -18,7 +18,7 @@ struct Evaluation: Decodable {
     let flag: Flag?
     let beginAt: String?
     let correcteds: [Correct]?
-    let corrector: Correct?
+    let corrector: Corrector?
     let truant: Truant?
     let filledAt: String?
     let questionsWithAnswers: [QwA]?
@@ -41,6 +41,25 @@ struct Evaluation: Decodable {
         case filledAt = "filled_at"
         case questionsWithAnswers = "questions_with_answers"
         case scale, team, feedbacks
+    }
+}
+
+struct Corrector: Decodable {
+    let invisible: String?
+    let visible: Correct?
+    
+    // Where we determine what type the value is
+    init(from decoder: Decoder) throws {
+        let container =  try decoder.singleValueContainer()
+        // Check for a String
+        do {
+            invisible = try container.decode(String?.self)
+            visible = nil
+        } catch {
+            // Check for Correct
+            visible = try container.decode(Correct?.self)
+            invisible = nil
+        }
     }
 }
 
