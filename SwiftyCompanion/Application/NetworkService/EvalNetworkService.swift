@@ -31,11 +31,11 @@ class EvalNetworkSevice {
                 if let dictionary: NSDictionary = try JSONSerialization.jsonObject(with: data!) as? NSDictionary {
                     print("Dictionary content: ", dictionary)
                     if (dictionary["error"] == nil) {
-                        print("if in do: Skip Succeded")
+                        print("if in do: Skip Failed")
                         completion()
                     }
                     else {
-                        print("else in do: ", dictionary)
+                        print("else in do: Skip Failed", dictionary)
                     }
                 }
                 else {
@@ -44,7 +44,7 @@ class EvalNetworkSevice {
             }
             catch {
                 completion()
-                print("Catch Block: ")
+                print("Catch Block: Skip Succeded")
             }
         }.resume()
     }

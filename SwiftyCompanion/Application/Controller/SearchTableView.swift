@@ -51,6 +51,7 @@ extension SearchTableView: UISearchResultsUpdating {
             guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(text)&sort=login") else { return }
             SearchNetworkService.shared.getSearchData(from: url) { data in
                 guard let data = data as? [UserSearch] else { return }
+                print("data:", data)
                 if data.isEmpty == false {
                     self.searchNamesArray = data
                     DispatchQueue.main.async {

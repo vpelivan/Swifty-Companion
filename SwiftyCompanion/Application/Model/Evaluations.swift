@@ -17,7 +17,7 @@ struct Evaluation: Decodable {
     let finalMark: Int?
     let flag: Flag?
     let beginAt: String?
-    let correcteds: [Correct]?
+    let correcteds: Correcteds?
     let corrector: Corrector?
     let truant: Truant?
     let filledAt: String?
@@ -58,6 +58,25 @@ struct Corrector: Decodable {
         } catch {
             // Check for Correct
             visible = try container.decode(Correct?.self)
+            invisible = nil
+        }
+    }
+}
+
+struct Correcteds: Decodable {
+    let invisible: String?
+    let visible: [Correct?]?
+    
+    // Where we determine what type the value is
+    init(from decoder: Decoder) throws {
+        let container =  try decoder.singleValueContainer()
+        // Check for a String
+        do {
+            invisible = try container.decode(String?.self)
+            visible = nil
+        } catch {
+            // Check for Correct
+            visible = try container.decode([Correct?].self)
             invisible = nil
         }
     }

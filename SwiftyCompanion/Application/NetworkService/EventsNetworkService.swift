@@ -80,7 +80,7 @@ class EventsNeworkSevice {
             }
             catch {
                 completion()
-                print("Catch Block: ")
+                print("Catch Block: Unsubscribtion Succeded")
             }
         }.resume()
     }

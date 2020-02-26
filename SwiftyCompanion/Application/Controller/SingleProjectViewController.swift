@@ -62,8 +62,8 @@ class SingleProjectViewController: UIViewController {
         guard let projectId = self.projectInfo.project?.id else { return }
         guard let projectInfoUrl = URL(string: "\(intraURL)/v2/cursus/1/projects?filter[id]=\(projectId)&page[size]=100") else { return }
         guard let urlUserProject = URL(string: "\(intraURL)/v2/projects_users/\(self.projectInfo?.id ?? 0)") else { return }
-        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions in
-            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams in
+        ProjectNetworkService.shared.getProjectInfo(from: projectInfoUrl) { projectSessions, _ in
+            ProjectNetworkService.shared.getTeamsInfo(url: urlUserProject) { teams, _ in
                 self.projectSessions = projectSessions
                 self.teams = teams
                 self.getPoolDays()

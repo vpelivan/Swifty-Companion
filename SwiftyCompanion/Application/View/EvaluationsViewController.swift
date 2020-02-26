@@ -38,7 +38,7 @@ class EvaluationsViewController: UIViewController {
         DispatchQueue.global().async {
             let group = DispatchGroup()
             group.enter()
-            NetworkService.shared.getData(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result) in
+            NetworkService.shared.getData(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result, _) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 self.evaluations = trueEval
                 print("corrector")
@@ -46,7 +46,7 @@ class EvaluationsViewController: UIViewController {
             }
             group.wait()
             group.enter()
-            NetworkService.shared.getData(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
+            NetworkService.shared.getData(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result, _) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 for eval in trueEval {
                     self.evaluations.append(eval)
@@ -61,7 +61,7 @@ class EvaluationsViewController: UIViewController {
                 sleep(1)
                 guard let projectID = self.evaluations[i]?.team?.projectID else { return }
                 guard let projectUrl = URL(string: "\(self.intraURL)/v2/projects/\(projectID)") else { return }
-                NetworkService.shared.getData(into: ProjectName?.self, from: projectUrl) { (project, result) in
+                NetworkService.shared.getData(into: ProjectName?.self, from: projectUrl) { (project, result, _) in
                     guard let trueProject = project as? ProjectName else { return }
                     self.evaluations[i]?.projectName = trueProject.name
                     group.leave()
@@ -129,14 +129,14 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
         let tuple = fetchTime(from: evaluations[indexPath.row]?.beginAt)
         cell.loginButton.isHidden = false
         if evaluations[indexPath.row]?.corrector?.visible?.id == AuthUser.shared.userID {
-            if let corrected = evaluations[indexPath.row]?.correcteds {
+            if let corrected = evaluations[indexPath.row]?.correcteds?.visible {
                 if corrected.isEmpty == false {
                     if tuple.1 == true {
                         cell.willEvaluate.text = "You will evaluate: "
                     } else {
                         cell.willEvaluate.text = "You're supposed to evaluate: "
                     }
-                    cell.loginButton.setTitle(corrected[0].login, for: .normal)
+                    cell.loginButton.setTitle(corrected[0]?.login, for: .normal)
                 }
             } else {
                 cell.willEvaluate.text = "You will evaluate someone"

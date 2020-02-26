@@ -38,14 +38,14 @@ class EventsViewController: UIViewController {
         guard let eventsUrl = URL(string: "\(intraURL)v2/campus/\(campusId)/events?filter[future]=true") else { return }
         guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users") else { return }
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
-            NetworkService.shared.getData(into: [Event?].self, from: eventsUrl) { (events, result) in
+            NetworkService.shared.getData(into: [Event?].self, from: eventsUrl) { (events, result, _) in
                 guard let eventsForSure = events as? [Event?] else { return }
                 self.events = eventsForSure
                 for _ in 0..<self.events.count {
                     self.eventsData.append(EventsData())
                 }
                 DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                    NetworkService.shared.getData(into: [EventsUser?].self, from: url) { (data, result) in
+                    NetworkService.shared.getData(into: [EventsUser?].self, from: url) { (data, result, _) in
                         guard let trueEventUsers = data as? [EventsUser?] else { return }
                         self.eventsUsers = trueEventUsers
                         DispatchQueue.main.async {

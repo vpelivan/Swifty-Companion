@@ -356,17 +356,17 @@ class ProfileViewController: UIViewController {
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
         guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
-            NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
+            NetworkService.shared.getData(into: UserData.self, from: url) { User, result, _ in
                 guard let userInfo = User as? UserData else { return }
                 vc.myInfo = userInfo
                 guard let userId = userInfo.id else { return }
                 guard let url = URL(string: "\(self.intraURL)v2/users/\(userId)/coalitions") else { return }
                 DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(1000)) {
-                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
+                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result, _ in
                         guard let coalitionData = Coalition as? [Coalition] else { return }
                         vc.coalitionData = coalitionData
                         guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(userId)") else { return }
-                        NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                        NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result, _ in
                             guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
                             vc.examsInternships = examsInternships
                             DispatchQueue.main.async {

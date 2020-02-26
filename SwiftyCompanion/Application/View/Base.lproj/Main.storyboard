@@ -1014,7 +1014,7 @@
                         <viewLayoutGuide key="safeArea" id="xlc-X9-s9j"/>
                     </view>
                     <navigationItem key="navigationItem" title="Evaluations" id="zYo-ra-Tqc">
-                        <barButtonItem key="rightBarButtonItem" title="Slots" id="6M6-HN-YZJ">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Slots" id="6M6-HN-YZJ">
                             <color key="tintColor" red="0.0" green="0.74252170319999999" blue="0.74488407369999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="oZy-dR-Qzz" kind="show" id="Kg5-F0-kwE"/>
