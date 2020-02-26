@@ -10,18 +10,19 @@ import UIKit
 
 class EvaluationsViewController: UIViewController {
     
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     var evaluations: [Evaluation?] = []
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     let intraURL = AuthUser.shared.intraURL
     var login: String?
+    var sessionTasks: [URLSessionDataTask?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = colorCyan
         tableView.tableFooterView = UIView(frame: .zero)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,6 +30,18 @@ class EvaluationsViewController: UIViewController {
         activityIndicator.startAnimating()
         self.tableView.reloadData()
         fetchData()
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
+            }
+        }
     }
         
     fileprivate func fetchData() {
@@ -38,15 +51,16 @@ class EvaluationsViewController: UIViewController {
         DispatchQueue.global().async {
             let group = DispatchGroup()
             group.enter()
-            NetworkService.shared.getData(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result, _) in
+            let correctorTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 self.evaluations = trueEval
                 print("corrector")
                 group.leave()
             }
+            self.sessionTasks.append(correctorTask)
             group.wait()
             group.enter()
-            NetworkService.shared.getData(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result, _) in
+            let correctedTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 for eval in trueEval {
                     self.evaluations.append(eval)
@@ -54,20 +68,28 @@ class EvaluationsViewController: UIViewController {
                 print("corrected")
                 group.leave()
             }
+            self.sessionTasks.append(correctedTask)
             group.wait()
             
             for i in 0 ..< self.evaluations.count {
-                group.enter()
                 sleep(1)
-                guard let projectID = self.evaluations[i]?.team?.projectID else { return }
-                guard let projectUrl = URL(string: "\(self.intraURL)/v2/projects/\(projectID)") else { return }
-                NetworkService.shared.getData(into: ProjectName?.self, from: projectUrl) { (project, result, _) in
-                    guard let trueProject = project as? ProjectName else { return }
-                    self.evaluations[i]?.projectName = trueProject.name
+                group.enter()
+                if self.evaluations.isEmpty == false {
+                    guard let projectID = self.evaluations[i]?.team?.projectID else { continue }
+                    guard let projectUrl = URL(string: "\(self.intraURL)/v2/projects/\(projectID)") else { continue }
+                    let nameTask = NetworkService.shared.getDataWithoutAlarm(into: ProjectName?.self, from: projectUrl) { (project, result) in
+                        guard let trueProject = project as? ProjectName else { return }
+                        self.evaluations[i]?.projectName = trueProject.name
+                        print("project name")
+                        group.leave()
+                    }
+                    self.sessionTasks.append(nameTask)
+                }
+                else {
                     group.leave()
                 }
-                group.wait()
             }
+            group.wait()
             group.enter()
             DispatchQueue.main.async {
                 self.activityIndicator.isHidden = true
@@ -90,22 +112,22 @@ class EvaluationsViewController: UIViewController {
         let difference = Int((evalInterval - nowInterval))
         
         switch difference {
-        case Int.min ... -129601: return (" \((difference / 86400) * -1) days ago", false)
+        case Int.min ... -129601: return (" \((difference / 86400) * -1) day(s) ago", false)
         case -129600 ..< -86400: return (" one day ago", false)
-        case -86400 ..< -4200: return (" \((difference / 3600) * -1) hours ago", false)
+        case -86400 ..< -4200: return (" \((difference / 3600) * -1) hour(s) ago", false)
         case -4200 ..< -3555: return (" one hour ago", false)
-        case -3555 ..< 180: return (" \((difference / 60) * -1) minutes ago", false)
+        case -3555 ..< 180: return (" \((difference / 60) * -1) minute(s) ago", false)
         case -180 ..< -60: return (" a few minutes ago", false)
         case -60 ..< -30: return (" a minute ago", false)
         case -30 ..< 0: return (" a few seconds ago", false)
         case 0 ..< 30: return (" in a few seconds", true)
         case 30 ..< 60: return (" in a minute", true)
         case 60 ..< 180: return (" in a few minutes", true)
-        case 180 ..< 3555: return (" in \(difference / 60) minutes", true)
+        case 180 ..< 3555: return (" in \(difference / 60) minute(s)", true)
         case 3555 ..< 4200: return (" in one hour", true)
-        case 4200 ..< 86400: return (" in \(difference / 3600) hours", true)
+        case 4200 ..< 86400: return (" in \(difference / 3600) hour(s)", true)
         case 86400 ..< 129600: return (" in one day", true)
-        case 129600...Int.max : return (" in \(difference / 86400) days", true)
+        case 129600...Int.max : return (" in \(difference / 86400) day(s)", true)
         default: return ("-", true)
         }
     }
@@ -128,6 +150,7 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: "evalCell", for: indexPath) as! EvaluationViewCell
         let tuple = fetchTime(from: evaluations[indexPath.row]?.beginAt)
         cell.loginButton.isHidden = false
+        cell.projectLabel.isHidden = false
         if evaluations[indexPath.row]?.corrector?.visible?.id == AuthUser.shared.userID {
             if let corrected = evaluations[indexPath.row]?.correcteds?.visible {
                 if corrected.isEmpty == false {
@@ -137,11 +160,15 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
                         cell.willEvaluate.text = "You're supposed to evaluate: "
                     }
                     cell.loginButton.setTitle(corrected[0]?.login, for: .normal)
+                    cell.loginButton.addTarget(self, action: #selector(EvaluationsViewController.viewProfile(_:)), for: .touchUpInside)
                 }
             } else {
                 cell.willEvaluate.text = "You will evaluate someone"
                 cell.loginButton.isHidden = true
+                cell.projectLabel.isHidden = true
             }
+            cell.timeLabel.text = tuple.0
+            cell.projectLabel.text = "on \(evaluations[indexPath.row]?.projectName ?? "-")"
         } else {
             if tuple.1 == true {
                 cell.willEvaluate.text = "You will be evaluated by: "
@@ -158,7 +185,6 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
             cell.timeLabel.text = tuple.0
             cell.projectLabel.text = "on \(evaluations[indexPath.row]?.projectName ?? "-")"
         }
-        
         return cell
     }
     

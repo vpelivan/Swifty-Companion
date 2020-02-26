@@ -35,6 +35,7 @@
 		A36AD85323E062400065F627 /* LoginNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85223E062400065F627 /* LoginNetworkService.swift */; };
 		A36AD85523E0942D0065F627 /* OtherMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85423E0942D0065F627 /* OtherMethods.swift */; };
 		A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */; };
+		A36E27C2240704F300BA11C4 /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36E27C1240704F300BA11C4 /* LoadViewController.swift */; };
 		A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D862239950AA005AA0A2 /* LabelMacCell.swift */; };
 		A374D865239953BB005AA0A2 /* ClusterUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D864239953BB005AA0A2 /* ClusterUsers.swift */; };
 		A38445E4237AEF7000E0C78A /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38445E3237AEF7000E0C78A /* UserViewController.swift */; };
@@ -95,6 +96,7 @@
 		A36AD85223E062400065F627 /* LoginNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNetworkService.swift; sourceTree = "<group>"; };
 		A36AD85423E0942D0065F627 /* OtherMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMethods.swift; sourceTree = "<group>"; };
 		A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeammateCollectionViewCell.swift; sourceTree = "<group>"; };
+		A36E27C1240704F300BA11C4 /* LoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		A374D862239950AA005AA0A2 /* LabelMacCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelMacCell.swift; sourceTree = "<group>"; };
 		A374D864239953BB005AA0A2 /* ClusterUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterUsers.swift; sourceTree = "<group>"; };
 		A38445E3237AEF7000E0C78A /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
 				572469BD23F6E4070096A775 /* ProfileViewCell.swift */,
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
+				A36E27C1240704F300BA11C4 /* LoadViewController.swift */,
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
 				57E98C0D24021800006D834C /* EvaluationViewCell.swift */,
 				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
@@ -418,6 +421,7 @@
 				A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */,
 				A36A3D712396F6B800403959 /* LoggedMacCell.swift in Sources */,
 				A3A9965823DE151D00688199 /* AllSkillsViewController.swift in Sources */,
+				A36E27C2240704F300BA11C4 /* LoadViewController.swift in Sources */,
 				57EBA1022402B397006AC329 /* Evaluations.swift in Sources */,
 				A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */,
 				A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */,

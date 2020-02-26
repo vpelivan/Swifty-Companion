@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -483,6 +483,33 @@
             </objects>
             <point key="canvasLocation" x="2956" y="106.59670164917542"/>
         </scene>
+        <!--Load View Controller-->
+        <scene sceneID="Dnd-vK-L7f">
+            <objects>
+                <viewController storyboardIdentifier="loadController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="v1s-wK-ujr" customClass="LoadViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1uN-ut-FGY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-HV-eGL">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jVp-HV-eGL" firstAttribute="centerY" secondItem="1uN-ut-FGY" secondAttribute="centerY" id="HIg-Cg-pNa"/>
+                            <constraint firstItem="jVp-HV-eGL" firstAttribute="centerX" secondItem="1uN-ut-FGY" secondAttribute="centerX" id="I3j-En-w4C"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iuh-Ua-lwi"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="jVp-HV-eGL" id="UvF-UR-A8o"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EDC-hK-AxZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3761" y="107"/>
+        </scene>
         <!--All Projects-->
         <scene sceneID="7To-gq-lPD">
             <objects>
@@ -716,6 +743,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="xWp-JS-ghZ" id="4ww-J3-DTS"/>
                         <outlet property="collectionView" destination="OZa-3g-wqC" id="4TC-Pw-ivc"/>
+                        <outlet property="refreshButton" destination="GEO-Af-RDs" id="bgq-IB-U12"/>
                         <segue destination="XkI-cI-KIx" kind="show" identifier="goToClusterUser" id="IH0-Kv-PCI"/>
                     </connections>
                 </viewController>
@@ -2024,6 +2052,6 @@
         <image name="icons8-user-90" width="30" height="30"/>
         <image name="noImage" width="300" height="300"/>
         <image name="person.2" catalog="system" width="64" height="40"/>
-        <image name="xmark" catalog="system" width="64" height="56"/>
+        <image name="xmark" catalog="system" width="32" height="32"/>
     </resources>
 </document>

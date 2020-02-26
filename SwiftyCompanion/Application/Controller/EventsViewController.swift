@@ -20,6 +20,7 @@ class EventsViewController: UIViewController {
     let campusId = AuthUser.shared.campusID!
     var selectedIndexPath: IndexPath?
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    var sessionTasks: [URLSessionDataTask?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,32 +34,52 @@ class EventsViewController: UIViewController {
         performRequest()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
+            }
+        }
+    }
+    
     func performRequest() {
         let intraURL = AuthUser.shared.intraURL
         guard let eventsUrl = URL(string: "\(intraURL)v2/campus/\(campusId)/events?filter[future]=true") else { return }
         guard let url = URL(string: "https://api.intra.42.fr/v2/users/\(self.userId)/events_users") else { return }
-        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
-            NetworkService.shared.getData(into: [Event?].self, from: eventsUrl) { (events, result, _) in
+        DispatchQueue.global().async{
+            let group = DispatchGroup()
+            group.enter()
+            let eventsTask = NetworkService.shared.getDataWithoutAlarm(into: [Event?].self, from: eventsUrl) { (events, result) in
                 guard let eventsForSure = events as? [Event?] else { return }
                 self.events = eventsForSure
                 for _ in 0..<self.events.count {
                     self.eventsData.append(EventsData())
                 }
-                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(300)) {
-                    NetworkService.shared.getData(into: [EventsUser?].self, from: url) { (data, result, _) in
-                        guard let trueEventUsers = data as? [EventsUser?] else { return }
-                        self.eventsUsers = trueEventUsers
-                        DispatchQueue.main.async {
-                            self.eventLoadIndicator.isHidden = true
-                            self.eventLoadIndicator.stopAnimating()
-                            self.eventsTableView.reloadData()
-                            self.eventsTableView.dataSource = self
-                            self.eventsTableView.delegate = self
-                            self.eventLoadIndicator.isHidden = true
-                            self.eventLoadIndicator.stopAnimating()
-                        }
-                    }
-                }
+                group.leave()
+            }
+            self.sessionTasks.append(eventsTask)
+            group.wait()
+            group.enter()
+            let userTask = NetworkService.shared.getDataWithoutAlarm(into: [EventsUser?].self, from: url) { (data, result) in
+                guard let trueEventUsers = data as? [EventsUser?] else { return }
+                self.eventsUsers = trueEventUsers
+                group.leave()
+            }
+            self.sessionTasks.append(userTask)
+            group.wait()
+            group.enter()
+            DispatchQueue.main.async {
+                self.eventLoadIndicator.isHidden = true
+                self.eventLoadIndicator.stopAnimating()
+                self.eventsTableView.reloadData()
+                self.eventsTableView.dataSource = self
+                self.eventsTableView.delegate = self
+                self.eventLoadIndicator.isHidden = true
+                self.eventLoadIndicator.stopAnimating()
+                group.leave()
             }
         }
     }

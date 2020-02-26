@@ -15,7 +15,9 @@ class ClusterViewController: UIViewController {
     var clusterDict: [String : ClusterUsers?] = [:]
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
+    var sessionTasks: [URLSessionDataTask?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,16 +29,37 @@ class ClusterViewController: UIViewController {
         getClusterData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.refreshButton.isEnabled = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        clearBuffer()
+    }
+    
+    func clearBuffer() {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
+            }
+        }
+    }
     
     func getClusterData() {
         DispatchQueue.global().async {
             let group = DispatchGroup()
-            for i in 1...5 {
+            for i in 1...6 {
                 group.enter()
-                self.getClusterInfo(num: i) {
+                let task = self.getClusterInfo(num: i) {
                     group.leave()
+                }
+                if i != 0 && i % 2 == 0 {
                     sleep(1)
                 }
+                self.sessionTasks.append(task)
                 group.wait()
             }
             group.enter()
@@ -47,6 +70,9 @@ class ClusterViewController: UIViewController {
                 self.collectionView.delegate = self
                 self.collectionView.dataSource = self
                 self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
+                if self.refreshButton.isEnabled == false {
+                    self.refreshButton.isEnabled = true
+                }
                 group.leave()
             }
         }
@@ -55,9 +81,10 @@ class ClusterViewController: UIViewController {
     
     
     @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
+        refreshButton.isEnabled = false
+        clearBuffer()
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        //        collectionView.reloadData()
         getClusterData()
     }
 }
@@ -65,16 +92,11 @@ class ClusterViewController: UIViewController {
 extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if self.activityIndicator.isHidden == false {
-            return 0
-        }
         return 12
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.activityIndicator.isHidden == false {
-            return 0
-        }
+
         return 22
     }
     
@@ -203,8 +225,8 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension ClusterViewController {
-    func getClusterInfo(num: Int, completion: @escaping () -> ()) {
-        guard let token = AuthUser.shared.token?.accessToken else { return }
+    func getClusterInfo(num: Int, completion: @escaping () -> ()) -> URLSessionDataTask? {
+        guard let token = AuthUser.shared.token?.accessToken else { return nil }
         let intraURL = AuthUser.shared.intraURL
         let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
         let request = NSMutableURLRequest(url: url! as URL)
@@ -213,7 +235,7 @@ extension ClusterViewController {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 1
         let session = URLSession.shared
-        session.dataTask(with: request as URLRequest) {
+        let task = session.dataTask(with: request as URLRequest) {
             (data, response, error) in
             print(num)
             do
@@ -231,7 +253,8 @@ extension ClusterViewController {
                 completion()
                 return print("Another error:\(error)")
             }
-        }.resume()
+        }
+        task.resume()
+        return task
     }
-    
 }

@@ -50,7 +50,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
     @IBAction func tapLogIn(_ sender: UIButton) {
         guard let url = URL(string: "\(intraURL)/v2/me") else { return }
         authorizeUser(context: self, completion: {
-            NetworkService.shared.getData(into: UserData.self, from: url) { User, result, _ in
+            NetworkService.shared.getData(into: UserData.self, from: url) { User, result in
                 self.errorHandler(to: result) {
                     self.myInfo = User as? UserData
                     guard let userId = self.myInfo.id else { return }
@@ -58,12 +58,12 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
                     AuthUser.shared.userID = userId
                     AuthUser.shared.campusID = campusID
                     guard let url = URL(string: "\(self.intraURL)/v2/users/\(userId)/coalitions") else { return }
-                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result, _ in
+                    NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
                         self.errorHandler(to: result) {
                             self.coalitionData = Coalition as! [Coalition?]
                             guard let url = URL(string: "\(self.intraURL)/v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(userId)") else { return }
                             DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(500)) {
-                                NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result, _ in
+                                NetworkService.shared.getData(into: [ProjectsUsers].self, from: url) { examsInternships, result in
                                     self.errorHandler(to: result) {
                                         self.examsInternships = examsInternships as! [ProjectsUsers?]
                                         self.stopIndicator()
