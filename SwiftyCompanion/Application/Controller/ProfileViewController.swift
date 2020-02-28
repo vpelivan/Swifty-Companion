@@ -43,6 +43,17 @@ class ProfileViewController: UIViewController {
         tableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
+            }
+        }
+    }
+    
     @IBAction func tapLogOut(_ sender: Any) {
        let cookieJar = HTTPCookieStorage.shared
         for cookie in cookieJar.cookies! {

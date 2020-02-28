@@ -13,8 +13,8 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any, Result<String, Error>) -> ()) -> URLSessionDataTask? {
-        guard let token = AuthUser.shared.token?.accessToken else { return nil }
+    public func getData<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any, Result<String, Error>) -> ()) {
+        guard let token = AuthUser.shared.token?.accessToken else { return }
         
         let request = NSMutableURLRequest(url: url as URL)
         request.httpMethod = "GET"
@@ -36,7 +36,6 @@ class NetworkService {
             }
         }
         task.resume()
-        return task
     }
     
     public func getDataWithoutAlarm<T: Decodable>(into type: T.Type, from url: URL, completion: @escaping (Any, Result<String, Error>) -> ()) -> URLSessionDataTask? {
@@ -46,9 +45,6 @@ class NetworkService {
             request.httpMethod = "GET"
             request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
             let session = URLSession.shared
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 2
-            configuration.timeoutIntervalForResource = 2
             let task = session.dataTask(with: request as URLRequest) {
                 (data, response, error) in
                 do

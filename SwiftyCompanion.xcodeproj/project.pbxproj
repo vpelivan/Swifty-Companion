@@ -10,6 +10,7 @@
 		571A5F1E237F41ED0014C1BC /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571A5F1D237F41ED0014C1BC /* Projects.swift */; };
 		572469BC23F6E3820096A775 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BB23F6E3820096A775 /* ProfileViewController.swift */; };
 		572469BE23F6E4070096A775 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572469BD23F6E4070096A775 /* ProfileViewCell.swift */; };
+		5752D6792407440700B39B0A /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752D6782407440700B39B0A /* SearchTableViewCell.swift */; };
 		575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */; };
 		575A01DA23DE59E8009CC511 /* TeamsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A01D923DE59E8009CC511 /* TeamsViewCell.swift */; };
 		57E98C0C240216DF006D834C /* EvaluationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E98C0B240216DE006D834C /* EvaluationsViewController.swift */; };
@@ -71,6 +72,7 @@
 		571A5F1D237F41ED0014C1BC /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
 		572469BB23F6E3820096A775 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		572469BD23F6E4070096A775 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
+		5752D6782407440700B39B0A /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDescriptionCell.swift; sourceTree = "<group>"; };
 		575A01D923DE59E8009CC511 /* TeamsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewCell.swift; sourceTree = "<group>"; };
 		57E98C0B240216DE006D834C /* EvaluationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EvaluationsViewController.swift; path = ../View/EvaluationsViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
 				57E98C0D24021800006D834C /* EvaluationViewCell.swift */,
 				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
+				5752D6782407440700B39B0A /* SearchTableViewCell.swift */,
 				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
 				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
@@ -427,6 +430,7 @@
 				A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A368998623FC28E90056A74B /* CursusTableViewController.swift in Sources */,
+				5752D6792407440700B39B0A /* SearchTableViewCell.swift in Sources */,
 				A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */,
 				A3DAF5AF239A980D00ED4937 /* EmptyMacCellController.swift in Sources */,
 				A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */,
