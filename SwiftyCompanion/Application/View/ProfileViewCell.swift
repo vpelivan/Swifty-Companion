@@ -21,10 +21,12 @@ class ProfileViewCell: UITableViewCell {
     @IBOutlet weak var userWallet: UILabel!
     @IBOutlet weak var userLocation: UILabel!
     @IBOutlet weak var subView: UIView!
+    @IBOutlet weak var staffLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         subView.layer.cornerRadius = 5.0
+        staffLabel.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

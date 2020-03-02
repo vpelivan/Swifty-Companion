@@ -174,7 +174,7 @@ class ProfileViewController: UIViewController {
     
     fileprivate func setSearchBar() {
             let searchTableView = storyboard!.instantiateViewController(withIdentifier: "SearchTableView") as! SearchTableView
-
+        
             searchController = UISearchController(searchResultsController: searchTableView)
             searchController?.searchResultsUpdater = searchTableView
             searchController?.searchBar.placeholder = "Find a user"
@@ -187,9 +187,15 @@ class ProfileViewController: UIViewController {
 
     fileprivate func fetchProfileCell(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! ProfileViewCell
+        
         if let imageUrl = URL(string: myInfo.imageURL ?? ""){
             NetworkService.shared.getImage(from: imageUrl) {image in
                 cell.userImage.image = image
+            }
+        }
+        if myInfo.staff != nil {
+            if myInfo.staff == true {
+                cell.staffLabel.isHidden = false
             }
         }
         if myInfo.campus?.isEmpty == false {

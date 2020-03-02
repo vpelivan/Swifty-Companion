@@ -47,13 +47,14 @@ class EvaluationsViewController: UIViewController {
     }
     
     fileprivate func fetchData() {
-        guard let correctorUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrector") else { return }
-        guard let correctedUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrected") else { return }
+//        guard let correctorUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrector") else { return }
+//        guard let correctedUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrected") else { return }
+        guard let url = URL(string: "\(intraURL)v2/me/scale_teams") else { return }
         
         DispatchQueue.global().async {
             let group = DispatchGroup()
             group.enter()
-            let correctorTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: correctorUrl) { (evaluations, result) in
+            let correctorTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: url) { (evaluations, result) in
                 guard let trueEval = evaluations as? [Evaluation?] else { return }
                 self.evaluations = trueEval
                 print("corrector")
@@ -61,17 +62,17 @@ class EvaluationsViewController: UIViewController {
             }
             self.sessionTasks.append(correctorTask)
             group.wait()
-            group.enter()
-            let correctedTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
-                guard let trueEval = evaluations as? [Evaluation?] else { return }
-                for eval in trueEval {
-                    self.evaluations.append(eval)
-                }
-                print("corrected")
-                group.leave()
-            }
-            self.sessionTasks.append(correctedTask)
-            group.wait()
+//            group.enter()
+//            let correctedTask = NetworkService.shared.getDataWithoutAlarm(into: [Evaluation?].self, from: correctedUrl) { (evaluations, result) in
+//                guard let trueEval = evaluations as? [Evaluation?] else { return }
+//                for eval in trueEval {
+//                    self.evaluations.append(eval)
+//                }
+//                print("corrected")
+//                group.leave()
+//            }
+//            self.sessionTasks.append(correctedTask)
+//            group.wait()
             
             for i in 0 ..< self.evaluations.count {
                 sleep(1)
@@ -121,7 +122,7 @@ class EvaluationsViewController: UIViewController {
         case -129600 ..< -86400: return (" one day ago", false)
         case -86400 ..< -4200: return (" \((difference / 3600) * -1) hour(s) ago", false)
         case -4200 ..< -3555: return (" one hour ago", false)
-        case -3555 ..< 180: return (" \((difference / 60) * -1) minute(s) ago", false)
+        case -3555 ..< -180: return (" \((difference / 60) * -1) minute(s) ago", false)
         case -180 ..< -60: return (" a few minutes ago", false)
         case -60 ..< -30: return (" a minute ago", false)
         case -30 ..< 0: return (" a few seconds ago", false)

@@ -1595,15 +1595,28 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STAFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBk-qQ-rao">
+                                                            <rect key="frame" x="8" y="8" width="58" height="20"/>
+                                                            <color key="backgroundColor" red="0.042876340450000001" green="0.71358960869999999" blue="0.72157961130000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="mvy-p2-DNj"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.41516285211267606" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="bBk-qQ-rao" firstAttribute="leading" secondItem="c60-e6-xGW" secondAttribute="leading" constant="8" id="3g8-Tj-Gvs"/>
                                                         <constraint firstItem="4df-Xz-f4R" firstAttribute="leading" secondItem="c60-e6-xGW" secondAttribute="leading" constant="8" id="BSi-CB-UBj"/>
+                                                        <constraint firstItem="4df-Xz-f4R" firstAttribute="leading" secondItem="bBk-qQ-rao" secondAttribute="trailing" constant="-58" id="K4M-FM-wpO"/>
                                                         <constraint firstAttribute="bottom" secondItem="b62-AA-c0b" secondAttribute="bottom" constant="8" id="LaB-tF-1en"/>
                                                         <constraint firstAttribute="trailing" secondItem="b62-AA-c0b" secondAttribute="trailing" constant="8" id="OmL-N3-QlC"/>
                                                         <constraint firstItem="4df-Xz-f4R" firstAttribute="top" secondItem="c60-e6-xGW" secondAttribute="top" constant="8" id="SOG-bI-eZt"/>
                                                         <constraint firstItem="4df-Xz-f4R" firstAttribute="width" secondItem="c60-e6-xGW" secondAttribute="width" multiplier="0.44" id="T7I-xL-Gb5"/>
                                                         <constraint firstItem="b62-AA-c0b" firstAttribute="top" secondItem="c60-e6-xGW" secondAttribute="top" constant="8" id="eRX-Fx-3MQ"/>
+                                                        <constraint firstItem="bBk-qQ-rao" firstAttribute="top" secondItem="c60-e6-xGW" secondAttribute="top" constant="8" id="hZX-0j-oSJ"/>
                                                         <constraint firstAttribute="bottom" secondItem="4df-Xz-f4R" secondAttribute="bottom" constant="8" id="qiR-eB-6gH"/>
                                                         <constraint firstItem="b62-AA-c0b" firstAttribute="leading" secondItem="4df-Xz-f4R" secondAttribute="trailing" constant="8" id="tCa-zP-26c"/>
                                                     </constraints>
@@ -1620,6 +1633,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="cursusCoalition" destination="fD0-qo-aVu" id="jF2-qm-0O7"/>
+                                            <outlet property="staffLabel" destination="bBk-qQ-rao" id="qrE-3B-lmN"/>
                                             <outlet property="subView" destination="c60-e6-xGW" id="h1h-mY-5AS"/>
                                             <outlet property="userCampus" destination="Mko-jw-gr8" id="T2d-aU-OQq"/>
                                             <outlet property="userEmail" destination="g6w-cy-z7O" id="bxP-LT-WVW"/>
