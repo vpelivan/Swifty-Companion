@@ -362,9 +362,6 @@ class ProfileViewController: UIViewController {
         return cell
     }
         
-
-    
-    
     @IBAction func unwindToProfileFromSearch(_ unwindSegue: UIStoryboardSegue) {
         guard let svc = unwindSegue.source as? SearchTableView else { return }
         guard let vc = svc.vc else { return }
