@@ -383,7 +383,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return cellDict.count
     }
 
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let keys = (cellDict as NSDictionary).allKeys(for: indexPath.row) as! [Int]
         guard let key = keys.first else { return UITableViewCell() }

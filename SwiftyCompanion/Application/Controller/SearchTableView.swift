@@ -44,6 +44,15 @@ class SearchTableView: UIViewController {
         }
     }
     
+    private func makeAlarm() {
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+            OtherMethods.shared.alert(title: "User Not Found", message: "Check if you pointed a correct login")
+            self.tableView.reloadData()
+        }
+    }
+    
     func fetchFoundUserData(login: String) {
         var id: Int?
 
@@ -57,7 +66,10 @@ class SearchTableView: UIViewController {
             group.enter()
             let dataTask = NetworkService.shared.getDataWithoutAlarm(into: UserData.self, from: url) { User, result in
                 guard let userInfo = User as? UserData else { return }
-                guard let userId = userInfo.id else { return }
+                guard let userId = userInfo.id else {
+                    self.makeAlarm()
+                    return
+                }
                 id = userId
                 vc.myInfo = userInfo
                 group.leave()
@@ -140,8 +152,9 @@ extension SearchTableView: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchTableView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        login = searchBar.text?.lowercased()
-        self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
+        guard let login = searchBar.text?.lowercased() else { return }
+        self.login = login
+        fetchFoundUserData(login: login)
     }
 }
 

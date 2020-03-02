@@ -51,7 +51,6 @@ class NetworkService {
                 {
                     guard let data = data else { return }
                     let Data = try JSONDecoder().decode(type.self, from: data)
-
                     completion(Data, .success("API Data successfuly transfered"))
                 }
                 catch let error {
