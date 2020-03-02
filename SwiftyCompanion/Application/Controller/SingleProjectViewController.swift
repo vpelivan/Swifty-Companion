@@ -30,6 +30,7 @@ class SingleProjectViewController: UIViewController {
     var collViewTeamIndex: Int = 0
     var collViewUsersIndex: Int = 0
     var cellDict: [Int : Int] = [0:0, 1:1]
+    var sessionTasks: [URLSessionDataTask?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,12 @@ class SingleProjectViewController: UIViewController {
         activityIndicator.startAnimating()
         fetchData()
         tableView.tableFooterView = UIView(frame: .zero)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        tableView.reloadData()
     }
 
     fileprivate func setCellQuantity() {
@@ -53,6 +60,17 @@ class SingleProjectViewController: UIViewController {
             for i in 0..<neededProjects.count {
                 cellDict[i + 2 + teams.count] = index
                 index += 1
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
             }
         }
     }
@@ -231,11 +249,62 @@ class SingleProjectViewController: UIViewController {
         }
         return cell
     }
+    
+    func fetchFoundUserData(login: String) {
+        var id: Int?
+        let intraURL = AuthUser.shared.intraURL
+        
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
+        
+        guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(800)) {
+            let group = DispatchGroup()
+            group.enter()
+            let dataTask = NetworkService.shared.getDataWithoutAlarm(into: UserData.self, from: url) { User, result in
+                guard let userInfo = User as? UserData else { return }
+                guard let userId = userInfo.id else { return }
+                id = userId
+                vc.myInfo = userInfo
+                group.leave()
+            }
+            self.sessionTasks.append(dataTask)
+            group.wait()
+            group.enter()
+            guard let coalitionsUrl = URL(string: "\(intraURL)v2/users/\(id ?? 0)/coalitions") else { return }
+            let coalitionTask = NetworkService.shared.getDataWithoutAlarm(into: [Coalition?].self, from: coalitionsUrl) { Coalition, result in
+                guard let coalitionData = Coalition as? [Coalition] else { return }
+                vc.coalitionData = coalitionData
+                group.leave()
+            }
+            self.sessionTasks.append(coalitionTask)
+            group.wait()
+            sleep(1)
+            group.enter()
+            guard let url = URL(string: "\(intraURL)v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(id ?? 0)") else { return }
+            let examsInternshipsTask = NetworkService.shared.getDataWithoutAlarm(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
+                vc.examsInternships = examsInternships
+                group.leave()
+            }
+            self.sessionTasks.append(examsInternshipsTask)
+            group.wait()
+            group.enter()
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(vc, animated: true)
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                group.leave()
+            }
+        }
+    }
 }
 
 extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if activityIndicator.isHidden == false {
+            return 0
+        }
         return cellDict.count
     }
     
@@ -271,6 +340,8 @@ extension SingleProjectViewController: UITableViewDataSource, UITableViewDelegat
             }
         }
     }
+    
+    
 }
 
 extension SingleProjectViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -295,5 +366,17 @@ extension SingleProjectViewController: UICollectionViewDelegate, UICollectionVie
             self.collViewUsersIndex = 0
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let cell = collectionView.cellForItem(at: indexPath) as! TeammateCollectionViewCell
+        guard let login = cell.loginLabel.text else { return }
+        if login != AuthUser.shared.login {
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            tableView.reloadData()
+            fetchFoundUserData(login: login)
+        }
     }
 }

@@ -19,5 +19,6 @@ class AuthUser {
     var token: Token?
     var userID: Int?
     var campusID: Int?
+    var login: String?
     init() {}
 }

@@ -17,17 +17,39 @@ class SearchTableView: UIViewController {
     var login: String?
     var sessionTasks: [URLSessionDataTask?] = []
     let intraURL = AuthUser.shared.intraURL
+    var vc: ProfileViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView(frame: .zero)
+        activityIndicator.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    func fetchFoundUserData(from controller: UIViewController, login: String) {
+    override func viewWillAppear(_ animated: Bool) {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+        tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if sessionTasks.isEmpty == false {
+            for task in sessionTasks {
+                guard let trueTask = task else { continue }
+                if trueTask.state == .running {
+                    trueTask.cancel()
+                }
+            }
+        }
+    }
+    
+    func fetchFoundUserData(login: String) {
         var id: Int?
 
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.reloadData()
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
         guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
         DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(800)) {
@@ -62,10 +84,11 @@ class SearchTableView: UIViewController {
             self.sessionTasks.append(examsInternshipsTask)
             group.wait()
             group.enter()
+            self.vc = vc
             DispatchQueue.main.async {
-                self.navigationController?.pushViewController(vc, animated: true)
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
+                self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
                 group.leave()
             }
         }
@@ -78,14 +101,9 @@ extension SearchTableView: UISearchResultsUpdating {
         if searchController.searchBar.text != "" {
             guard let text = searchController.searchBar.text else { return }
             guard let url = URL(string: "\(intraURL)v2/users?search[login]=\(text)&sort=login") else { return }
-            SearchNetworkService.shared.getSearchData(from: url) { data in
-                guard let data = data as? [UserSearch] else { return }
-                print("data:", data)
-                if data.isEmpty == false {
-                    self.searchNamesArray = data
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+            getSearchData(from: url) {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -94,16 +112,17 @@ extension SearchTableView: UISearchResultsUpdating {
 
 extension SearchTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return  searchNamesArray.count
+        if activityIndicator.isHidden == false {
+            return 0
         }
+        return  searchNamesArray.count
+    }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SearchTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             if indexPath.row < searchNamesArray.count {
                 guard let login = searchNamesArray[indexPath.row].login else {return cell}
-                cell.loginLabel.text = login
-                 guard let url = URL(string: "https://cdn.intra.42.fr/users/\(login).jpg") else { return cell }
-                cell.imageView?.kf.setImage(with: url)
+                cell.textLabel?.text = login
                 print(searchNamesArray[indexPath.row].login ?? "no value")
             }
             return cell
@@ -111,12 +130,10 @@ extension SearchTableView: UITableViewDelegate, UITableViewDataSource {
         
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
+            guard let login = searchNamesArray[indexPath.row].login else { return }
+    
             if indexPath.row < searchNamesArray.count {
-                login = searchNamesArray[indexPath.row].login
-    //            DispatchQueue.main.async {
-    //                self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
-    //            }
-                fetchFoundUserData(from: self, login: self.login!)
+                fetchFoundUserData(login: login)
             }
         }
 }
@@ -125,5 +142,36 @@ extension SearchTableView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         login = searchBar.text?.lowercased()
         self.performSegue(withIdentifier: "unwindToProfile", sender: nil)
+    }
+}
+
+extension SearchTableView {
+    func getSearchData(from url: URL, completion: @escaping () -> ()) {
+        guard let token = AuthUser.shared.token?.accessToken else { return }
+
+        let request = NSMutableURLRequest(url: url as URL)
+        request.httpMethod = "GET"
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        let session = URLSession.shared
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 1
+        session.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            do
+            {
+                guard let data = data else { return }
+                let Data = try JSONDecoder().decode([UserSearch?].self, from: data)
+                guard let decodedData = Data as? [UserSearch] else { return }
+                print("data:", data)
+                if data.isEmpty == false {
+                    self.searchNamesArray = decodedData
+                }
+                completion()
+            }
+            catch let error {
+                completion()
+                print(error)
+            }
+        }.resume()
     }
 }

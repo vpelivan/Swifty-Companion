@@ -26,30 +26,7 @@ class CustomLayout: UICollectionViewLayout {
         
         override func prepare() {
             
-//            let STATUS_BAR_HEIGHT = UIApplication.shared.statusBarFrame.height
-//            let NAV_BAR_HEIGHT = UINavigationController().navigationBar.frame.size.height
-            
             collectionView?.bounces = false
-            
-//            if !dataSourceDidUpdate {
-//
-//                let yOffSet = collectionView!.contentOffset.y
-//
-//                for section in 0 ..< collectionView!.numberOfSections {
-//                    if section == 0 {
-//                        for item in 0 ..< collectionView!.numberOfItems(inSection: section) {
-//                            let cellIndexPath = IndexPath(item: item, section: section)
-//                            if let attrs = cellAttributesDictionary[cellIndexPath] {
-//                                var frame = attrs.frame
-//                                frame.origin.y = yOffSet/* + STATUS_BAR_HEIGHT + NAV_BAR_HEIGHT*/
-//                                attrs.frame = frame
-//                            }
-//                        }
-//                    }
-//                }
-//                return
-//            }
-//
             dataSourceDidUpdate = false
             
             for section in 0 ..< collectionView!.numberOfSections {

@@ -21,6 +21,7 @@ class EventsViewController: UIViewController {
     var selectedIndexPath: IndexPath?
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     var sessionTasks: [URLSessionDataTask?] = []
+    @IBOutlet weak var noEventsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class EventsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        noEventsLabel.isHidden = true
         eventLoadIndicator.isHidden = false
         eventLoadIndicator.startAnimating()
         performRequest()
@@ -77,6 +79,9 @@ class EventsViewController: UIViewController {
                 self.eventsTableView.reloadData()
                 self.eventsTableView.dataSource = self
                 self.eventsTableView.delegate = self
+                if self.events.count == 0 {
+                    self.noEventsLabel.isHidden = false
+                }
                 self.eventLoadIndicator.isHidden = true
                 self.eventLoadIndicator.stopAnimating()
                 group.leave()

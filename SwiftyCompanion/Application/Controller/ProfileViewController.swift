@@ -12,6 +12,7 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
     var searchController: UISearchController?
     var myInfo: UserData!
     var defaultCursus: CursusUser?
@@ -36,10 +37,10 @@ class ProfileViewController: UIViewController {
         }
         setCellQuantity()
         setSearchBar()
+        setTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setTableView()
         tableView.reloadData()
     }
     
@@ -178,7 +179,7 @@ class ProfileViewController: UIViewController {
             searchController?.searchResultsUpdater = searchTableView
             searchController?.searchBar.placeholder = "Find a user"
             searchController?.searchBar.tintColor = colorCyan
-            searchController?.hidesNavigationBarDuringPresentation = true
+            searchController?.hidesNavigationBarDuringPresentation = false
             searchController?.searchBar.delegate = searchTableView
             definesPresentationContext = true
             navigationItem.searchController = searchController
@@ -321,7 +322,6 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func switchSomeSkills(to cell: SkillsViewCell, condition: [Bool], skills: [Skill], etc: String) -> UITableViewCell {
-        
         cell.skillNameOne.isHidden = condition[0]
         cell.skillNameOne.text = skills[0].name
         cell.levelOne.isHidden = condition[0]
@@ -362,85 +362,19 @@ class ProfileViewController: UIViewController {
         return cell
     }
         
+
     
-    func fetchFoundUserData(from controller: UIViewController, login: String) {
-        var id: Int?
-        
-        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
-        guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
-        DispatchQueue.global().async {
-            let group = DispatchGroup()
-            group.enter()
-            let dataTask = NetworkService.shared.getDataWithoutAlarm(into: UserData.self, from: url) { User, result in
-                guard let userInfo = User as? UserData else { return }
-                guard let userId = userInfo.id else { return }
-                id = userId
-                vc.myInfo = userInfo
-                group.leave()
-            }
-            self.sessionTasks.append(dataTask)
-            group.wait()
-            group.enter()
-            guard let coalitionsUrl = URL(string: "\(self.intraURL)v2/users/\(id ?? 0)/coalitions") else { return }
-            let coalitionTask = NetworkService.shared.getDataWithoutAlarm(into: [Coalition?].self, from: coalitionsUrl) { Coalition, result in
-                guard let coalitionData = Coalition as? [Coalition] else { return }
-                vc.coalitionData = coalitionData
-                group.leave()
-            }
-            self.sessionTasks.append(coalitionTask)
-            group.wait()
-            sleep(1)
-            group.enter()
-            guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(id ?? 0)") else { return }
-            let examsInternshipsTask = NetworkService.shared.getDataWithoutAlarm(into: [ProjectsUsers].self, from: url) { examsInternships, result in
-                guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
-                vc.examsInternships = examsInternships
-                group.leave()
-            }
-            self.sessionTasks.append(examsInternshipsTask)
-            group.wait()
-            group.enter()
-            DispatchQueue.main.async {
-                self.navigationController?.pushViewController(vc, animated: true)
-                self.activityIndicator.isHidden = true
-                self.activityIndicator.stopAnimating()
-                group.leave()
-            }
-        }
-    }
-    
-    @IBAction func unwindToProfileFromCluster(_ unwindSegue: UIStoryboardSegue) {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        tableView.reloadData()
-        guard let svc = unwindSegue.source as? ClusterUserViewController else { return }
-        guard let login = svc.login else { return }
-        fetchFoundUserData(from: svc, login: login)
-    }
     
     @IBAction func unwindToProfileFromSearch(_ unwindSegue: UIStoryboardSegue) {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        tableView.reloadData()
         guard let svc = unwindSegue.source as? SearchTableView else { return }
-        guard let login = svc.login else { return }
-        fetchFoundUserData(from: svc, login: login)
-    }
-    
-    @IBAction func unwindToProfileFromEvaluations(_ unwindSegue: UIStoryboardSegue, sender: Any?) {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        tableView.reloadData()
-        guard let svc = unwindSegue.source as? EvaluationsViewController else { return }
-        guard let login = svc.login else { return }
-        fetchFoundUserData(from: svc, login: login)
+        guard let vc = svc.vc else { return }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func unwindToProfileFromCursus(_ unwindSegue: UIStoryboardSegue) {
         guard let svc = unwindSegue.source as? CursusTableViewController else { return }
         self.defaultCursus = svc.chosenCursus
     }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -473,4 +407,3 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-

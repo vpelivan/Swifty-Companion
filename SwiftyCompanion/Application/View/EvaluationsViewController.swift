@@ -12,6 +12,7 @@ class EvaluationsViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noEvaluationLabel: UILabel!
     var evaluations: [Evaluation?] = []
     let colorCyan = #colorLiteral(red: 0, green: 0.7427903414, blue: 0.7441888452, alpha: 1)
     let intraURL = AuthUser.shared.intraURL
@@ -26,11 +27,12 @@ class EvaluationsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        noEvaluationLabel.isHidden = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         self.tableView.reloadData()
         fetchData()
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,7 +45,7 @@ class EvaluationsViewController: UIViewController {
             }
         }
     }
-        
+    
     fileprivate func fetchData() {
         guard let correctorUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrector") else { return }
         guard let correctedUrl = URL(string: "\(intraURL)v2/me/scale_teams/as_corrected") else { return }
@@ -97,6 +99,9 @@ class EvaluationsViewController: UIViewController {
                 self.tableView.dataSource = self
                 self.tableView.delegate = self
                 self.tableView.reloadData()
+                if self.evaluations.count == 0 {
+                    self.noEvaluationLabel.isHidden = false
+                }
                 group.leave()
             }
         }
@@ -133,8 +138,58 @@ class EvaluationsViewController: UIViewController {
     }
     
     @objc func viewProfile(_ sender: UIButton) {
-        login = sender.currentTitle
-        self.performSegue(withIdentifier: "toProfileFromEval", sender: nil)
+        guard let login = sender.currentTitle else { return }
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        tableView.reloadData()
+        fetchFoundUserData(login: login)
+    }
+    
+    func fetchFoundUserData(login: String) {
+        var id: Int?
+        
+        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "goToUserProfile") as? ProfileViewController else { return }
+        
+        guard let url = URL(string: "\(intraURL)v2/users/\(login)") else { return }
+        DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(800)) {
+            let group = DispatchGroup()
+            group.enter()
+            let dataTask = NetworkService.shared.getDataWithoutAlarm(into: UserData.self, from: url) { User, result in
+                guard let userInfo = User as? UserData else { return }
+                guard let userId = userInfo.id else { return }
+                id = userId
+                vc.myInfo = userInfo
+                group.leave()
+            }
+            self.sessionTasks.append(dataTask)
+            group.wait()
+            group.enter()
+            guard let coalitionsUrl = URL(string: "\(self.intraURL)v2/users/\(id ?? 0)/coalitions") else { return }
+            let coalitionTask = NetworkService.shared.getDataWithoutAlarm(into: [Coalition?].self, from: coalitionsUrl) { Coalition, result in
+                guard let coalitionData = Coalition as? [Coalition] else { return }
+                vc.coalitionData = coalitionData
+                group.leave()
+            }
+            self.sessionTasks.append(coalitionTask)
+            group.wait()
+            sleep(1)
+            group.enter()
+            guard let url = URL(string: "\(self.intraURL)v2/projects_users?filter[project_id]=11,118,212,1650,1656&user_id=\(id ?? 0)") else { return }
+            let examsInternshipsTask = NetworkService.shared.getDataWithoutAlarm(into: [ProjectsUsers].self, from: url) { examsInternships, result in
+                guard let examsInternships = examsInternships as? [ProjectsUsers] else { return }
+                vc.examsInternships = examsInternships
+                group.leave()
+            }
+            self.sessionTasks.append(examsInternshipsTask)
+            group.wait()
+            group.enter()
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(vc, animated: true)
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                group.leave()
+            }
+        }
     }
 }
 

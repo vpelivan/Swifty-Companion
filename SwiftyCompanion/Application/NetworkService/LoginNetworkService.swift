@@ -19,20 +19,21 @@ class LoginNetworkService {
     
     private init() {}
     
-    public func refreshToken() {
-        let token = AuthUser.shared.token
-        let currentStamp = Int(Date().timeIntervalSince1970)
-        guard let tokenCreationStamp = token?.createdAt else { return }
-        guard let expirationValue = token?.expiresIn else { return }
-        guard let bearer = AuthUser.shared.bearer else { return }
-        if ((currentStamp - tokenCreationStamp) >= expirationValue) {
-            makeRefreshToken(bearer: bearer) {
-                print("Token Refreshed")
-            }
-        }
-    }
+//    public func refreshToken() {
+//        let token = AuthUser.shared.token
+//        let currentStamp = Int(Date().timeIntervalSince1970)
+//        guard let tokenCreationStamp = token?.createdAt else { return }
+//        guard let expirationValue = token?.expiresIn else { return }
+//        guard let bearer = AuthUser.shared.bearer else { return }
+//        if ((currentStamp - tokenCreationStamp) >= expirationValue) {
+//            makeRefreshToken(bearer: bearer) {
+//                print("Token Refreshed")
+//            }
+//        }
+//    }
     
-    func makeRefreshToken(bearer: String, completion: @escaping () -> ()) {
+    func makeRefreshToken(completion: @escaping () -> ()) {
+        guard let bearer = AuthUser.shared.bearer else { return }
         guard let refreshToken = AuthUser.shared.token?.refreshToken else { return }
         let httpBody = "grant_type=authorization_code&client_id=\(UID)&client_secret=\(secretKey)&\(bearer)&redirect_uri=\(callbackURI)"
         
