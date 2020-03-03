@@ -1508,7 +1508,7 @@
             </objects>
             <point key="canvasLocation" x="1318" y="1012"/>
         </scene>
-        <!--Swifty Companion-->
+        <!--Companion-->
         <scene sceneID="BdE-0K-aM8">
             <objects>
                 <viewController storyboardIdentifier="goToUserProfile" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8bf-dC-a2D" customClass="ProfileViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
@@ -1916,7 +1916,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fJ0-a6-9qq"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Swifty Companion" id="dOL-Ih-Xbq">
+                    <navigationItem key="navigationItem" title="Companion" id="dOL-Ih-Xbq">
                         <barButtonItem key="rightBarButtonItem" title="Log Out" id="69n-vL-b0p">
                             <color key="tintColor" red="0.042876340450000001" green="0.71358960869999999" blue="0.72157961130000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B008ECD3A5C29AC36DBAB140066BA659"
-               BuildableName = "Pods_SwiftyCompanion.framework"
-               BlueprintName = "Pods-SwiftyCompanion"
+               BlueprintIdentifier = "FCD9153E4CDE1C5567BEA49EF18DE759"
+               BuildableName = "Pods_Companion.framework"
+               BlueprintName = "Pods-Companion"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

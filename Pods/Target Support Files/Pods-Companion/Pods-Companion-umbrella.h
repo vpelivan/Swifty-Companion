@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_SwiftyCompanionVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_SwiftyCompanionVersionString[];
+FOUNDATION_EXPORT double Pods_CompanionVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_CompanionVersionString[];
 

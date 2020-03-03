@@ -20,10 +20,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.Unit-factory.SwiftyCompanion</string>
+			<string>com.Unit-factory.Companion</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>SwiftyCompanion</string>
+				<string>Companion</string>
 			</array>
 		</dict>
 	</array>

@@ -18,7 +18,6 @@
 		57EBA1022402B397006AC329 /* Evaluations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EBA1012402B397006AC329 /* Evaluations.swift */; };
 		57EBA104240358FB006AC329 /* EvalNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EBA103240358FB006AC329 /* EvalNetworkService.swift */; };
 		57F2735423E8D99B009EDB1C /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F2735323E8D99B009EDB1C /* ErrorHandling.swift */; };
-		846C10DCB94DEF2775D57DF6 /* Pods_SwiftyCompanion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */; };
 		A326F2932373066D009D3E12 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F2922373066D009D3E12 /* NetworkService.swift */; };
 		A326F29B237320E8009D3E12 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29A237320E8009D3E12 /* UserProfile.swift */; };
 		A326F29D237326C2009D3E12 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A326F29C237326C2009D3E12 /* AuthUser.swift */; };
@@ -64,9 +63,28 @@
 		A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */; };
 		A3F2D69023DCC64D003FAB32 /* SkillsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */; };
 		A3F678AD23F14C65009C59D2 /* SingleEventDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */; };
+		F40FF2917A4F5DF0A54A0F89 /* Pods_Companion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3220E2098BF005905071BC63 /* Pods_Companion.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A316EF81240EEA62007A2EA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A316EF7C240EEA62007A2EA6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C3F44C782D64D7EB20B61CE3844EBFAD;
+			remoteInfo = Kingfisher;
+		};
+		A316EF83240EEA62007A2EA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A316EF7C240EEA62007A2EA6 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 36FD03A1043D3E02887AF83A8548A3C6;
+			remoteInfo = "Pods-Companion";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		3220E2098BF005905071BC63 /* Pods_Companion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Companion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyCompanion.debug.xcconfig"; path = "Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion.debug.xcconfig"; sourceTree = "<group>"; };
 		571A5F1D237F41ED0014C1BC /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
 		572469BB23F6E3820096A775 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +97,9 @@
 		57EBA1012402B397006AC329 /* Evaluations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evaluations.swift; sourceTree = "<group>"; };
 		57EBA103240358FB006AC329 /* EvalNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvalNetworkService.swift; sourceTree = "<group>"; };
 		57F2735323E8D99B009EDB1C /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
-		655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyCompanion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		74BB2E57DF64365A6035BE2F /* Pods-Companion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Companion.debug.xcconfig"; path = "Target Support Files/Pods-Companion/Pods-Companion.debug.xcconfig"; sourceTree = "<group>"; };
+		94B82979999571375D4E6B00 /* Pods-Companion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Companion.release.xcconfig"; path = "Target Support Files/Pods-Companion/Pods-Companion.release.xcconfig"; sourceTree = "<group>"; };
+		A316EF7C240EEA62007A2EA6 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		A326F2922373066D009D3E12 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A326F29A237320E8009D3E12 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		A326F29C237326C2009D3E12 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
@@ -135,13 +155,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				846C10DCB94DEF2775D57DF6 /* Pods_SwiftyCompanion.framework in Frameworks */,
+				F40FF2917A4F5DF0A54A0F89 /* Pods_Companion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A316EF7D240EEA62007A2EA6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A316EF82240EEA62007A2EA6 /* Kingfisher.framework */,
+				A316EF84240EEA62007A2EA6 /* Pods_Companion.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A326F2862372FD52009D3E12 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,7 +277,7 @@
 		A3C076702362FE220098A25F = {
 			isa = PBXGroup;
 			children = (
-				A3C0767B2362FE220098A25F /* SwiftyCompanion */,
+				A3C0767B2362FE220098A25F /* Companion */,
 				A3C0767A2362FE220098A25F /* Products */,
 				C86C22A26F1EF94195923DD1 /* Pods */,
 				D4EF383DA16243EC930F0F8F /* Frameworks */,
@@ -263,13 +292,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A3C0767B2362FE220098A25F /* SwiftyCompanion */ = {
+		A3C0767B2362FE220098A25F /* Companion */ = {
 			isa = PBXGroup;
 			children = (
 				A326F2892372FD92009D3E12 /* Application */,
 				A326F28B2372FE99009D3E12 /* Supporting Files */,
 			);
-			path = SwiftyCompanion;
+			path = Companion;
 			sourceTree = "<group>";
 		};
 		C86C22A26F1EF94195923DD1 /* Pods */ = {
@@ -277,6 +306,8 @@
 			children = (
 				53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */,
 				DCC128913098179E54E5062A /* Pods-SwiftyCompanion.release.xcconfig */,
+				74BB2E57DF64365A6035BE2F /* Pods-Companion.debug.xcconfig */,
+				94B82979999571375D4E6B00 /* Pods-Companion.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -284,7 +315,8 @@
 		D4EF383DA16243EC930F0F8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				655EDA8E4EEE5BA8C1BA3A08 /* Pods_SwiftyCompanion.framework */,
+				A316EF7C240EEA62007A2EA6 /* Pods.xcodeproj */,
+				3220E2098BF005905071BC63 /* Pods_Companion.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,9 +324,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A3C076782362FE220098A25F /* SwiftyCompanion */ = {
+		A3C076782362FE220098A25F /* Companion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3C0768E2362FE260098A25F /* Build configuration list for PBXNativeTarget "SwiftyCompanion" */;
+			buildConfigurationList = A3C0768E2362FE260098A25F /* Build configuration list for PBXNativeTarget "Companion" */;
 			buildPhases = (
 				BC3A5248D4987C76072CE6FD /* [CP] Check Pods Manifest.lock */,
 				A3C076752362FE220098A25F /* Sources */,
@@ -306,7 +338,7 @@
 			);
 			dependencies = (
 			);
-			name = SwiftyCompanion;
+			name = Companion;
 			productName = SwiftyCompanion;
 			productReference = A3C076792362FE220098A25F /* Companion.app */;
 			productType = "com.apple.product-type.application";
@@ -326,7 +358,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A3C076742362FE220098A25F /* Build configuration list for PBXProject "SwiftyCompanion" */;
+			buildConfigurationList = A3C076742362FE220098A25F /* Build configuration list for PBXProject "Companion" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -337,12 +369,35 @@
 			mainGroup = A3C076702362FE220098A25F;
 			productRefGroup = A3C0767A2362FE220098A25F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A316EF7D240EEA62007A2EA6 /* Products */;
+					ProjectRef = A316EF7C240EEA62007A2EA6 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				A3C076782362FE220098A25F /* SwiftyCompanion */,
+				A3C076782362FE220098A25F /* Companion */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A316EF82240EEA62007A2EA6 /* Kingfisher.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Kingfisher.framework;
+			remoteRef = A316EF81240EEA62007A2EA6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A316EF84240EEA62007A2EA6 /* Pods_Companion.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods_Companion.framework;
+			remoteRef = A316EF83240EEA62007A2EA6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A3C076772362FE220098A25F /* Resources */ = {
@@ -375,7 +430,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyCompanion-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Companion-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -388,15 +443,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Companion/Pods-Companion-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Companion/Pods-Companion-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyCompanion/Pods-SwiftyCompanion-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Companion/Pods-Companion-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -533,7 +588,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -588,7 +643,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -600,12 +655,12 @@
 		};
 		A3C0768F2362FE260098A25F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53A25038B052344A1C19DA97 /* Pods-SwiftyCompanion.debug.xcconfig */;
+			baseConfigurationReference = 74BB2E57DF64365A6035BE2F /* Pods-Companion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyCompanion/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Companion/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -620,12 +675,12 @@
 		};
 		A3C076902362FE260098A25F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCC128913098179E54E5062A /* Pods-SwiftyCompanion.release.xcconfig */;
+			baseConfigurationReference = 94B82979999571375D4E6B00 /* Pods-Companion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
-				INFOPLIST_FILE = "$(SRCROOT)/SwiftyCompanion/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Companion/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -641,7 +696,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A3C076742362FE220098A25F /* Build configuration list for PBXProject "SwiftyCompanion" */ = {
+		A3C076742362FE220098A25F /* Build configuration list for PBXProject "Companion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3C0768C2362FE260098A25F /* Debug */,
@@ -650,7 +705,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3C0768E2362FE260098A25F /* Build configuration list for PBXNativeTarget "SwiftyCompanion" */ = {
+		A3C0768E2362FE260098A25F /* Build configuration list for PBXNativeTarget "Companion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3C0768F2362FE260098A25F /* Debug */,

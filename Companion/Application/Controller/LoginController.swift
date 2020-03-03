@@ -60,6 +60,7 @@ class LoginController: UIViewController, ASWebAuthenticationPresentationContextP
                     AuthUser.shared.campusID = campusID
                     AuthUser.shared.login = userLogin
                     guard let url = URL(string: "\(self.intraURL)/v2/users/\(userId)/coalitions") else { return }
+                    sleep(1)
                     NetworkService.shared.getData(into: [Coalition?].self, from: url) { Coalition, result in
                         self.errorHandler(to: result) {
                             self.coalitionData = Coalition as! [Coalition?]
