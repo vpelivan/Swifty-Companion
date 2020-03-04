@@ -34,18 +34,18 @@ class SingleProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView(frame: .zero)
         navigationItem.title = projectInfo.project?.name
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         fetchData()
-        tableView.tableFooterView = UIView(frame: .zero)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
-        tableView.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        activityIndicator.isHidden = true
+//        activityIndicator.stopAnimating()
+//        tableView.reloadData()
+//    }
 
     fileprivate func setCellQuantity() {
         guard let teams = teams?.teams else { return }

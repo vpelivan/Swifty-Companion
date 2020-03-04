@@ -50,6 +50,7 @@ class ClusterViewController: UIViewController {
     
     func getClusterData() {
         DispatchQueue.global().async {
+            self.clusterDict = [:]
             let group = DispatchGroup()
             for i in 1...6 {
                 group.enter()

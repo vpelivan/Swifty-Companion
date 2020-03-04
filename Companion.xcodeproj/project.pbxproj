@@ -162,6 +162,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57EFF6AF24106C17009E87C3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A3865D84238D59E5007540D0 /* EventTableViewCell.swift */,
+				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
+				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
+				A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */,
+				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
+				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
+				A374D862239950AA005AA0A2 /* LabelMacCell.swift */,
+				A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */,
+				575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */,
+				A3A30A2D23FAFBF9005403C1 /* CurrentLevelViewCell.swift */,
+				A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */,
+				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
+				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
+				572469BD23F6E4070096A775 /* ProfileViewCell.swift */,
+				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
+				57E98C0D24021800006D834C /* EvaluationViewCell.swift */,
+				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
+				5752D6782407440700B39B0A /* SearchTableViewCell.swift */,
+				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
+				A3654FBD2409138F00666235 /* ClusterUserInfoCell.swift */,
+				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
+				A3654FBB2409112C00666235 /* ClusterUserImageCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		A316EF7D240EEA62007A2EA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,32 +220,11 @@
 		A326F2872372FD63009D3E12 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				57EFF6AF24106C17009E87C3 /* Cells */,
 				A3C076802362FE220098A25F /* Main.storyboard */,
-				A3865D84238D59E5007540D0 /* EventTableViewCell.swift */,
-				A3A34BC323859E29009DAB75 /* ProjectTableViewCell.swift */,
-				A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */,
-				A3DAF5AE239A980D00ED4937 /* EmptyMacCellController.swift */,
-				A36A3D702396F6B800403959 /* LoggedMacCell.swift */,
-				A39943532390308E00F1569E /* PoolDayTableViewCell.swift */,
-				A374D862239950AA005AA0A2 /* LabelMacCell.swift */,
-				A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */,
-				575A01D723DE525E009CC511 /* ProjectDescriptionCell.swift */,
 				A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */,
 				A36A3D6E2396F47300403959 /* CustomLayout.swift */,
-				A3A30A2D23FAFBF9005403C1 /* CurrentLevelViewCell.swift */,
-				A3A30A2F23FAFE56005403C1 /* CurrentCursusViewCell.swift */,
-				A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */,
-				A3F678AC23F14C65009C59D2 /* SingleEventDescriptionCell.swift */,
-				572469BD23F6E4070096A775 /* ProfileViewCell.swift */,
 				A3F2D68E23DCC64D003FAB32 /* SkillsViewCell.xib */,
-				A3A9965523DDF93D00688199 /* MarkTableViewCell.swift */,
-				57E98C0D24021800006D834C /* EvaluationViewCell.swift */,
-				A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */,
-				5752D6782407440700B39B0A /* SearchTableViewCell.swift */,
-				A3A34BC52385A94D009DAB75 /* SkillsTableViewCell.swift */,
-				A3654FBD2409138F00666235 /* ClusterUserInfoCell.swift */,
-				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
-				A3654FBB2409112C00666235 /* ClusterUserImageCell.swift */,
 				A3C076882362FE260098A25F /* LaunchScreen.storyboard */,
 			);
 			path = View;
