@@ -11,7 +11,7 @@ import Kingfisher
 
 class ClusterViewController: UIViewController {
     
-    var ClusterLoggedUsers: [ClusterUsers?] = []
+    //    var ClusterLoggedUsers: [ClusterUsers?] = []
     var clusterDict: [String : ClusterUsers?] = [:]
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -52,42 +52,55 @@ class ClusterViewController: UIViewController {
         DispatchQueue.global().async {
             self.clusterDict = [:]
             let group = DispatchGroup()
-            for i in 1...6 {
+            var flag = false
+            for i in 1...15 {
                 group.enter()
-                let task = self.getClusterInfo(num: i) {
+                let task = self.getClusterInfo(num: i)  {
+                    clusterLogged in
+                    if clusterLogged.isEmpty == false {
+                        for user in clusterLogged {
+                            let host = user?.host
+                            self.clusterDict.updateValue(user, forKey: host ?? "empty")
+                        }
+                    }
+                    else {
+                        flag = true
+                    }
                     group.leave()
                 }
+                group.wait()
+                if flag == true {
+                    break
+                }
+                self.sessionTasks.append(task)
                 if i != 0 && i % 2 == 0 {
                     sleep(1)
                 }
-                self.sessionTasks.append(task)
-                group.wait()
+        }
+        group.enter()
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+            self.collectionView.reloadData()
+            self.collectionView.delegate = self
+            self.collectionView.dataSource = self
+            self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
+            if self.refreshButton.isEnabled == false {
+                self.refreshButton.isEnabled = true
             }
-            group.enter()
-            DispatchQueue.main.async {
-                self.activityIndicator.isHidden = true
-                self.activityIndicator.stopAnimating()
-                self.collectionView.reloadData()
-                self.collectionView.delegate = self
-                self.collectionView.dataSource = self
-                self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
-                if self.refreshButton.isEnabled == false {
-                    self.refreshButton.isEnabled = true
-                }
-                group.leave()
-            }
+            group.leave()
         }
     }
-    
-    
-    
-    @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
-        refreshButton.isEnabled = false
-        clearBuffer()
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        getClusterData()
-    }
+}
+
+
+@IBAction func tapRefresh(_ sender: UIBarButtonItem) {
+    refreshButton.isEnabled = false
+    clearBuffer()
+    activityIndicator.isHidden = false
+    activityIndicator.startAnimating()
+    getClusterData()
+}
 }
 
 extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -97,7 +110,7 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        
         return 22
     }
     
@@ -226,10 +239,10 @@ extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension ClusterViewController {
-    func getClusterInfo(num: Int, completion: @escaping () -> ()) -> URLSessionDataTask? {
+    func getClusterInfo(num: Int, completion: @escaping ([ClusterUsers?]) -> ()) -> URLSessionDataTask? {
         guard let token = AuthUser.shared.token?.accessToken else { return nil }
         let intraURL = AuthUser.shared.intraURL
-        let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)")
+        let url = NSURL(string: "\(intraURL)/v2/campus/8/locations?page[size]=100&page[number]=\(num)&filter[end]=false")
         let request = NSMutableURLRequest(url: url! as URL)
         request.httpMethod = "GET"
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
@@ -242,16 +255,11 @@ extension ClusterViewController {
             do
             {
                 guard let data = data else { return }
-                self.ClusterLoggedUsers = try JSONDecoder().decode([ClusterUsers?].self, from: data)
-                for i in 0..<self.ClusterLoggedUsers.count {
-                    if self.ClusterLoggedUsers[i]?.end_at == nil {
-                        self.clusterDict.updateValue(self.ClusterLoggedUsers[i], forKey: self.ClusterLoggedUsers[i]?.host ?? "empty")
-                    }
-                }
-                completion()
+                let clusterLogged = try JSONDecoder().decode([ClusterUsers?].self, from: data)
+                completion(clusterLogged)
             }
             catch let error {
-                completion()
+                completion([ClusterUsers?]())
                 return print("Another error:\(error)")
             }
         }

@@ -58,6 +58,8 @@
 		A3E47CE42386C2110022151C /* AllProjectsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */; };
 		A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE52386C2370022151C /* AllProjectsViewController.swift */; };
 		A3E47CE8238717B70022151C /* ClusterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E47CE7238717B70022151C /* ClusterViewController.swift */; };
+		A3E4EB5C2411732500691337 /* SlotsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4EB5B2411732500691337 /* SlotsTableViewCell.swift */; };
+		A3E4EB6024117A3700691337 /* SlotsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E4EB5F24117A3700691337 /* SlotsModel.swift */; };
 		A3F2D68B23DCA44E003FAB32 /* CurrentProjectsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */; };
 		A3F2D68C23DCA44E003FAB32 /* CurrentProjectsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */; };
 		A3F2D68F23DCC64D003FAB32 /* SkillsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */; };
@@ -142,6 +144,8 @@
 		A3E47CE32386C2110022151C /* AllProjectsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsTableViewCell.swift; sourceTree = "<group>"; };
 		A3E47CE52386C2370022151C /* AllProjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsViewController.swift; sourceTree = "<group>"; };
 		A3E47CE7238717B70022151C /* ClusterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClusterViewController.swift; path = ../View/ClusterViewController.swift; sourceTree = "<group>"; };
+		A3E4EB5B2411732500691337 /* SlotsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsTableViewCell.swift; sourceTree = "<group>"; };
+		A3E4EB5F24117A3700691337 /* SlotsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsModel.swift; sourceTree = "<group>"; };
 		A3F2D68923DCA44E003FAB32 /* CurrentProjectsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentProjectsViewCell.swift; sourceTree = "<group>"; };
 		A3F2D68A23DCA44E003FAB32 /* CurrentProjectsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentProjectsViewCell.xib; sourceTree = "<group>"; };
 		A3F2D68D23DCC64D003FAB32 /* SkillsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsViewCell.swift; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 				A3654FBD2409138F00666235 /* ClusterUserInfoCell.swift */,
 				575A01D923DE59E8009CC511 /* TeamsViewCell.swift */,
 				A3654FBB2409112C00666235 /* ClusterUserImageCell.swift */,
+				A3E4EB5B2411732500691337 /* SlotsTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				A34A565823E1DB8D006BB676 /* Events.swift */,
 				57F2735323E8D99B009EDB1C /* ErrorHandling.swift */,
 				57EBA1012402B397006AC329 /* Evaluations.swift */,
+				A3E4EB5F24117A3700691337 /* SlotsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 				57EBA1022402B397006AC329 /* Evaluations.swift in Sources */,
 				A35119C123DF4D1F00E295C7 /* ProjectNetworkService.swift in Sources */,
 				A32E192A23E75A1C00DEDA20 /* TokenModel.swift in Sources */,
+				A3E4EB6024117A3700691337 /* SlotsModel.swift in Sources */,
 				A3577237237C1CCD009284CB /* Coalition.swift in Sources */,
 				A368998623FC28E90056A74B /* CursusTableViewController.swift in Sources */,
 				5752D6792407440700B39B0A /* SearchTableViewCell.swift in Sources */,
@@ -520,6 +527,7 @@
 				572469BC23F6E3820096A775 /* ProfileViewController.swift in Sources */,
 				A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */,
 				A39943542390308E00F1569E /* PoolDayTableViewCell.swift in Sources */,
+				A3E4EB5C2411732500691337 /* SlotsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
