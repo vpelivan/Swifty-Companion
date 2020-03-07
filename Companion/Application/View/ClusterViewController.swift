@@ -53,7 +53,7 @@ class ClusterViewController: UIViewController {
             self.clusterDict = [:]
             let group = DispatchGroup()
             var flag = false
-            for i in 1...15 {
+            for i in 1... {
                 group.enter()
                 let task = self.getClusterInfo(num: i)  {
                     clusterLogged in
@@ -76,31 +76,31 @@ class ClusterViewController: UIViewController {
                 if i != 0 && i % 2 == 0 {
                     sleep(1)
                 }
-        }
-        group.enter()
-        DispatchQueue.main.async {
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.stopAnimating()
-            self.collectionView.reloadData()
-            self.collectionView.delegate = self
-            self.collectionView.dataSource = self
-            self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
-            if self.refreshButton.isEnabled == false {
-                self.refreshButton.isEnabled = true
             }
-            group.leave()
+            group.enter()
+            DispatchQueue.main.async {
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                self.collectionView.reloadData()
+                self.collectionView.delegate = self
+                self.collectionView.dataSource = self
+                self.navigationController?.navigationBar.topItem?.title = "\(self.clusterDict.count) users logged in Cluster"
+                if self.refreshButton.isEnabled == false {
+                    self.refreshButton.isEnabled = true
+                }
+                group.leave()
+            }
         }
     }
-}
-
-
-@IBAction func tapRefresh(_ sender: UIBarButtonItem) {
-    refreshButton.isEnabled = false
-    clearBuffer()
-    activityIndicator.isHidden = false
-    activityIndicator.startAnimating()
-    getClusterData()
-}
+    
+    
+    @IBAction func tapRefresh(_ sender: UIBarButtonItem) {
+        refreshButton.isEnabled = false
+        clearBuffer()
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        getClusterData()
+    }
 }
 
 extension ClusterViewController: UICollectionViewDelegate, UICollectionViewDataSource {

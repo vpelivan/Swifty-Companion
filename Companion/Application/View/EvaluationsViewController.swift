@@ -241,6 +241,7 @@ extension EvaluationsViewController: UITableViewDelegate, UITableViewDataSource 
                         self.evaluations.remove(at: indexPath.row)
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                         print("Skipped evaluation")
+                        
                     }
                 }
             })
