@@ -53,9 +53,13 @@ class SlotsViewController: UIViewController {
                 self.sessionTasks.append(task)
             }
             group.enter()
-            
+//            self.getSlotsByDay()
             group.leave()
             DispatchQueue.main.async {
+                guard let currentEnd = self.allSlots[0]?.endAt else {return}
+                guard let nextBegin = self.allSlots[1]?.beginAt else {return}
+                let i = self.isOneSlot(from: currentEnd, to: nextBegin)
+                print(i ?? 0)
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
@@ -65,18 +69,50 @@ class SlotsViewController: UIViewController {
         }
     }
     
-    func getSlotsByDay() {
-        
+    //        if allSlots.count > 1 {
+    //            for i in 0 ..< allSlots.count {
+    //                guard let currentSlot = allSlots[i] else { break }
+    //                guard let nextSlot = allSlots[i + 1] else { break }
+    //                if currentSlot.endAt == nextSlot.beginAt {
+    //
+    //
+    //                } else {
+    //
+    //                }
+    //            }
+    //        } else {
+    //            guard let currentSlot = allSlots[0] else { break }
+    //            var composedSlot: ComposedSlot?
+    //            composedSlot?.slotArray.append(currentSlot)
+    //            composedSlot?.beginAt = currentSlot.beginAt
+    //            composedSlot?.endAt = currentSlot.endAt
+    //        }
+    //    }
+    
+    func isOneSlot(from currentSlotEnd: String?, to nextSlotBegin: String?) -> Bool? {
+        guard let currentSlot = currentSlotEnd, let nextSlot = nextSlotBegin else { return nil }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssZ"
+        dateFormatter.timeZone = .current
+        if let current = dateFormatter.date(from: currentSlot), let next = dateFormatter.date(from: nextSlot) {
+            if current == next {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        return nil
     }
     
-    func getComposedSlots() -> ComposedSlot? {
-        var composedSlot: ComposedSlot?
+//    func getSlotsByDay() {
+//        for slot in allSlots {
+//
+//        }
+//    }
+    
+    func getComposedSlots() {
         
-        for i in allSlots {
-            
-        }
-        
-        return composedSlot
     }
 }
 

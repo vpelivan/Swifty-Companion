@@ -12,13 +12,13 @@ import UIKit
 // MARK: - Slot
 
 struct Slots {
-    let slots: [ComposedSlot?]
+    var slots: [ComposedSlot?]
 }
 
 struct ComposedSlot {
-    let slotArray: [Slot?]
-    let begin: NSDate?
-    let end: NSDate?
+    var slotArray: [Slot?]
+    var beginAt: String?
+    var endAt: String?
 }
 
 struct Slot: Decodable {
