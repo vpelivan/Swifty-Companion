@@ -20,6 +20,7 @@ struct ComposedSlot {
     var slotArray: [Slot?]
     var beginAt: Date?
     var endAt: Date?
+    var multiday: Bool = false
 }
 
 struct Slot: Decodable {

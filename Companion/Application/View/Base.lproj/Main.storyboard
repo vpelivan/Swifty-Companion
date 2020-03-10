@@ -1092,6 +1092,12 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6zl-Nr-9ei">
                                 <rect key="frame" x="169" y="305" width="37" height="37"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slots Not Set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sI6-qA-oU1">
+                                <rect key="frame" x="137.5" y="313" width="100.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -1099,6 +1105,8 @@
                             <constraint firstItem="wkZ-0n-eri" firstAttribute="bottom" secondItem="pOF-S3-HHu" secondAttribute="bottom" id="beo-HP-cdF"/>
                             <constraint firstItem="6zl-Nr-9ei" firstAttribute="centerX" secondItem="Qyx-AN-6xD" secondAttribute="centerX" id="cCq-49-J6g"/>
                             <constraint firstItem="wkZ-0n-eri" firstAttribute="leading" secondItem="pOF-S3-HHu" secondAttribute="leading" id="fqX-Hr-SPz"/>
+                            <constraint firstItem="sI6-qA-oU1" firstAttribute="centerY" secondItem="Qyx-AN-6xD" secondAttribute="centerY" id="jJ0-gF-8Yc"/>
+                            <constraint firstItem="sI6-qA-oU1" firstAttribute="centerX" secondItem="Qyx-AN-6xD" secondAttribute="centerX" id="pDh-k8-4bq"/>
                             <constraint firstItem="wkZ-0n-eri" firstAttribute="trailing" secondItem="pOF-S3-HHu" secondAttribute="trailing" id="yNO-Zq-NIA"/>
                             <constraint firstItem="6zl-Nr-9ei" firstAttribute="centerY" secondItem="Qyx-AN-6xD" secondAttribute="centerY" id="yg7-Z5-QmS"/>
                         </constraints>
@@ -1114,6 +1122,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="6zl-Nr-9ei" id="GHY-W4-AtZ"/>
+                        <outlet property="notSetLabel" destination="sI6-qA-oU1" id="Npk-SS-rTD"/>
                         <outlet property="tableView" destination="wkZ-0n-eri" id="vVr-s6-CC8"/>
                     </connections>
                 </viewController>
@@ -1124,18 +1133,62 @@
         <!--Add New Slot-->
         <scene sceneID="SPZ-Y6-BY0">
             <objects>
-                <viewController id="8I8-XV-kH4" sceneMemberID="viewController">
+                <viewController id="8I8-XV-kH4" customClass="NewSlotViewController" customModule="Companion" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UmB-68-b3v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Znf-Iw-VXm">
+                                <rect key="frame" x="16" y="95" width="343" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Time:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OM4-ef-Hlj">
+                                <rect key="frame" x="16" y="66" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rDi-3t-jAC">
+                                <rect key="frame" x="16" y="178" width="343" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Time:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMe-MH-6Ap">
+                                <rect key="frame" x="16" y="149" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Znf-Iw-VXm" firstAttribute="top" secondItem="OM4-ef-Hlj" secondAttribute="bottom" constant="8" id="1MI-ss-hS4"/>
+                            <constraint firstItem="a2E-NL-sbE" firstAttribute="trailing" secondItem="rDi-3t-jAC" secondAttribute="trailing" constant="16" id="FCq-B3-LBk"/>
+                            <constraint firstItem="tMe-MH-6Ap" firstAttribute="top" secondItem="Znf-Iw-VXm" secondAttribute="bottom" constant="20" id="IhM-8R-15N"/>
+                            <constraint firstItem="OM4-ef-Hlj" firstAttribute="leading" secondItem="a2E-NL-sbE" secondAttribute="leading" constant="16" id="KbW-7Z-vey"/>
+                            <constraint firstItem="a2E-NL-sbE" firstAttribute="trailing" secondItem="Znf-Iw-VXm" secondAttribute="trailing" constant="16" id="Oka-u6-SmX"/>
+                            <constraint firstItem="a2E-NL-sbE" firstAttribute="trailing" secondItem="OM4-ef-Hlj" secondAttribute="trailing" constant="16" id="VVF-Fo-fMe"/>
+                            <constraint firstItem="a2E-NL-sbE" firstAttribute="trailing" secondItem="tMe-MH-6Ap" secondAttribute="trailing" constant="16" id="XTg-Vr-XZQ"/>
+                            <constraint firstItem="rDi-3t-jAC" firstAttribute="leading" secondItem="a2E-NL-sbE" secondAttribute="leading" constant="16" id="aAh-5K-htA"/>
+                            <constraint firstItem="OM4-ef-Hlj" firstAttribute="top" secondItem="a2E-NL-sbE" secondAttribute="top" constant="10" id="gzU-HR-L8Y"/>
+                            <constraint firstItem="Znf-Iw-VXm" firstAttribute="leading" secondItem="a2E-NL-sbE" secondAttribute="leading" constant="16" id="hLA-6A-xpt"/>
+                            <constraint firstItem="rDi-3t-jAC" firstAttribute="top" secondItem="tMe-MH-6Ap" secondAttribute="bottom" constant="8" id="slr-dD-bfa"/>
+                            <constraint firstItem="tMe-MH-6Ap" firstAttribute="leading" secondItem="a2E-NL-sbE" secondAttribute="leading" constant="16" id="xeX-6I-RxH"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="a2E-NL-sbE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Add New Slot" id="OAc-Kk-9U9"/>
+                    <navigationItem key="navigationItem" title="Add New Slot" id="OAc-Kk-9U9">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="wmw-ta-slS"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="endTimeField" destination="rDi-3t-jAC" id="sak-HK-9z6"/>
+                        <outlet property="startTimeField" destination="Znf-Iw-VXm" id="Pnp-mn-azO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybd-PM-496" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2884" y="1743"/>
+            <point key="canvasLocation" x="2884" y="1742.8785607196403"/>
         </scene>
         <!--Cluster User View Controller-->
         <scene sceneID="SdI-uS-jpb">

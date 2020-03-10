@@ -40,6 +40,7 @@
 		A36AD85723E0A11C0065F627 /* TeammateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */; };
 		A374D863239950AA005AA0A2 /* LabelMacCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D862239950AA005AA0A2 /* LabelMacCell.swift */; };
 		A374D865239953BB005AA0A2 /* ClusterUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A374D864239953BB005AA0A2 /* ClusterUsers.swift */; };
+		A37D85142418154900608DE6 /* NewSlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37D85132418154900608DE6 /* NewSlotViewController.swift */; };
 		A3865D85238D59E5007540D0 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D84238D59E5007540D0 /* EventTableViewCell.swift */; };
 		A3865D87238D6DDB007540D0 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D86238D6DDB007540D0 /* EventsViewController.swift */; };
 		A3865D89238D6DEB007540D0 /* SingleEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */; };
@@ -125,6 +126,7 @@
 		A36AD85623E0A11C0065F627 /* TeammateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeammateCollectionViewCell.swift; sourceTree = "<group>"; };
 		A374D862239950AA005AA0A2 /* LabelMacCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelMacCell.swift; sourceTree = "<group>"; };
 		A374D864239953BB005AA0A2 /* ClusterUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterUsers.swift; sourceTree = "<group>"; };
+		A37D85132418154900608DE6 /* NewSlotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSlotViewController.swift; sourceTree = "<group>"; };
 		A3865D84238D59E5007540D0 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		A3865D86238D6DDB007540D0 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		A3865D88238D6DEB007540D0 /* SingleEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				5746B80C2411AC6700775213 /* SlotsViewController.swift */,
+				A37D85132418154900608DE6 /* NewSlotViewController.swift */,
 				57E98C0B240216DE006D834C /* EvaluationsViewController.swift */,
 				A354918E237077F00056D05B /* LoginController.swift */,
 				572469BB23F6E3820096A775 /* ProfileViewController.swift */,
@@ -505,6 +508,7 @@
 				A3A9965623DDF93D00688199 /* MarkTableViewCell.swift in Sources */,
 				A3E47CE62386C2370022151C /* AllProjectsViewController.swift in Sources */,
 				A3A34BC62385A94D009DAB75 /* SkillsTableViewCell.swift in Sources */,
+				A37D85142418154900608DE6 /* NewSlotViewController.swift in Sources */,
 				A34A565723E1BA37006BB676 /* EventsNetworkService.swift in Sources */,
 				575A01D823DE525E009CC511 /* ProjectDescriptionCell.swift in Sources */,
 				A3A30A2E23FAFBF9005403C1 /* CurrentLevelViewCell.swift in Sources */,
