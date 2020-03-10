@@ -9,13 +9,15 @@
 import UIKit
 
 class SlotsViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var allSlots: [Slot?] = []
+    var allComposedSlots: [ComposedSlot?] = []
     var scaleTeams: [Evaluation?] = []
-    var slotsByDay: [Slots?] = []
+    var slotsByDay: [SlotsOfOneDay?] = []
     var sessionTasks: [URLSessionDataTask?] = []
+    var count = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +55,16 @@ class SlotsViewController: UIViewController {
                 self.sessionTasks.append(task)
             }
             group.enter()
-//            self.getSlotsByDay()
+            //            self.getSlotsByDay()
             group.leave()
             DispatchQueue.main.async {
-                guard let currentEnd = self.allSlots[0]?.endAt else {return}
-                guard let nextBegin = self.allSlots[1]?.beginAt else {return}
-                let i = self.isOneSlot(from: currentEnd, to: nextBegin)
-                print(i ?? 0)
+                self.getAllComposedSlots()
+                self.getSlotsByDay()
+//                for slot in self.allComposedSlots {
+//                    print(slot?.beginAt ?? 0)
+//                    print(slot?.endAt ?? 0)
+//                    print("")
+//                }
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
                 self.tableView.reloadData()
@@ -69,64 +74,91 @@ class SlotsViewController: UIViewController {
         }
     }
     
-    //        if allSlots.count > 1 {
-    //            for i in 0 ..< allSlots.count {
-    //                guard let currentSlot = allSlots[i] else { break }
-    //                guard let nextSlot = allSlots[i + 1] else { break }
-    //                if currentSlot.endAt == nextSlot.beginAt {
-    //
-    //
-    //                } else {
-    //
-    //                }
-    //            }
-    //        } else {
-    //            guard let currentSlot = allSlots[0] else { break }
-    //            var composedSlot: ComposedSlot?
-    //            composedSlot?.slotArray.append(currentSlot)
-    //            composedSlot?.beginAt = currentSlot.beginAt
-    //            composedSlot?.endAt = currentSlot.endAt
-    //        }
-    //    }
-    
-    func isOneSlot(from currentSlotEnd: String?, to nextSlotBegin: String?) -> Bool? {
-        guard let currentSlot = currentSlotEnd, let nextSlot = nextSlotBegin else { return nil }
+    func isOneDay(from oneDay: Date?, with secondDay: Date?) -> (Bool, Date?) {
+        guard let oneDay = oneDay, let secondDay = secondDay else { return (false, nil) }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssZ"
-        dateFormatter.timeZone = .current
-        if let current = dateFormatter.date(from: currentSlot), let next = dateFormatter.date(from: nextSlot) {
-            if current == next {
-                return true
-            }
-            else {
-                return false
-            }
+        dateFormatter.dateFormat = "d"
+        let one = dateFormatter.string(from: oneDay)
+        let two = dateFormatter.string(from: secondDay)
+        if one == two {
+            return (true, oneDay)
+        } else {
+            return (false, secondDay)
         }
-        return nil
     }
     
-//    func getSlotsByDay() {
-//        for slot in allSlots {
-//
-//        }
-//    }
+    func getSlotsByDay() {
+        for slot in allComposedSlots {
+            if slotsByDay.isEmpty == true {
+                var singleDay: SlotsOfOneDay? = SlotsOfOneDay(slots: [nil])
+                let tuple = isOneDay(from: slot?.beginAt, with: slot?.beginAt)
+                singleDay?.date = tuple.1
+                singleDay?.slots.append(slot)
+                slotsByDay.append(singleDay)
+            } else {
+                guard var last = slotsByDay.last else { break }
+                let tuple = isOneDay(from: last?.date, with: slot?.beginAt)
+                if tuple.0 == true {
+                    last?.slots.append(slot)
+                    
+                } else {
+                    var singleDay: SlotsOfOneDay? = SlotsOfOneDay(slots: [nil])
+                    singleDay?.date = tuple.1
+                    singleDay?.slots.append(slot)
+                    slotsByDay.append(singleDay)
+                    continue
+                }
+            }
+        }
+    }
     
-    func getComposedSlots() {
+    
+// MARK: - We gather all slots of 15 minutes interval to an array of composed slots with a duration
+    func getAllComposedSlots() {
+        while count < allSlots.count {
+            let composedSlot = getSingleComposedSlot()
+            allComposedSlots.append(composedSlot)
+        }
+    }
+// MARK: - We gather single composed slot of neighbour slots with 15 minutes duaration
+    func getSingleComposedSlot() -> ComposedSlot? {
+        var composedSlot: ComposedSlot? = ComposedSlot(slotArray: [nil])
+        let localTime = OtherMethods.shared.convertToLocalDate
         
+        for i in stride(from: count, to: allSlots.count, by: 1)  {
+            guard let currentSlot = allSlots[i] else { break }
+            if i == count {
+                composedSlot?.beginAt = localTime(currentSlot.beginAt)
+                composedSlot?.slotArray.append(currentSlot)
+                composedSlot?.endAt = localTime(currentSlot.endAt)
+            }
+            if (i != allSlots.count - 1) {
+                guard let nextSlot = allSlots[i + 1] else { count = i + 1; break }
+                if currentSlot.endAt == nextSlot.beginAt {
+                    composedSlot?.slotArray.append(nextSlot)
+                    composedSlot?.endAt = localTime(nextSlot.endAt)
+                } else {
+                    count = i + 1
+                    return composedSlot
+                }
+            }
+        }
+        count = allSlots.count
+        return composedSlot
     }
 }
 
 extension SlotsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return slotsByDay.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return slotsByDay[section]?.slots.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "section \(section)"
+        return OtherMethods.shared.getDay(from: slotsByDay[section]?.date)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,7 +172,7 @@ extension SlotsViewController: UITableViewDataSource, UITableViewDelegate {
             let delete = UIAlertAction(title: "Delete", style: .default) { _ in
                 
                 DispatchQueue.main.async {
-//                    self.evaluations.remove(at: indexPath.row)
+                    //                    self.evaluations.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                     print("Slot Deleted")
                 }

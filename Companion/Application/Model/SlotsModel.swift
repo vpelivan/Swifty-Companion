@@ -11,14 +11,15 @@ import UIKit
 
 // MARK: - Slot
 
-struct Slots {
+struct SlotsOfOneDay {
     var slots: [ComposedSlot?]
+    var date: Date?
 }
 
 struct ComposedSlot {
     var slotArray: [Slot?]
-    var beginAt: String?
-    var endAt: String?
+    var beginAt: Date?
+    var endAt: Date?
 }
 
 struct Slot: Decodable {
