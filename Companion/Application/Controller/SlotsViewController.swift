@@ -115,6 +115,9 @@ class SlotsViewController: UIViewController {
         }
     }
     
+    @IBAction func tapPlus(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "NewSlotViewController", sender: nil)
+    }
     
 // MARK: - We gather all slots of 15 minutes interval to an array of composed slots with a duration
     func getAllComposedSlots() {
@@ -133,16 +136,16 @@ class SlotsViewController: UIViewController {
             guard let currentSlot = allSlots[i] else { break }
             
             if i == count {
-                composedSlot?.beginAt = getDate(currentSlot.beginAt)
+                composedSlot?.beginAt = getDate(currentSlot.beginAt, "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                 composedSlot?.slotArray.append(currentSlot)
-                composedSlot?.endAt = getDate(currentSlot.endAt)
+                composedSlot?.endAt = getDate(currentSlot.endAt, "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                 
             }
             if (i != allSlots.count - 1) {
                 guard let nextSlot = allSlots[i + 1] else { count = i + 1; break }
                 if currentSlot.endAt == nextSlot.beginAt {
                     composedSlot?.slotArray.append(nextSlot)
-                    composedSlot?.endAt = getDate(nextSlot.endAt)
+                    composedSlot?.endAt = getDate(nextSlot.endAt, "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                 } else {
                     count = i + 1
                     return composedSlot
@@ -197,6 +200,11 @@ extension SlotsViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeActions
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let nvc = segue.destination as? NewSlotViewController else { return }
+        nvc.allComposedSlots = self.allComposedSlots
     }
 }
 

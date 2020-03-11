@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1116,7 +1116,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="56Z-cg-Z7f">
                             <color key="tintColor" red="0.0" green="0.74252170319999999" blue="0.74488407369999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="8I8-XV-kH4" kind="show" id="qyL-cM-RqH"/>
+                                <action selector="tapPlus:" destination="ovc-Xs-HWN" id="CCc-v0-Uyq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1124,6 +1124,7 @@
                         <outlet property="activityIndicator" destination="6zl-Nr-9ei" id="GHY-W4-AtZ"/>
                         <outlet property="notSetLabel" destination="sI6-qA-oU1" id="Npk-SS-rTD"/>
                         <outlet property="tableView" destination="wkZ-0n-eri" id="vVr-s6-CC8"/>
+                        <segue destination="8I8-XV-kH4" kind="show" identifier="NewSlotViewController" id="BdV-3C-Zcx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgx-lr-U35" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1179,7 +1180,11 @@
                         <viewLayoutGuide key="safeArea" id="a2E-NL-sbE"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add New Slot" id="OAc-Kk-9U9">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="wmw-ta-slS"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="wmw-ta-slS">
+                            <connections>
+                                <action selector="tapDone:" destination="8I8-XV-kH4" id="9kk-a6-kx7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="endTimeField" destination="rDi-3t-jAC" id="sak-HK-9z6"/>

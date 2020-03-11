@@ -36,10 +36,11 @@ class OtherMethods {
         return localDate
     }
     
-    public func getDate(from date: String?) -> Date? {
+    public func getDate(from date: String?, format: String) -> Date? {
         guard let date = date else { return nil }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = format
+        dateFormatter.timeZone = .current
         let utcDate = dateFormatter.date(from: date)
         return utcDate
     }
